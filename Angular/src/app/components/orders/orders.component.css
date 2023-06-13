@@ -1,0 +1,61 @@
+.orders-container {
+    background-image: url("../../../assets/images/bgggg.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.order-menu {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    background-color: #414758e1;
+    margin-top: 150px !important;
+
+}
+
+.order-filter {
+    display: flex;
+    justify-content: space-between;
+    background-color: lightgray;
+    color: #1B2838;
+    width: 80%;
+}
+
+.order-type {
+    transition: transform 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.order-type:hover,
+.order-type.selected {
+    /* background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; */
+    background-color: #777a52;
+    cursor: pointer;
+    color: white;
+}
+
+.order-type.selected {
+    transform: scale(0.90);
+}
+
+.order-type input[type="radio"] {
+    display: none;
+    /* Hide the default radio button */
+}
+
+.body-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

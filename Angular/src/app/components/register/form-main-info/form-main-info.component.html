@@ -1,0 +1,64 @@
+<ng-container >
+  <div class="row" [formGroup]="mainInfo">
+
+  <div class="mb-3">
+    <div [ngClass]="{'error':name.invalid && (name.dirty || name.touched)}">
+      <label for="nameInput" class="form-label">Name</label>
+      <span *ngIf="name.invalid && (name.dirty || name.touched)">
+        <span class="ms-3 errMsg" *ngIf="name.hasError('required')">Required</span>
+        <span class="ms-3 errMsg" *ngIf="name.hasError('minlength')">Minimum Length is 6</span>
+        <span class="ms-3 errMsg" *ngIf="name.hasError('forbiddenUsername')">Name can't be {{mainInfo.get("name").value}}</span>
+      </span>
+      <input type="text" class="form-control" id="nameInput" name="name" aria-describedby="emailHelp" formControlName="name" (blur)="updateView()">
+    </div>
+
+  </div>
+
+  <div class="mb-3">
+    <div [ngClass]="{'error':username.invalid && (username.dirty || username.touched)}">
+      <label for="usernameInput"  class="form-label">Username</label>
+      <span *ngIf="username.invalid && (username.dirty || username.touched)">
+        <span class="ms-3 errMsg" *ngIf="username.hasError('required')">Required</span>
+        <span class="ms-3 errMsg" *ngIf="username.hasError('minlength')">Minimum Length is 6</span>
+        <span class="ms-3 errMsg" *ngIf="username.hasError('forbiddenUsername')">Name can't be {{mainInfo.get("username").value}}</span>
+      </span>
+      <input type="text" class="form-control" id="usernameInput" name="username" aria-describedby="emailHelp" formControlName="username" (blur)="updateView()">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div [ngClass]="{'error':email.invalid && (email.dirty || email.touched)}">
+      <label for="emailInput"  class="form-label">Email address</label>
+      <span *ngIf="email.invalid && (email.dirty || email.touched)">
+        <span class="ms-3 errMsg" *ngIf="email.hasError('required')">Required</span>
+        <span class="ms-3 errMsg" *ngIf="email.hasError('email')">Invalid Email Format</span>
+      </span>
+      <input type="text" class="form-control" id="emailInput" name="email" aria-describedby="emailHelp" formControlName="email" (blur)="updateView()">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div [ngClass]="{'error':password.invalid && (password.dirty || password.touched)}">
+      <label for="passwordInput"  class="form-label">Password</label>
+      <span *ngIf="password.invalid && (password.dirty || password.touched)">
+        <span class="ms-3 errMsg" *ngIf="password.hasError('required')">Required</span>
+        <span class="ms-3 errMsg" *ngIf="password.hasError('minlength')">Minimum Length is 6</span>
+      </span>
+      <input type="password" class="form-control" id="passwordInput" name="password" aria-describedby="passwordHelp" formControlName="password" [(ngModel)]="myPass" (blur)="checkPasswords()">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div [ngClass]="{'error':!matchPass}">
+      <label for="pass2Input" class="form-label">Confirm Password</label>
+      <span *ngIf="!matchPass">
+        <span class="ms-3 errMsg">Password doesn't match</span>
+      </span>
+      <input type="password" class="form-control" id="passwordInput" name="password" aria-describedby="passwordHelp" formControlName="password2" [(ngModel)]="myPass2" (blur)="checkPasswords()">
+
+    </div>
+  </div>
+
+
+</div>
+</ng-container>
