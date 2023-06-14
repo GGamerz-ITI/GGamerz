@@ -45,6 +45,11 @@ export class GameShowComponent implements OnInit {
         }
       })
     }
+    // abdelrahim
+    $('.reply-link').click(function(e) {
+      e.preventDefault();
+      $(this).next('.reply-container').toggleClass('show');
+    });
   }
   assignImages() {
     this.game.images.forEach((img: string) => {
