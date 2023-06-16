@@ -30,6 +30,15 @@ module.exports = {
       },
       images:{
         type:Sequelize.JSON
+      },
+      tags:{
+        type:Sequelize.JSON
+      },
+      types:{
+        type:Sequelize.JSON
+      },
+      os:{
+        type:Sequelize.JSON
       }
     });
   },
