@@ -6,11 +6,11 @@ module.exports = ()=>{
         // Model attributes are defined here
           total: {
             allowNull: false,
-            type: Sequelize.DECIMAL 
+            type: DataTypes.DECIMAL 
           },
           status: {
             allowNull: false,
-            type: Sequelize.ENUM,
+            type: DataTypes.ENUM,
             values: ['accepted', 'pending', 'rejected'],
             defaultValue: 'pending',
           }
@@ -21,7 +21,12 @@ module.exports = ()=>{
         Order.belongsTo(models.Coupon);
 
         Order.belongsToMany(models.Game,{
-          foreignKey: 'orderId',
+          foreignKey: {
+            name: "orderId",
+            allowNull: false,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        },
           through: models.OrderGame
         });
 

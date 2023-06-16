@@ -27,6 +27,11 @@ module.exports = ()=>{
           type: DataTypes.STRING,
           allowNull: true
         },
+        points:{
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0
+        },
         role: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -72,18 +77,33 @@ module.exports = ()=>{
         });
 
         User.belongsToMany(models.Game,{
-          foreignKey: 'userId',
+          foreignKey: {
+            name: "userId",
+            allowNull: false,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+            },
           through: models.Cart
         });
     
         User.belongsToMany(models.User,{
-          foreignKey: 'userId',
+          foreignKey: {
+            name: "userId",
+            allowNull: false,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+            },
           as: 'followers', // people Who follow me
           through: models.Follower
         });
 
         User.belongsToMany(models.User,{
-          foreignKey: 'followerId',
+          foreignKey: {
+            name: "followerId",
+            allowNull: false,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+            },
           as: 'following', // People I follow them
           through: models.Follower
         });
