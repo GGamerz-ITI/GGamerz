@@ -18,14 +18,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       price:{
-        type: Sequelize.FLOAT
+        type: Sequelize.DECIMAL
       },
       tags:{
         type: Sequelize.JSON
 
       },
       dateSold:{
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
      });
   },
