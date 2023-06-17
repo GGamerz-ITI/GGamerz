@@ -37,6 +37,11 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: true
         },
+        points:{
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+        },
         role: {
           type: Sequelize.STRING,
           allowNull: false,
@@ -58,7 +63,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
-     */
+    */
      await queryInterface.dropTable('users');
   }
 };
