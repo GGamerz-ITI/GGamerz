@@ -17,6 +17,8 @@ export class GameShowComponent implements OnInit {
   user: any;
   cart: any[] = []
   images: GalleryItem[] = [];
+  buttonHidden = false;
+
 
   constructor(route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService) {
     this.gameID = route.snapshot.params["id"]
@@ -50,7 +52,34 @@ export class GameShowComponent implements OnInit {
       e.preventDefault();
       $(this).next('.reply-container').toggleClass('show');
     });
+
+    $('.reply-submit-btn').click(function(e) {
+      e.preventDefault();
+      var replyText = $(this).siblings('form').find('textarea').val();
+      var newComment = $('<div class="comment"><p class="comment-text">' + replyText + '</p></div>');
+      $(this).closest('.comment').after(newComment);
+      $(this).closest('.reply-container').removeClass('show');
+    });
+
+    ////
   }
+  ///// abdelrahim
+  isFormVisible = false;
+  reviewText = '';
+  isReplyVisible = false;
+
+  showForm() {
+    this.isFormVisible = true;
+  }
+  showReply() {
+    this.isReplyVisible = true;
+  }
+
+  submitReview() {
+    // Here you can implement the logic to submit the review
+    console.log(this.reviewText);
+  }
+  ////
   assignImages() {
     this.game.images.forEach((img: string) => {
       this.images.push(new ImageItem({ src: img, thumb: img })

@@ -80,7 +80,7 @@ body {
     justify-content: center;
 }
 
-/*  */
+/* abdelrahim */
 .comment-container {
   border: 1px solid #ddd;
   padding: 10px;
@@ -119,6 +119,13 @@ body {
   margin-right: 10px;
 }
 
+.reply-submit-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-top: 10px;
+}
+
 @media (max-width: 767px) {
   .reply-container form {
     flex-direction: column;
@@ -127,5 +134,10 @@ body {
   .reply-container textarea {
     margin-right: 0;
     margin-bottom: 10px;
+  }
+
+  .reply-submit-btn {
+    position: static;
+    margin-top: 10px;
   }
 }
