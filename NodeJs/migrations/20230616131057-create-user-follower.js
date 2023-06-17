@@ -7,7 +7,7 @@ module.exports = {
      * Add altering commands here.
     */
 
-     await queryInterface.createTable('users-followers', { 
+     await queryInterface.createTable('followers', { 
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -41,7 +41,7 @@ module.exports = {
     /**
      * Add reverting commands here.
     */
-    await queryInterface.dropTable('users-followers');
+    await queryInterface.dropTable('followers');
 
   }
 };
