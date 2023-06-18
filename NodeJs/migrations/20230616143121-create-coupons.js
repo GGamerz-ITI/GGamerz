@@ -6,7 +6,7 @@ module.exports = {
     /**
      * Add altering commands here.
     */
-    await queryInterface.createTable('coupons', { 
+    await queryInterface.createTable('Coupons', { 
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,6 +24,14 @@ module.exports = {
       expDate:{
         allowNull: true,
         type: Sequelize.DATE
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
      });
     
@@ -33,7 +41,7 @@ module.exports = {
     /**
      * Add reverting commands here.
      */
-     await queryInterface.dropTable('coupons');
+     await queryInterface.dropTable('Coupons');
 
   }
 };

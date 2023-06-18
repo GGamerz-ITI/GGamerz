@@ -13,7 +13,7 @@ app.use(cors());
 
 // Connecting to Database
 const connectDB = require(path.join(__dirname, "./db"));
-let sequelize = connectDB();
+connectDB();
 
 // Required For Routers
 const UserRouter = require(path.join(__dirname ,"./routers/UserRouter"));
