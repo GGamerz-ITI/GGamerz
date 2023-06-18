@@ -9,7 +9,7 @@ module.exports = () => {
         },
         price: {
             allowNull: false,
-            type: DataTypes.FLOAT
+            type: DataTypes.DECIMAL
         },
         releaseDate: {
             type: DataTypes.DATE,
