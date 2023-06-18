@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
-const User = require("../models/User");
+const path = require("path");
+const User = require(path.join(__dirname,"../models/User.js"))
+const models = require(path.join(__dirname ,"../models"));
 const { Op } = require("sequelize");
 require("dotenv").config({ path: __dirname + "/.env" });
 
@@ -72,60 +74,42 @@ const createUser = async (req, res) => {
     const { name, username, email, password, discord } = req.body;
 
     // Hash the password
-    // const saltRounds = 10;
-    // const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     let myuser = {
       name,
       username,
       email: email.toLowerCase(),
-      password,
-      discord: discord || null,
+      password: hashedPassword,
+      discord: discord.toLowerCase() || null,
     };
 
-    console.log(myuser)
     // Validate Data
-    // const { error } = validateUser(myuser);
-    // if (error) {
-    //   console.log("validation error")
-    //   return res.status(400).json({ message: error.details });
-    // }
+    const { error } = validateUser(myuser);
+    if (error) {
+      console.log("validation error")
+      return res.status(400).json({ message: error.details });
+    }
 
 
     // Save User
     try {
-      const newUser = await User.create({
-        name: 'ShehabHossam',
-        username: 'Shebo',
-        email: 'shehab@gmail.com',
-        password: '12345678',
-        discord: 'shehab@discord.com'
-      });
+      const newUser = await models.User.create(myuser);
       res.status(200).json(newUser);
       return;
     } catch (err) {
-      console.log(err)
-      res.status(409).json({ message: "Email Already Registered" });
-      return;
+      if(err.errors[0].message == 'email must be unique')
+      {
+        return res.status(409).json({ message: "Email Already Registered" });
+      } else{
+        console.log("else error")
+        return res.status(400).json({ message: err.errors[0].message})
+      }
     }
-    // const user = new User({
-    //   name: req.body.name,
-    //   username: req.body.username,
-    //   email: req.body.email.toLowerCase(),
-    //   password: hashedPassword,
-    //   // token: token  // token
-    // });
 
-    // try {
-    //   const newUser = await user.save();
-    //   res.status(201).json(newUser);
-    //   return;
-    // } catch (err) {
-    //   res.status(409).json({ message: "Email Already Registered" });
-    //   return;
-    // }
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: err.errors[0].message});
   }
 };
 
@@ -262,7 +246,8 @@ const validateUser = (data) => {
     name: Joi.string().required(),
     username: Joi.string().required(),
     email: Joi.string().email().required(),
-    hashedPassword: Joi.required(),
+    password: Joi.required(),
+    discord: Joi.string(),
   });
 
   return userSchema.validate(data);

@@ -7,7 +7,7 @@ module.exports = {
      * Add altering commands here.
      *
      * Example: */
-     await queryInterface.createTable('revenue', { 
+     await queryInterface.createTable('Revenues', { 
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -26,6 +26,14 @@ module.exports = {
       },
       dateSold:{
         type: Sequelize.DATE
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
      });
   },
@@ -34,7 +42,7 @@ module.exports = {
     /**
      * Add reverting commands here.
      **/
-    await queryInterface.dropTable('revenue');
+    await queryInterface.dropTable('Revenues');
      
   }
 };

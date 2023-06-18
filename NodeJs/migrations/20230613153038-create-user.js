@@ -6,7 +6,7 @@ module.exports = {
     /**
      * Add altering commands here.
      */
-      await queryInterface.createTable('users', { 
+      await queryInterface.createTable('Users', { 
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -28,7 +28,7 @@ module.exports = {
         },
         emailVerifiedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: true
         },
         password: {
           type: Sequelize.STRING,
@@ -57,6 +57,14 @@ module.exports = {
           allowNull: false,
           defaultValue: false,
         },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        }
       });
 
   },
@@ -65,6 +73,6 @@ module.exports = {
     /**
      * Add reverting commands here.
     */
-     await queryInterface.dropTable('users');
+     await queryInterface.dropTable('Users');
   }
 };

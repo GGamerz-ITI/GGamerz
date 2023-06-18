@@ -36,7 +36,7 @@ module.exports = () => {
     }, {});
     Game.associate = function (models) {
         
-        Game.hasMany(models.User, {
+        Game.belongsToMany(models.User, {
             foreignKey: {
                 name: 'gameId',
                 allowNull: false,
@@ -54,7 +54,7 @@ module.exports = () => {
                 onUpdate: 'CASCADE'
             },
         });
-        Game.hasMany(models.Order, {
+        Game.belongsToMany(models.Order, {
             foreignKey: {
                 name: 'gameId',
                 allowNull: false,

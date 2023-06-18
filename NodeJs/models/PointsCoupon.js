@@ -8,7 +8,7 @@ module.exports = ()=>{
             allowNull: false,
             type: DataTypes.INTEGER 
           }
-      }, {tableName: 'Points-coupons'});
+      }, {tableName: 'points-coupons'});
       PointsCoupon.associate = function(models) {
         // associations can be defined here
         PointsCoupon.belongsTo(models.Coupon);
