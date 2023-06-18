@@ -17,7 +17,8 @@ module.exports = ()=>{
           allowNull: false
         },
         emailVerifiedAt: {
-          type: DataTypes.DATE
+          type: DataTypes.DATE,
+          allowNull: false
         },
         password: {
           type: DataTypes.STRING,

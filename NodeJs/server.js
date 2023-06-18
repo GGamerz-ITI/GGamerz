@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
+const { Sequelize } = require('sequelize');
 
 const app = express();
 
@@ -12,5 +13,17 @@ app.use(cors());
 
 // Connecting to Database
 const connectDB = require(path.join(__dirname, "./db"));
-connectDB();
+let sequelize = connectDB();
 
+// Required For Routers
+const UserRouter = require(path.join(__dirname ,"./routers/UserRouter"));
+
+// Routers
+app.use('/api/users',UserRouter);
+
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
