@@ -9,6 +9,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
+// Required For Routers
+const UserRouter = require(path.join(__dirname ,"./routers/UserRouter"));
+
+// Routers
+app.use('/api/users',UserRouter);
 
 // Connecting to Database
 const connectDB = require(path.join(__dirname, "./db"));
