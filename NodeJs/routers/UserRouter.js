@@ -22,6 +22,6 @@ router.post("/ban", userController.banUser);
 router.post("/unban", userController.unBanUser);
 
 // Cart
-router.put("/cart/:id", cartController.updateUserCart);
+// router.put("/cart/:id", cartController.updateUserCart);
 
 module.exports = router;

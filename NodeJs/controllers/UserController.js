@@ -1,10 +1,8 @@
-const User = require("../models/User"); // import the User model
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
-const models = require("../models");
+const User = require("../models/User");
 const { Op } = require("sequelize");
-
 require("dotenv").config({ path: __dirname + "/.env" });
 
 // login
@@ -74,27 +72,35 @@ const createUser = async (req, res) => {
     const { name, username, email, password, discord } = req.body;
 
     // Hash the password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // const saltRounds = 10;
+    // const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     let myuser = {
       name,
       username,
       email: email.toLowerCase(),
-      hashedPassword,
+      password,
       discord: discord || null,
     };
 
+    console.log(myuser)
     // Validate Data
-    const { error } = validateUser(myuser);
-    if (error) {
-      return res.status(400).json({ message: error.details });
-    }
+    // const { error } = validateUser(myuser);
+    // if (error) {
+    //   console.log("validation error")
+    //   return res.status(400).json({ message: error.details });
+    // }
 
 
     // Save User
     try {
-      const newUser = await models.User.create(myuser);
+      const newUser = await User.create({
+        name: 'ShehabHossam',
+        username: 'Shebo',
+        email: 'shehab@gmail.com',
+        password: '12345678',
+        discord: 'shehab@discord.com'
+      });
       res.status(200).json(newUser);
       return;
     } catch (err) {
