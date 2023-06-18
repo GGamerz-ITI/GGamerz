@@ -7,7 +7,7 @@ module.exports = {
      * Add altering commands here.
     */
 
-     await queryInterface.createTable('followers', { 
+     await queryInterface.createTable('Followers', { 
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
-            tableName: 'users',
+            tableName: 'Users',
           },
           key: 'id'
         },
@@ -28,12 +28,20 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
         references: {
           model: {
-            tableName: 'users',
+            tableName: 'Users',
           },
           key: 'id'
         },
         allowNull: false
-      },  
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }  
     });
   },
 
@@ -41,7 +49,7 @@ module.exports = {
     /**
      * Add reverting commands here.
     */
-    await queryInterface.dropTable('followers');
+    await queryInterface.dropTable('Followers');
 
   }
 };

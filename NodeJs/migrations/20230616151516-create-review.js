@@ -7,7 +7,7 @@ module.exports = {
      * Add altering commands here.
      *
      * Example:  */
-     await queryInterface.createTable('reviews', { 
+     await queryInterface.createTable('Reviews', { 
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'users',
+            tableName: 'Users',
           },
           key: 'id'
         }
@@ -29,13 +29,21 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'games',
+            tableName: 'Games',
           },
           key: 'id'
         }
       },
       content:{
         type:Sequelize.STRING
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
       });
    
@@ -45,7 +53,7 @@ module.exports = {
     /**
      * Add reverting commands here.
      */
-    await queryInterface.dropTable('reviews');
+    await queryInterface.dropTable('Reviews');
      
   }
 };

@@ -6,7 +6,7 @@ module.exports = {
     /**
      * Add altering commands here.
     */
-    await queryInterface.createTable('points-coupons', { 
+    await queryInterface.createTable('Points-coupons', { 
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -22,11 +22,19 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'coupons',
+            tableName: 'Coupons',
           },
           key: 'id'
         },
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
      });
   },
 
@@ -34,6 +42,6 @@ module.exports = {
     /**
      * Add reverting commands here.
      */
-     await queryInterface.dropTable('points-coupons');
+     await queryInterface.dropTable('Points-coupons');
   }
 };

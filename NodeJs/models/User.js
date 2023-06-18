@@ -1,7 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-
-module.exports = ()=>{
+module.exports = (sequelize, DataTypes)=>{
     const User = sequelize.define('User', {
         // Model attributes are defined here
         name: {
@@ -18,7 +15,7 @@ module.exports = ()=>{
         },
         emailVerifiedAt: {
           type: DataTypes.DATE,
-          allowNull: false
+          allowNull: true
         },
         password: {
           type: DataTypes.STRING,
