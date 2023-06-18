@@ -52,6 +52,14 @@ module.exports = {
           type: Sequelize.STRING,
           defaultValue : "rgba(112, 192, 219, 0.527)",
         },
+        character: {
+          type: Sequelize.STRING,
+          defaultValue : "https://res.cloudinary.com/ds5puha49/image/upload/v1687129084/PkBYcGy_jz4ta4.png",
+        },
+        level: {
+          type: Sequelize.STRING,
+          defaultValue : "https://res.cloudinary.com/ds5puha49/image/upload/v1687129775/6009637_ow81gz.png",
+        },
         isBanned: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
