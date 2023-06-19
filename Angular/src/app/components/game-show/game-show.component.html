@@ -97,48 +97,9 @@
                 <p class="text-primary text-center">10,000 users</p>
             </div>
         </div>
-        <!-- abdelrahim -->
-        <div class="container">
-          <div class="row">
-            <div class="col d-flex justify-content-end">
-              <button class="btn btn-dark ml-auto" (click)="showForm()">WRITE A REVIEW</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <form id="review-form" [hidden]="!isFormVisible">
-                <label for="review-text">Review:</label>
-                <textarea id="review-text" name="review-text" class="form-control w-50" placeholder="Write a review..." [(ngModel)]="reviewText"></textarea>
-                <button class="btn btn-dark rounded mt-3" type="submit" (click)="submitReview()">Submit Review</button>
-              </form>
-            </div>
-          </div>
-        </div>
-        <!--  -->
-        <div class="container mt-3 ">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="comment-container rounded">
-                <div class="comment">
-                  <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <div class="d-flex justify-content-center align-items-center">
-                    <button class="btn btn-dark reply-link" (click)="showReply(); buttonHidden = true" [hidden]="buttonHidden">Reply</button>
-                  </div>
-
-
-                      <div class="col">
-                    <form  [hidden]="!isReplyVisible">
-                        <textarea class="form-control w-50" placeholder="Write a reply..."></textarea>
-                        <button class="btn btn-dark  btn-block mt-3 w-25">Submit</button>
-                    </form>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--  -->
+        <div class="col-left bg-dark shadow-lg rounded ml-5">
+        <app-feedback ></app-feedback>
+      </div>
     </div>
 </body>
 <app-footer></app-footer>
