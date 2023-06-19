@@ -17,8 +17,10 @@ connectDB();
 
 // Required For Routers
 const UserRouter = require(path.join(__dirname ,"./routers/UserRouter"));
+const ReviewRouter = require(path.join(__dirname ,"./routers/ReviewRouter"));
 
 // Routers
+app.use('/api/reviews',ReviewRouter);
 app.use('/api/users',UserRouter);
 
 

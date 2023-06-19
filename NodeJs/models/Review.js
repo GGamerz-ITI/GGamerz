@@ -1,14 +1,11 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-
-module.exports = () => {
+module.exports = (sequelize, DataTypes)=>{
     const Review = sequelize.define('Review', {
+        // Model attributes are defined here
         content: {
             type: DataTypes.STRING,
             allowNull: false
         },
-    }, {});
-
+      }, {});
     Review.associate = function (models) {
         
         Review.hasMany(models.Comment, {
