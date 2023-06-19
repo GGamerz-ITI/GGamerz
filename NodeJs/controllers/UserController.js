@@ -148,6 +148,7 @@ const updateUser = async (req, res) => {
       user.discord = req.body.discord || user.discord;
       user.preferences = req.body.preferences || user.preferences;
       user.bgColor = req.body.bgColor || user.bgColor;
+      user.character = req.body.character || user.character;
 
       const updatedUser = await user.save();
 

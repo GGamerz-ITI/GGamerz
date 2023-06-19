@@ -18,10 +18,17 @@ connectDB();
 // Required For Routers
 const UserRouter = require(path.join(__dirname ,"./routers/UserRouter"));
 const ProductRouter = require(path.join(__dirname ,"./routers/ProductRouter"));
+const CartRouter = require(path.join(__dirname ,"./routers/CartRouter"));
+const CouponRouter = require(path.join(__dirname ,"./routers/CouponRouter"));
 
 // Routers
 app.use('/api/users',UserRouter);
 app.use('/api/products',ProductRouter);
+
+// Routers
+app.use('/api/users',UserRouter);
+app.use('/api/cart',CartRouter);
+app.use('/api/coupons',CouponRouter);
 
 
 // Start the server
