@@ -142,7 +142,7 @@ const updateProduct=async (req, res) => {
   }
   const getProductById =async (req, res) => {
     try {
-      const product = await Product.findByPk(req.params.id);
+      const product = await models.Game.findByPk(req.params.id);
       if (!product) {
         return res.status(404).send("Product not found");
       }
