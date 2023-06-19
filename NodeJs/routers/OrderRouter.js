@@ -7,10 +7,8 @@ const OrderController = require(path.join(__dirname, "../controllers/OrderContro
 router.get('/', OrderController.getAllOrders);
 
 // Get order by ID
-// router.get('/:id', OrderController.getOrderById);
+router.get('/:id', OrderController.getOrderById);
 
-// Get orders by userID
-// router.get('/user/:userID', OrderController.getOrdersByUserId);
 
 // Create a new order
 router.post('/', OrderController.createOrder);

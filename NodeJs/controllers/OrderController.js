@@ -1,128 +1,4 @@
-// const path = require("path");
-// const models = require(path.join(__dirname, "../models"));
-// const { Op } = require("sequelize");
-// require("dotenv").config({ path: __dirname + "/.env" });
-
-// // Get all orders
-// const getAllOrders = async (req, res) => {
-//   try {
-//     const orders = await Order.findAll();
-//     res.json(orders);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// // Get order by ID
-// const getOrderById = async (req, res) => {
-//   try {
-//     const orderId = req.params.id;
-//     const order = await Order.findByPk(orderId);
-//     if (!order) {
-//       return res.status(404).json({ message: "Order not found" });
-//     }
-//     res.json(order);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// // Get all orders by userID
-// const getOrdersByUserID = async (req, res) => {
-//   try {
-//     const userID = req.params.userID;
-//     const orders = await Order.findAll({ where: { userID } });
-//     res.json(orders);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// // Create a new order
-// const createOrder = async (req, res) => {
-//   try {
-//     const data = req.body;
-//     const gameItems = data.gameItems;
-
-//     let total = 0;
-//     for (let i = 0; i < gameItems.length; i++) {
-//       total += gameItems[i].price;
-//     }
-
-//     const newOrder = await Order.create({
-//       gameItems: JSON.stringify(gameItems),
-//       status: 'pending',
-//       userID: data.userID,
-//       date: new Date(),
-//       numGames: gameItems.length,
-//       total: total,
-//     });
-
-//     res.status(200).json(newOrder);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// // Update order (status)
-// const updateOrder = async (req, res) => {
-//   try {
-//     const orderId = req.params.id;
-//     const newData = req.body;
-
-//     const order = await Order.findByPk(orderId);
-
-//     if (!order) {
-//       return res.status(404).json({ message: "Order not found" });
-//     }
-
-//     if (order.status === "accepted") {
-//       return res.status(400).json({ message: "Order has already been accepted and cannot be edited." });
-//     }
-
-//     if (order.status === "pending") {
-//       await Order.update(
-//         { status: newData.status },
-//         { where: { id: orderId } }
-//       );
-//       return res.status(200).json({ message: "Order updated successfully" });
-//     }
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// // Delete order
-// const deleteOrder = async (req, res) => {
-//   try {
-//     const orderId = req.params.id;
-//     const order = await Order.findByPk(orderId);
-
-//     if (!order) {
-//       return res.status(404).json({ message: "Order not found" });
-//     }
-
-//     if (order.status === 'accepted') {
-//       return res.json("This order has already been accepted and cannot be deleted.");
-//     }
-
-//     await Order.destroy({ where: { id: orderId } });
-
-//     res.json(order.status || "Not Found");
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// module.exports = {
-//   getAllOrders,
-//   getOrdersByUserID,
-//   createOrder,
-//   updateOrder,
-//   deleteOrder,
-//   getOrderById,
-// };
-const { Order, User, Coupon, Game, OrderGame } = require('../models');
+const { Order, User, Coupon, Game, OrderGame,Cart } = require('../models');
 
 // Get all orders
 async function getAllOrders(req, res) {
@@ -151,56 +27,77 @@ async function getOrderById(req, res) {
   }
 }
 
-
 // Create a new order
 async function createOrder(req, res) {
-  const { total, status, userId, couponId, gameItems } = req.body;
-
+  // console.log(req.body)
+  const { total, userId, couponId} = req.body;
+  // console.log(total, userId, couponId)
   try {
-    const order = await Order.create({
-      total,
-      status,
-      userId,
-      couponId,
+    const createdOrder = await Order.create({
+      total:total,
+      userId: userId,
+      couponId: couponId,
+    });
+    const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: Game,
+          through:Cart
+        }
+      ]
     });
 
-    await order.addGames(gameItems);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    const createdOrder = await Order.findByPk(order.id, {
-      include: [User, Coupon, Game],
+    const cart = user.Games; // Assuming the association accessor is named "Games"
+    const itemIds = cart.map(game => game.dataValues.id);
+    if (!cart || cart.length === 0) {
+      return res.status(404).json({ message: "Cart is empty" });
+    }
+    const orderGames = itemIds.map((itemId) => {
+      return {
+        orderId: createdOrder.id,
+        gameId: itemId,
+      };
     });
 
-    res.status(201).json(createdOrder);
+    await OrderGame.bulkCreate(orderGames);
+
+    res.json(createdOrder);
+    
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
 // Update an order by ID
 async function updateOrder(req, res) {
-  const orderId = req.params.id;
-  const { total, status, userId, couponId } = req.body;
-
   try {
+    const orderId = req.params.id;
+    const { status } = req.body;
     const order = await Order.findByPk(orderId);
-    if (order) {
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    if (order.status === "accepted") {
+      return res.status(400).json({ message: "Order has already been accepted and cannot be edited." });
+    }
+
+    if (order.status === "pending") {
       await order.update({
-        total,
-        status,
-        userId,
-        couponId,
+        status: status
       });
 
-      const updatedOrder = await Order.findByPk(order.id, {
-        include: [User, Coupon, Game],
-      });
-
-      res.json(updatedOrder);
-    } else {
-      res.status(404).json({ error: 'Order not found' });
+      return res.status(200).json({ message: "Order updated successfully" });
     }
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 }
 
@@ -211,8 +108,14 @@ async function deleteOrder(req, res) {
   try {
     const order = await Order.findByPk(orderId);
     if (order) {
+      await OrderGame.destroy({
+        where: {
+          orderId: orderId
+        }
+      });
+
       await order.destroy();
-      res.sendStatus(204);
+      res.json({ message: 'Order deleted successfully' });
     } else {
       res.status(404).json({ error: 'Order not found' });
     }
@@ -221,6 +124,7 @@ async function deleteOrder(req, res) {
   }
 }
 
+
 module.exports = {
   getAllOrders,
   getOrderById,
@@ -228,4 +132,3 @@ module.exports = {
   updateOrder,
   deleteOrder,
 };
-

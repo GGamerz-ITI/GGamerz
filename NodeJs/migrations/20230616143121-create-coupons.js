@@ -21,6 +21,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DECIMAL 
       },
+      points: {
+        type: Sequelize.INTEGER 
+      },
       expDate:{
         allowNull: true,
         type: Sequelize.DATE
