@@ -52,6 +52,10 @@ module.exports = (sequelize, DataTypes)=>{
           allowNull: false,
           defaultValue: false,
         },
+        preferences:{
+          type: DataTypes.JSON,
+          allowNull: true
+        }
       }, {});
       User.associate = function(models) {
         // associations can be defined here
