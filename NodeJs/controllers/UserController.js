@@ -13,7 +13,7 @@ const login = async (req, res) => {
     const userEmail = req.body.email.toLowerCase();
     const userPassword = req.body.password;
 
-    const user = await User.findOne({ email: userEmail });
+    const user = await models.User.findOne({ where: { email: userEmail } });
     // Check if user is available ?
     if (!user) {
       res.status(404).json({ message: "Email not registered" });
@@ -50,7 +50,7 @@ const login = async (req, res) => {
 // get all users
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await models.User.findAll();
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -60,10 +60,14 @@ const getAllUsers = async (req, res) => {
 // get a single user by ID
 const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await  models.User.findOne({ where: { id: req.params.id } });
+    if(!user)
+    {
+      return res.status(404).json({ message: "User not found" });
+    }
     res.json(user);
   } catch (err) {
-    res.status(404).json({ message: "User not found" });
+    res.status(500).json({ message: err.message });
     return;
   }
 };
@@ -165,15 +169,17 @@ const updateUser = async (req, res) => {
 
 // delete a user by ID
 const deleteUser = async (req, res) => {
-  if (!mongoose.isValidObjectId(req.body.id)) {
-    res.status(400).json({ message: "Invalid user ID" });
+
+  const userId = parseInt(req.params.id);
+  if (isNaN(userId)) {
+    res.status(400).json({ message: 'Invalid user ID' });
     return;
   }
 
   try {
-    const deleteUser = await User.deleteOne({ _id: req.body.id });
+    const deleteUser = await models.User.destroy({ where: {id: userId}});
     if (deleteUser) {
-      res.json({ message: "User deleted" });
+      res.status(200).json({ message: "User Deleted" });
       return;
     } else {
       res.status(400).json({ message: "Failed to delete user" });
