@@ -11,51 +11,50 @@ require("dotenv").config({ path: __dirname + "/.env" });
 // get all game reviews
 const getAllReviewcomments = async (req, res) => {
   try {
-    const game = await  models.Game.findOne({ where: { id: req.params.id } });
-    if(!game)
+    const review = await  models.Review.findOne({ where: { id: req.params.id } });
+    if(!review)
     {
-      return res.status(404).json({ message: "game not found" });
+      return res.status(404).json({ message: "review not found" });
     }
-    const reviews = await models.Review.findAll({ where: { gameId: game.id } });
-    if(!reviews)
+    const comments = await models.Comment.findAll({ where: { reviewId: review.id } });
+    if(!comments)
     {
-      return res.status(404).json({ message: " no reviews yet" });
+      return res.status(404).json({ message: " no comments yet" });
     }
-    console.log(reviews);
-    res.json(reviews);
+    // console.log(comments);
+    res.json(comments);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-// get a single user by ID
+// get a single comment by ID
 const getCommentById = async (req, res) => {
   try {
-    const review = await  models.Review.findOne({ where: { id: req.params.id } });
-    if(!review)
+    const comment = await  models.Comment.findOne({ where: { id: req.params.id } });
+    if(!comment)
     {
-      return res.status(404).json({ message: "Review not found" });
+      return res.status(404).json({ message: "comment not found" });
     }
-    res.json(review);
+    res.json(comment);
   } catch (err) {
     res.status(500).json({ message: err.message });
     return;
   }
 };
 
-// create a new review
+// create a new comment
 const createComment = async (req, res) => {
   try {
-    // const {userId,gameId,content } = req.body;
-    let newreview = {
+    let newcomment = {
         content: req.body.content,
-        gameId: req.body.gameId,
+        reviewId: req.body.reviewId,
         userId: req.body.userId
     };
-    // Save review
+    // Save comment
     try {
-      const newrevieww = await models.Review.create(newreview);
-      res.status(200).json(newrevieww);
+      const newcommentt = await models.Comment.create(newcomment);
+      res.status(200).json(newcommentt);
       return;
     } catch (err) {
         return res.status(400).json({ message: err.message})
@@ -66,18 +65,18 @@ const createComment = async (req, res) => {
 };
 
 
-// delete a review by ID
+// delete a comment by ID
 const deleteComment = async (req, res) => {
 
-  const reviewId = parseInt(req.params.id);
-  if (isNaN(reviewId)) {
-    res.status(400).json({ message: 'Invalid review Id' });
+  const CommentId = parseInt(req.params.id);
+  if (isNaN(CommentId)) {
+    res.status(400).json({ message: 'Invalid Comment Id' });
     return;
   }
 
   try {
-    const deleteReview = await models.User.destroy({ where: {id: reviewId}});
-    if (deleteReview) {
+    const deletedComment = await models.Comment.destroy({ where: {id: CommentId}});
+    if (!deletedComment) {
       res.status(200).json({ message: "review Deleted" });
       return;
     } else {
@@ -89,9 +88,6 @@ const deleteComment = async (req, res) => {
     return;
   }
 };
-
-
-
 
 
 

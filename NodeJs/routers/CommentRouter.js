@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 
-const reviewController = require(path.join(__dirname, "../controllers/ReviewController"));
+const comentController = require(path.join(__dirname, "../controllers/CommentController"));
 
-router.get("/comment/:id", reviewController.getAllReviewcomments);
-router.get("/:id", reviewController.getCommentById);
-router.delete("/:id", reviewController.createComment);
-router.post("/create", reviewController.deleteComment);
+router.get("/review/:id", comentController.getAllReviewcomments);
+router.get("/:id", comentController.getCommentById);
+router.delete("/:id", comentController.createComment);
+router.post("/create", comentController.deleteComment);
 
 module.exports = router;
