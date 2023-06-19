@@ -1,10 +1,7 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const path = require("path");
-const User = require(path.join(__dirname, "../models/User.js"));
+const Game = require(path.join(__dirname, "../models/Game.js"));
 const models = require(path.join(__dirname, "../models"));
-const { Op } = require("sequelize");
 const { uploadProduct } = require("../MiddleWares/MulterUpload");
 require("dotenv").config({ path: __dirname + "/.env" });
 
@@ -14,11 +11,17 @@ const createProduct = async (req, res) => {
       if (err) {
         return res.status(500).send("Error uploading file");
       } else {
-        const { name, price, releaseDate, description, tags, types, os } =
-          req.body;
-        //   if(req.files){
-        //     console.log(req.files);
-        //   }
+        const {
+          name,
+          price,
+          releaseDate,
+          description,
+          tags,
+          types,
+          os,
+          points,
+        } = req.body;
+
         let myProduct = {
           name,
           price,
@@ -27,6 +30,7 @@ const createProduct = async (req, res) => {
           tags,
           types,
           os,
+          points,
         };
 
         myProduct.images = [];
@@ -48,13 +52,10 @@ const createProduct = async (req, res) => {
         }
 
         const newProduct = await models.Game.create(myProduct);
-        console.log(newProduct);
         res.status(200).json(newProduct);
-        //   return;
       }
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).send("Server Error, Failed to create the product !");
   }
 };

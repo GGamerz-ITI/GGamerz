@@ -30,6 +30,9 @@ module.exports = (sequelize, DataTypes)=>{
         },
         os: {
             type: DataTypes.JSON
+        },
+        points: {
+            type: DataTypes.DECIMAL
         }
     }, {});
     Game.associate = function (models) {
