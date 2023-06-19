@@ -1,7 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-
-module.exports = () => {
+module.exports = (sequelize, DataTypes)=>{
     const OrderGame = sequelize.define('OrderGame', {
         orderId: {
             type: DataTypes.INTEGER,
