@@ -1,0 +1,62 @@
+.comment-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.comment {
+  position: relative;
+}
+
+.comment-text {
+  margin-bottom: 10px;
+}
+
+.reply-link {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.reply-container {
+  display: none;
+  margin-top: 10px;
+}
+
+.reply-container.show {
+  display: block;
+}
+
+.reply-container form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.reply-container textarea {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.reply-submit-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-top: 10px;
+}
+.btn{
+  background-color: #414758e1;
+}
+@media (max-width: 767px) {
+  .reply-container form {
+    flex-direction: column;
+  }
+
+  .reply-container textarea {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .reply-submit-btn {
+    position: static;
+    margin-top: 10px;
+  }
+}

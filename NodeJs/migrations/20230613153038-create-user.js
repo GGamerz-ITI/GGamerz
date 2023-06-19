@@ -6,7 +6,7 @@ module.exports = {
     /**
      * Add altering commands here.
      */
-      await queryInterface.createTable('users', { 
+      await queryInterface.createTable('Users', { 
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -27,7 +27,8 @@ module.exports = {
           unique: true
         },
         emailVerifiedAt: {
-          type: Sequelize.DATE
+          type: Sequelize.DATE,
+          allowNull: true
         },
         password: {
           type: Sequelize.STRING,
@@ -36,6 +37,11 @@ module.exports = {
         discord: {
           type: Sequelize.STRING,
           allowNull: true
+        },
+        points:{
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
         },
         role: {
           type: Sequelize.STRING,
@@ -46,11 +52,27 @@ module.exports = {
           type: Sequelize.STRING,
           defaultValue : "rgba(112, 192, 219, 0.527)",
         },
+        character: {
+          type: Sequelize.STRING,
+          defaultValue : "https://res.cloudinary.com/ds5puha49/image/upload/v1687129084/PkBYcGy_jz4ta4.png",
+        },
+        level: {
+          type: Sequelize.STRING,
+          defaultValue : "https://res.cloudinary.com/ds5puha49/image/upload/v1687129775/6009637_ow81gz.png",
+        },
         isBanned: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
           defaultValue: false,
         },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        }
       });
 
   },
@@ -58,7 +80,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
-     */
-     await queryInterface.dropTable('users');
+    */
+     await queryInterface.dropTable('Users');
   }
 };

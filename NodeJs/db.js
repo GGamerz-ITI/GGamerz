@@ -1,5 +1,8 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config({path: __dirname + '/.env'})
+const express = require('express');
+
+const app = express();
 
 const connectDB = async ()=>{
     const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
@@ -11,6 +14,7 @@ const connectDB = async ()=>{
     try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
+        return sequelize;
         } catch (error) {
         console.error('Unable to connect to the database:', error);
       }
