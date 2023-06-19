@@ -4,6 +4,7 @@ const Game = require(path.join(__dirname, "../models/Game.js"));
 const models = require(path.join(__dirname, "../models"));
 const { uploadProduct } = require("../MiddleWares/MulterUpload");
 require("dotenv").config({ path: __dirname + "/.env" });
+const cloudinary = require('cloudinary').v2;
 
 const getAllProducts =async (req, res) => {
     try {
@@ -13,8 +14,7 @@ const getAllProducts =async (req, res) => {
       console.error("Error retrieving products:", error);
       res.status(500).json({ error: "Failed to retrieve products" });
     }
-  }
-
+  };
 const createProduct = async (req, res) => {
   try {
     await uploadProduct(req, res, async function (err) {
@@ -60,8 +60,7 @@ const createProduct = async (req, res) => {
   } catch (err) {
     return res.status(500).send("Server Error, Failed to create the product !");
   }
-};
-
+  };
 const updateProduct=async (req, res) => {
   
     try {
@@ -139,7 +138,7 @@ const updateProduct=async (req, res) => {
       console.error(error);
       res.status(500).send("An error occurred while updating the product.");
     }
-  }
+  };
   const getProductById =async (req, res) => {
     try {
       const product = await models.Game.findByPk(req.params.id);
@@ -151,11 +150,53 @@ const updateProduct=async (req, res) => {
       console.error(error);
       res.status(500).send("An error occurred while retrieving the product");
     }
-  }
+  };
+  const deleteProduct = async (req, res) => {
+    try {
+      const product = await models.Game.findByPk(req.params.id);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+  
+      // Delete the images from Cloudinary
+      if (product.images && product.images.length > 0) {
+        const publicIds = product.images.map((image) => {
+          const filename = image.split("/").pop();
+          return `games/${filename.split(".")[0]}`;
+        });
+  
+        await cloudinary.api.delete_resources(publicIds);
+      }
+  
+      // Delete the character from Cloudinary
+      if (product.character) {
+        const publicId = product.character.split("/").pop().split(".")[0];
+        await cloudinary.api.delete_resources(`characters/${publicId}`);
+      }
+      await models.Review.destroy({
+        where: {
+          userId: req.params.id,
+        },
+      });
+      // Delete the product from the database
+      await models.Game.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+  
+      res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("An error occurred while deleting the product.");
+    }
+  };
+  
 
 module.exports = {
   createProduct,
   getAllProducts,
   updateProduct,
   getProductById,
+  deleteProduct
 };

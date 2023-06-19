@@ -1,7 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+module.exports = (sequelize, DataTypes)=>{
 
-module.exports = () => {
     const Review = sequelize.define('Review', {
         content: {
             type: DataTypes.STRING,
