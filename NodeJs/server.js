@@ -21,6 +21,7 @@ const ReviewRouter = require(path.join(__dirname ,"./routers/ReviewRouter"));
 const CommentRouter = require(path.join(__dirname ,"./routers/CommentRouter"));
 const ProductRouter = require(path.join(__dirname ,"./routers/ProductRouter"));
 const UserStatsRouter = require(path.join(__dirname ,"./routers/UserStatsRouter"));
+const FollowRouter = require(path.join(__dirname ,"./routers/FollowRouter"));
 const CartRouter = require(path.join(__dirname ,"./routers/CartRouter"));
 const OrderRouter = require(path.join(__dirname ,"./routers/OrderRouter"));
 const CouponRouter = require(path.join(__dirname ,"./routers/CouponRouter"));
