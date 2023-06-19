@@ -4,7 +4,7 @@ const path = require("path");
 
 const productController = require(path.join(__dirname, "../controllers/ProductController"));
 
-// router.get("/", productController.getAllProducts);
+router.get("/", productController.getAllProducts);
 router.post("/create", productController.createProduct);
 // router.get("/:id", productController.getProductById);
 // router.put("/:id", productController.updateProduct);

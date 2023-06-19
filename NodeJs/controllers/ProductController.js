@@ -5,22 +5,24 @@ const models = require(path.join(__dirname, "../models"));
 const { uploadProduct } = require("../MiddleWares/MulterUpload");
 require("dotenv").config({ path: __dirname + "/.env" });
 
+const getAllProducts =async (req, res) => {
+    try {
+      const products = await models.Game.findAll();
+      res.json(products);
+    } catch (error) {
+      console.error("Error retrieving products:", error);
+      res.status(500).json({ error: "Failed to retrieve products" });
+    }
+  }
+
 const createProduct = async (req, res) => {
   try {
     await uploadProduct(req, res, async function (err) {
       if (err) {
         return res.status(500).send("Error uploading file");
       } else {
-        const {
-          name,
-          price,
-          releaseDate,
-          description,
-          tags,
-          types,
-          os,
-          points,
-        } = req.body;
+        const { name, price, releaseDate, description, tags, types, os, points } =
+          req.body;
 
         let myProduct = {
           name,
@@ -61,4 +63,5 @@ const createProduct = async (req, res) => {
 };
 module.exports = {
   createProduct,
+  getAllProducts,
 };
