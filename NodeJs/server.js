@@ -18,10 +18,12 @@ connectDB();
 // Required For Routers
 const UserRouter = require(path.join(__dirname ,"./routers/UserRouter"));
 const ReviewRouter = require(path.join(__dirname ,"./routers/ReviewRouter"));
+const CartRouter = require(path.join(__dirname ,"./routers/CartRouter"));
 
 // Routers
 app.use('/api/reviews',ReviewRouter);
 app.use('/api/users',UserRouter);
+app.use('/api/cart',CartRouter);
 
 
 // Start the server

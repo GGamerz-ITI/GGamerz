@@ -26,7 +26,8 @@ export class ProfileComponent implements OnInit {
   inputs: any[] = []
   character = 'assets/images/Characters/PkBYcGy.png'
   bgImg = "url(" + this.character + ")"
-  
+  selectedImage:any
+
   constructor(private userService: UserService, private orderService: OrdersService,
     private cdr: ChangeDetectorRef, private userUpdateService: UserUpdateService) { }
 
@@ -48,7 +49,8 @@ export class ProfileComponent implements OnInit {
       "username": this.updatedName,
       "discord": this.updatedDiscord,
       "preferences": this.updatedPreferences,
-      "bgColor": this.bgcolor
+      "bgColor": this.bgcolor,
+      // "character":this.character
     }
     this.emitValue(updatedUser);
     this.userService.updateUser(this.user._id, updatedUser).subscribe({
@@ -140,8 +142,77 @@ export class ProfileComponent implements OnInit {
   }
   setDefault() {
     this.bgcolor = this.default
+    this.character = 'assets/images/Characters/PkBYcGy.png'
+    this.bgImg = "url(" + this.character + ")"
   }
   addInput() {
     this.inputs.push("")
   }
+  changePP(char: any) {
+    switch (char) {
+      case 1:
+        this.character = 'https://res.cloudinary.com/ds5puha49/image/upload/v1687129075/pubg_gibvff.png'
+        break;
+      case 2:
+        this.character = 'https://res.cloudinary.com/ds5puha49/image/upload/v1687129110/enoiz019r2t41_gdu6rq.png'
+        break;
+      case 3:
+        this.character = 'https://res.cloudinary.com/ds5puha49/image/upload/v1687129076/fa15ab68646f5cd1e5f259693bef1e98-transformed_i3eloo.png'
+        break;
+      case 4:
+        this.character = 'https://res.cloudinary.com/ds5puha49/image/upload/v1687129084/PkBYcGy_jz4ta4.png'
+        break;
+      case 5:
+        this.character = 'https://res.cloudinary.com/ds5puha49/image/upload/v1687129076/ValorantSkye_ac7wia.png'
+        break;
+    }
+    this.bgImg = "url(" + this.character + ")"
+    this.selectedImage = char;
+    //update user
+  }
+
+  // followers=[
+  //   {
+  //     username:"ahmed",
+  //     character:"assets/images/Characters/PkBYcGy.png",
+  //     level:"gladiator"
+  //   },
+  //   {
+  //     username:"samya",
+  //     character:"assets/images/Characters/enoiz019r2t41.png",
+  //     level:"slayer"
+  //   },
+  //   {
+  //     username:"koko",
+  //     character:"assets/images/Characters/pubg.png",
+  //     level:"knight"
+  //   }
+  // ]
+  // following=[
+  //   {
+  //     username:"ahmed",
+  //     character:"assets/images/Characters/PkBYcGy.png",
+  //     level:"gladiator"
+  //   },
+  //   {
+  //     username:"samya",
+  //     character:"assets/images/Characters/enoiz019r2t41.png",
+  //     level:"slayer"
+  //   },
+  //   {
+  //     username:"koko",
+  //     character:"assets/images/Characters/pubg.png",
+  //     level:"knight"
+  //   },
+  //   {
+  //     username:"samya",
+  //     character:"assets/images/Characters/enoiz019r2t41.png",
+  //     level:"slayer"
+  //   },
+  //   {
+  //     username:"koko",
+  //     character:"assets/images/Characters/pubg.png",
+  //     level:"knight"
+  //   }
+  // ]
 }

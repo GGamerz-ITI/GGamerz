@@ -1,11 +1,46 @@
 <app-navbar></app-navbar>
-<div  [style.backgroundImage.]="bgImg" class=" page-container d-flex">
+<div [style.backgroundImage.]="bgImg" class=" page-container d-flex">
     <div [style.background.]="bgcolor" class="profile-container shadow-lg rounded">
         <div class="header m-2 p-3 d-flex flex-row">
             <div class=" info d-flex flex-row">
                 <!-- profile pic -->
                 <div class="profile-pic rounded m-3">
                     <img [src]="character">
+                    <div class="pp">
+                        <i *ngIf="editMode" data-bs-toggle="modal" data-bs-target="#pp"
+                            class="fas cam text-light fa-camera fa-lg"></i>
+                    </div>
+                    <!-- profile picture change -->
+                    <div class="modal fade" id="pp" index="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header text-dark p-3">
+                                    <h5>Pick Your Fighter!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
+                                   
+                                    <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/enoiz019r2t41.png"
+                                        (click)="changePP(2)"
+                                        [ngClass]="{'selected img-thumbnail shadow-sm': selectedImage === 2}">
+                                    <img class=" m-2 w-25 newPP "
+                                        src="assets/images/thumbnails/fa15ab68646f5cd1e5f259693bef1e98-transformed.png"
+                                        (click)="changePP(3)"
+                                        [ngClass]="{'selected img-thumbnail shadow-sm' : selectedImage === 3}">
+                                    <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/PkBYcGy.png"
+                                        (click)="changePP(4)"
+                                        [ngClass]="{'selected img-thumbnail shadow-sm': selectedImage === 4}">
+                                    <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/ValorantSkye.png"
+                                        (click)="changePP(5)"
+                                        [ngClass]="{'selected img-thumbnail shadow-sm': selectedImage === 5}">
+                                        <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/pubg.png"
+                                        (click)="changePP(1)"
+                                        [ngClass]="{'selected img-thumbnail shadow-sm': selectedImage === 1}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <div class="mb-2" *ngIf="editMode else elseblock">
@@ -36,15 +71,62 @@
                         </div>
 
                     </div>
-
                     <div class="mt-4 d-flex flex-row" *ngIf="!editMode">
-                        <div class="mt-2 m-2 rounded text-center stat text-light">
-                            <span>465</span><br>
+                        <!-- followers -->
+                        <div data-bs-toggle="modal" data-bs-target="#followers"
+                            class="mt-2 m-2 rounded text-center stat text-light">
+                            <span>3</span><br>
                             <label>Followers</label>
+                            <div class="modal fade" id="followers" index="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-dark p-3">
+                                            <h5>Followers List</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
+                                            <!-- <div *ngFor="let follower of followers"
+                                                class="text-dark d-flex flex-row align-items-center">
+                                                <img class="w-25 m-4" src={{follower.character}}>
+                                                <div>
+                                                    <p class="m-2 fw-bold">{{follower.username}}</p>
+                                                    <p class="bg-dark m-2 text-light pt-1 pb-1 ps-2 pe-2">
+                                                        {{follower.level}}</p>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mt-2 m-2 rounded text-center stat text-light">
-                            <span>3,415</span><br>
+                        <!-- following -->
+                        <div data-bs-toggle="modal" data-bs-target="#following"
+                            class="mt-2 m-2 rounded text-center stat text-light">
+                            <span>5</span><br>
                             <label>Following</label>
+                            <div class="modal fade" id="following" index="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-dark p-3">
+                                            <h5>Following List</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
+                                            <!-- <div *ngFor="let person of following"
+                                                class="text-dark d-flex flex-row align-items-center">
+                                                <img class="w-25 m-4" src={{person.character}}>
+                                                <div>
+                                                    <p class="m-2 fw-bold">{{person.username}}</p>
+                                                    <p class="bg-dark m-2 text-light pt-1 pb-1 ps-2 pe-2">
+                                                        {{person.level}}</p>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

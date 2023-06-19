@@ -1,7 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-
-module.exports = () => {
+module.exports = (sequelize, DataTypes)=>{
     const Revenue = sequelize.define('Revenue', {
         name:{
             type: DataTypes.STRING

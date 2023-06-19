@@ -1,7 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-
-module.exports = ()=>{
+module.exports = (sequelize, DataTypes)=>{
     const PointsCoupon = sequelize.define('PointsCoupon', {
         // Model attributes are defined here
           points: {

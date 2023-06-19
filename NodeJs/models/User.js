@@ -39,6 +39,14 @@ module.exports = (sequelize, DataTypes)=>{
           type: DataTypes.STRING,
           defaultValue : "rgba(112, 192, 219, 0.527)",
         },
+        character: {
+          type: DataTypes.STRING,
+          defaultValue : "https://res.cloudinary.com/ds5puha49/image/upload/v1687129084/PkBYcGy_jz4ta4.png",
+        },
+        level: {
+          type: DataTypes.STRING,
+          defaultValue : "https://res.cloudinary.com/ds5puha49/image/upload/v1687129775/6009637_ow81gz.png",
+        },
         isBanned: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
