@@ -10,12 +10,22 @@ require("dotenv").config({ path: __dirname + "/.env" });
 
 // get all game reviews
 const getAllGameReviews = async (req, res) => {
-//   try {
-//     const users = await models.User.findAll();
-//     res.json(users);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
+  try {
+    const game = await  models.Game.findOne({ where: { id: req.params.id } });
+    if(!game)
+    {
+      return res.status(404).json({ message: "game not found" });
+    }
+    const reviews = await models.Review.findAll({ where: { gameId: game.id } });
+    if(!reviews)
+    {
+      return res.status(404).json({ message: " no reviews yet" });
+    }
+    console.log(reviews);
+    res.json(reviews);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // get a single user by ID
@@ -26,7 +36,7 @@ const getReviewById = async (req, res) => {
     {
       return res.status(404).json({ message: "Review not found" });
     }
-    res.json(user);
+    res.json(review);
   } catch (err) {
     res.status(500).json({ message: err.message });
     return;
