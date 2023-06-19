@@ -15,11 +15,13 @@
     /* background-color: rgba(112, 219, 142, 0.527); */
     width: 80%;
 }
-.overUser{
-  width: 10em;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+.overUser {
+    width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 .theme {
     align-items: center;
 }
@@ -50,7 +52,9 @@
     padding: 3px 18px;
 
 }
-
+.stat:hover{
+    cursor: pointer;
+}
 .title:hover {
     cursor: pointer;
     color: #007bff;
@@ -103,4 +107,21 @@
 .games-purchased {
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.cam:hover{
+    cursor: pointer;
+}
+.newPP:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.newPP{
+    transition: transform 0.3s ease;
+    /* width: 200px;
+height: 170px; */
+}
+.selected{
+    transform: scale(1.2);
+    background-color: #777a52d0;
 }
