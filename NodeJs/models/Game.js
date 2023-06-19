@@ -1,19 +1,40 @@
 module.exports = (sequelize, DataTypes)=>{
     const Game = sequelize.define('Game', {
         // Model attributes are defined here
-        name: {   type: DataTypes.STRING,  
-            allowNull: false   }, 
-         price: {  allowNull: false,            
-                 type: DataTypes.DECIMAL },
-         releaseDate: {  type: DataTypes.DATE,  },     
-        description: {   type: DataTypes.STRING,      
-        allowNull: false         },
-        character: { type: DataTypes.STRING,  },      
-        images: {  type: DataTypes.JSON    },      
-        tags: { type: DataTypes.JSON         },      
-        types: {type: DataTypes.JSON         },      
-        os: { type: DataTypes.JSON         }
-      }, {});
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        price: {
+            allowNull: false,
+            type: DataTypes.DECIMAL
+        },
+        releaseDate: {
+            type: DataTypes.DATE,
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        character: {
+            type: DataTypes.STRING,
+        },
+        images: {
+            type: DataTypes.JSON
+        },
+        tags: {
+            type: DataTypes.JSON
+        },
+        types: {
+            type: DataTypes.JSON
+        },
+        os: {
+            type: DataTypes.JSON
+        },
+        points: {
+            type: DataTypes.DECIMAL
+        }
+    }, {});
     Game.associate = function (models) {
         
         Game.belongsToMany(models.User, {

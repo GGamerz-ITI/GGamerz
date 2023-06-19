@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const path = require("path");
-const User = require(path.join(__dirname,"../models/User.js"))
-const models = require(path.join(__dirname ,"../models"));
+const User = require(path.join(__dirname, "../models/User.js"));
+const models = require(path.join(__dirname, "../models"));
 const { Op } = require("sequelize");
 const { use } = require("../routers/UserRouter");
 require("dotenv").config({ path: __dirname + "/.env" });
@@ -61,9 +61,8 @@ const getAllUsers = async (req, res) => {
 // get a single user by ID
 const getUserById = async (req, res) => {
   try {
-    const user = await  models.User.findOne({ where: { id: req.params.id } });
-    if(!user)
-    {
+    const user = await models.User.findOne({ where: { id: req.params.id } });
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     res.json(user);
@@ -93,10 +92,9 @@ const createUser = async (req, res) => {
     // Validate Data
     const { error } = validateUser(myuser);
     if (error) {
-      console.log("validation error")
+      console.log("validation error");
       return res.status(400).json({ message: error.details });
     }
-
 
     // Save User
     try {
@@ -104,16 +102,14 @@ const createUser = async (req, res) => {
       res.status(200).json(newUser);
       return;
     } catch (err) {
-      if(err.errors[0].message == 'email must be unique')
-      {
+      if (err.errors[0].message == "email must be unique") {
         return res.status(409).json({ message: "Email Already Registered" });
-      } else{
-        return res.status(400).json({ message: err.errors[0].message})
+      } else {
+        return res.status(400).json({ message: err.errors[0].message });
       }
     }
-
   } catch (err) {
-   return res.status(400).json({ message: err.errors[0].message});
+    res.status(400).json({ message: err.errors[0].message });
   }
 };
 
@@ -143,7 +139,8 @@ const updateUser = async (req, res) => {
       var hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     }
 
-    const user = await  models.User.findOne({ where: { id: req.params.id } });
+    const userID = req.params.id;
+    const user = await User.findById(userID);
     if (user) {
       user.name = req.body.name || user.name;
       user.username = req.body.username || user.username;
@@ -171,15 +168,14 @@ const updateUser = async (req, res) => {
 
 // delete a user by ID
 const deleteUser = async (req, res) => {
-
   const userId = parseInt(req.params.id);
   if (isNaN(userId)) {
-    res.status(400).json({ message: 'Invalid user ID' });
+    res.status(400).json({ message: "Invalid user ID" });
     return;
   }
 
   try {
-    const deleteUser = await models.User.destroy({ where: {id: userId}});
+    const deleteUser = await models.User.destroy({ where: { id: userId } });
     if (deleteUser) {
       res.status(200).json({ message: "User Deleted" });
       return;

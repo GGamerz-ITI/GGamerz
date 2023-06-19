@@ -1,4 +1,5 @@
 module.exports = (sequelize, DataTypes)=>{
+
     const Review = sequelize.define('Review', {
         // Model attributes are defined here
         userId: {
