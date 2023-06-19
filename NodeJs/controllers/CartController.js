@@ -87,8 +87,8 @@ const addToCart = async (req, res) => {
 
     try {
         const addToCart = await models.Cart.create({
-            userId:userId,
-            gameId:gameId
+            userId,
+            gameId
         });
         // console.log(addToCart)
         if (addToCart) {

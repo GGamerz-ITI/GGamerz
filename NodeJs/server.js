@@ -20,12 +20,14 @@ const UserRouter = require(path.join(__dirname ,"./routers/UserRouter"));
 const ReviewRouter = require(path.join(__dirname ,"./routers/ReviewRouter"));
 const CommentRouter = require(path.join(__dirname ,"./routers/CommentRouter"));
 const CartRouter = require(path.join(__dirname ,"./routers/CartRouter"));
+const CouponRouter = require(path.join(__dirname ,"./routers/CouponRouter"));
 
 // Routers
 app.use('/api/reviews',ReviewRouter);
 app.use('/api/users',UserRouter);
 app.use('/api/cart',CartRouter);
 app.use('/api/comments',CommentRouter);
+app.use('/api/coupons',CouponRouter);
 
 
 // Start the server
