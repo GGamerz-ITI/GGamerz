@@ -1,8 +1,6 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
-
-module.exports = () => {
+module.exports = (sequelize, DataTypes)=>{
     const Game = sequelize.define('Game', {
+        // Model attributes are defined here
         name: {
             type: DataTypes.STRING,
             allowNull: false

@@ -5,20 +5,21 @@ const path = require("path");
 const User = require(path.join(__dirname, "../models/User.js"));
 const models = require(path.join(__dirname, "../models"));
 const { Op } = require("sequelize");
+const { uploadProduct } = require("../MiddleWares/MulterUpload");
 require("dotenv").config({ path: __dirname + "/.env" });
 
 
 
-const cretaeProduct= async (req, res) => {
+const createProduct= async (req, res) => {
     try {
        await uploadProduct(req, res, async function (err) {
         if (err) {
           return res.status(500).send("Error uploading file");
         } else {
             const {name, price, releaseDate, description, tags, types, os}= req.body;
-          if(req.files){
-            console.log(req.files);
-          }
+        //   if(req.files){
+        //     console.log(req.files);
+        //   }
         let myProduct= {
             name,
             price,
@@ -27,23 +28,8 @@ const cretaeProduct= async (req, res) => {
             tags,
             types,
             os,
-
         }
        
-        //   let product = await Product.create({
-        //     name: req.body.name,
-        //     price: req.body.price,
-        //     os: req.body.os,
-        //     tag: req.body.tag,
-        //     type: req.body.type,
-        //     description: req.body.description,
-        //     // releasedDate: req.body.releasedDate,
-        //     // images: fileNames, // Save the secure URLs of the uploaded images
-        //   });
-        //   if (!product) {
-        //     return res.status(400).send("There is No Product With this ID !");
-        //   }
-          
           myProduct.images = [];
           
           if(req.files){
@@ -53,12 +39,12 @@ const cretaeProduct= async (req, res) => {
               console.log(myProduct);
             });
             console.log(images)
-            myProduct.save();
+            // myProduct.save();
           }
           const newProduct = await models.Game.create(myProduct);
+          console.log(newProduct);
           res.status(200).json(newProduct);
-          return;
-        //   return res.status(200).json({ updatedProduct: product });
+        //   return;
         }
       })
     } catch (err) {
@@ -66,4 +52,6 @@ const cretaeProduct= async (req, res) => {
       return res.status(500).send("Server Error, Failed to create the product !");
   }
   }
-  ;
+  module.exports = {
+    createProduct
+  }
