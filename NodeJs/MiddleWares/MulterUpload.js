@@ -1,7 +1,10 @@
-const { storage }= require("../storage/storage")
-const multer = require('multer')
-const uploadProduct= multer({storage}).array('imageURL',5)
+const { storage } = require("../storage/storage");
+const multer = require("multer");
+const uploadProduct = multer({ storage }).fields([
+    { name: "imageURL", maxCount: 5 },
+    { name: "character", maxCount: 1 },
+  ]);
 
-module.exports={
-    uploadProduct
-}
+module.exports = {
+  uploadProduct,
+};
