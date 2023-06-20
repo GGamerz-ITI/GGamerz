@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     Coupon.hasMany(models.Order, {
       foreignKey: {
         name: 'couponId',
-        allowNull: false,
+        allowNull: true,
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       }

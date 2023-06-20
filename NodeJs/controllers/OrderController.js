@@ -60,15 +60,22 @@ async function getOrderById(req, res) {
 
 // Create a new order
 async function createOrder(req, res) {
-  // console.log(req.body)
-  const { total, userId, couponId } = req.body;
+  console.log(req.body)
+  // const { total, userId, couponId } = req.body;
+  const total = req.body.total
+  const userId = req.body.userId
+  const couponId = req.body.couponId
+
   // console.log(total, userId, couponId)
   try {
+    console.log("user found")
+
     const createdOrder = await Order.create({
       total: total,
       userId: userId,
-      couponId: couponId,
+      couponId: couponId
     });
+
     const user = await User.findByPk(userId, {
       include: [
         {
@@ -77,7 +84,7 @@ async function createOrder(req, res) {
         }
       ]
     });
-
+    console.log("user found")
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
