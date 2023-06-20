@@ -11,7 +11,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartItemComponent {
 
   user: any;
-  total: number = 0;
+  total: any;
   cart: any
 
   constructor(private userService: UserService, private cartService: CartService) { }
@@ -29,6 +29,7 @@ export class CartItemComponent {
 
 
   async ngOnInit(): Promise<void> {
+    this.total=0
     const userObservable = this.userService.getCurrentUser()
     if (userObservable) {
       userObservable.subscribe({
