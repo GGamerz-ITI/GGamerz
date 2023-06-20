@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 
 export class CreditCardComponent {
 
-  cardholderName = 'CARDHOLDER';
+  cardholderName = 'CARD HOLDER';
   cardNumber: string[] = ['XXXX', 'XXXX', 'XXXX', 'XXXX'];
   cvv = 'xxx';
 
@@ -41,7 +41,7 @@ export class CreditCardComponent {
 
   ngOnInit(): void {
     this.cartTotalPrice = this.cartService.gettotalPriceFromLocalStorage();
-    // console.log(typeof this.cartTotalPrice)
+    console.log( this.cartTotalPrice)
     this.cart.length = this.cartService.getallItemsFromLocalStorage();
   }
 
@@ -108,7 +108,7 @@ export class CreditCardComponent {
     // properities to create order
     const orderData = {
       gameItems: this.user.cart,
-      userID: this.user._id,
+      userID: this.user.id,
       total: this.cartTotalPrice
     };
 
@@ -126,7 +126,7 @@ export class CreditCardComponent {
   }
 
   clearCart() {
-    this.userService.updateUserCart(this.user._id, []).subscribe({
+    this.cartService.emptyCart(this.user.id).subscribe({
       next: () => {
         this.ngOnInit();
       },

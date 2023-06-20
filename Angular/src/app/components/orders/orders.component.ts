@@ -31,7 +31,7 @@ export class OrdersComponent implements OnInit {
         switchMap((userData) => { //to switch to the orders Observable inside the user Observable subscription
           this.user = userData;
           // Fetch user orders
-          const ordersObservable = this.orderService.GetUserOrders(this.user._id);
+          const ordersObservable = this.orderService.GetUserOrders(this.user.id);
           if (ordersObservable) {
             return ordersObservable;
           } else {
@@ -41,6 +41,7 @@ export class OrdersComponent implements OnInit {
       ).subscribe({
         next: (data: any) => {
           this.orders = data;
+          console.log(this.orders)
           this.filterData();
         },
         error: (err: any) => {
