@@ -256,7 +256,31 @@ const validateUpdate = (data) => {
   return userSchema.validate(data);
 };
 
+
+const usersWithUserRole = async (req, res) => {
+  try {
+    const { searchTerm } = req.body;
+    const users = await models.User.findAll({
+      where: {
+        preferences: {
+          [Op.like]: `%${searchTerm}%`
+        }
+      }
+    });
+    if (users.length === 0) { // check if the users array is empty
+      return res.status(404).json({ message: 'No users found' }); // send a 404 error response
+    }
+    res.json(users);
+    // console.log(users)
+  } catch (err) {
+    console.error(`Error fetching users: ${err.message}`);
+    res.status(500).json({ message: 'Error fetching users' });
+  }
+};
+
+
 module.exports = {
+  usersWithUserRole,
   getAllUsers,
   getUserById,
   createUser,
