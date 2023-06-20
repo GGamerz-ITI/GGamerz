@@ -35,7 +35,7 @@ app.use('/api/cart',CartRouter);
 app.use('/api/order',OrderRouter);
 app.use('/api/comments',CommentRouter);
 app.use('/api/coupons',CouponRouter);
-
+app.use('/api/community',FollowRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
