@@ -10,41 +10,54 @@
             <div class="col ">
               <form class="comment-container rounded mt-3 h-75" id="review-form" [hidden]="!isFormVisible" >
                 <textarea id="review-text" name="review-text" class="form-control w-50 h-25" placeholder="Write a review..." [(ngModel)]="reviewText"></textarea>
-                <button class="btn btn-dark rounded mt-3" type="submit" (click)="submitReview()">Submit Review</button>
+                <button class="btn btn-dark rounded mt-3" type="submit" (click)="create_review()">Submit Review</button>
               </form>
             </div>
           </div>
         </div>
         <!--  -->
-        <div class="container p-3">
+        <div class="container p-3" *ngFor="let review of reviews">
           <div class="row">
-             <div class="col-md-12">
-              <div class="comment-container rounded">
-
-                <div class="comment">
-                   <!-- dropdown -->
-                   <div class=" float-right">
-                    <div class="dropdown ">
-                      <button class="bg-dark text-white border-0 rounded-0 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="col-md-12">
+              <div class="comment-container mt-3">
+                <div class="comment d-flex align-items-start justify-content-between">
+                  <!-- circular picture and username -->
+                  <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center mr-3" style="width: 40px; height: 40px;">
+                      <span class="fas fa-user"></span>
+                    </div>
+                    <div>
+                      <p class="font-weight-bold mb-0" style="color: green;">Aly mohamed</p>
+                    </div>
+                  </div>
+                  <!-- dropdown -->
+                  <div>
+                    <div class="dropdown">
+                      <button class="bg-dark text-white border-0 rounded-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="fas fa-ellipsis-h"></span>
                       </button>
                       <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" style="box-shadow: none;">
                         <a class="dropdown-item" href="#">Delete</a>
                       </div>
                     </div>
-                  </div><br>
-                  <!--  -->
-                   <p class="comment-text mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> <div class="d-flex justify-content-center align-items-center"> <button class="btn btn-dark reply-link mt-3" (click)="showReply(); buttonHidden = true" [hidden]="buttonHidden">Reply</button> </div>
-                          <div class="col">
-                        <form  [hidden]="!isReplyVisible">
-                            <input class="form-control w-50" placeholder="Write a reply...">
-                            <button class="btn btn-dark  mt-3 ">Reply</button>
-                        </form>
-                      </div>
-
-                    </div>
                   </div>
+                </div>
+                <!-- review content and reply button -->
+                <div class="d-flex justify-content-between">
+                  <p class="comment-content mb-2">{{ review.content }}</p>
+                  <button class="btn btn-dark reply-link" (click)="showReply(); buttonHidden = true" [hidden]="buttonHidden">Reply</button>
+                </div>
+                <!-- reply form -->
+                <div *ngIf="isReplyVisible" class="col">
+                  <form>
+                    <div class="form-group">
+                      <input class="form-control w-50" placeholder="Write a reply...">
+                    </div>
+                    <button class="btn btn-dark mt-3" type="submit">Comment</button>
+                  </form>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
         <!--  -->
