@@ -21,8 +21,6 @@ router.post("/ban", userController.banUser);
 //Unban
 router.post("/unban", userController.unBanUser);
 
-// Cart
-// router.put("/cart/:id", cartController.updateUserCart);
 
 // filter by prefernce
 router.post("/preference", userController.usersWithUserRole);

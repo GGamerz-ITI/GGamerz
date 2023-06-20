@@ -5,26 +5,20 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     /**
      * Add altering commands here.
-    */ 
-     await queryInterface.createTable('Orders', { 
+    */
+    await queryInterface.createTable('Points-coupons', { 
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      total: {
+      points: {
         allowNull: false,
-        type: Sequelize.DECIMAL 
-      },
-      status: {
-        allowNull: false,
-        type: Sequelize.ENUM,
-        values: ['accepted', 'pending', 'rejected'],
-        defaultValue: 'pending',
+        type: Sequelize.INTEGER
       },
       couponId: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -32,16 +26,6 @@ module.exports = {
           },
           key: 'id'
         },
-      },
-      userId: {
-        allowNull: false,
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: {
-            tableName: 'Users',
-          },
-          key: 'id'
-        }
       },
       createdAt: {
         allowNull: false,
@@ -51,14 +35,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-      });
+     });
   },
 
   async down (queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      */
-    await queryInterface.dropTable('Orders');
-    
+     await queryInterface.dropTable('Points-coupons');
   }
 };

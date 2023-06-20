@@ -6,6 +6,7 @@ import { GamesService } from 'src/app/services/products.service';
 import { firstValueFrom } from 'rxjs';
 import { UserService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-all-games',
@@ -16,19 +17,17 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AllGamesComponent implements OnInit {
   tags: string[] = [];
   types: string[] = [];
-  games: any[]=[]
+  games: any[] = []
   rawData: any
-  isFavorite: boolean = false;
-  isAdded: boolean = false;
   priceRange: FormGroup;
   os: FormGroup;
   filteredGames: any[] = [];
   gameTags: any[] = [];
   user: any;
-  cart: any[] = []
+  cart: any
   isLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService, private gamesService: GamesService, private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(private authService: AuthService, private gamesService: GamesService, private formBuilder: FormBuilder, private userService: UserService, private cartService: CartService) {
     this.priceRange = this.formBuilder.group({
       range1: false,
       range2: false,
@@ -51,7 +50,15 @@ export class AllGamesComponent implements OnInit {
       userObservable.subscribe({
         next: (data) => {
           this.user = data;
-          this.cart = this.user.cart
+          this.cartService.GetCart(this.user.id).subscribe({
+            next: (data) => {
+              this.cart = data;
+              console.log(this.cart)
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          })
         },
         error: (err) => {
           console.log(err)
@@ -64,53 +71,63 @@ export class AllGamesComponent implements OnInit {
       this.games = this.rawData;
       if (this.games && this.games.length > 0) {
         this.games.forEach((game: any) => {
-          game.tag.forEach((tag: string) => {
+          game.tags.forEach((tag: string) => {
             if (!this.gameTags.includes(tag))
               this.gameTags.push(tag)
           });
         });
       }
-      // console.log(this.gameTags)
     } catch (error) {
       console.error("An error occurred while retrieving the games", error);
     }
-    // console.log(this.gameTags)
   }
+
   isloggedIn() {
     this.isLoggedIn = this.authService.isLoggedIn()
   }
+
   isInCart(g: any): boolean {
-    const index = this.cart.findIndex((item: any) => item._id === g._id);
-    if (index === -1) {
-      return false;
-    } else {
+    if (this.cart.some((item: any) => item.id == g.id))
       return true
-    }
+    return false
   }
+
   addToCart(g: any) {
     if (this.cart.length > 0) {
-      const index = this.cart.findIndex((item: any) => item._id === g._id);
+      const index = this.cart.findIndex((item: any) => item.id === g.id);
       if (index === -1) {
-        this.cart.push(g);
+        this.cartService.addToCart(g.id,this.user.id).subscribe({
+          next: () => {
+            this.cart.push(g);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        })
       } else {
-        this.cart.splice(index, 1);
+        this.cartService.removeItem(g.id,this.user.id).subscribe({
+          next: () => {
+            this.cart.splice(index, 1);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        })
       }
     }
     else
-      this.cart.push(g);
-    this.userService.updateUserCart(this.user._id, this.cart).subscribe({
-      next: () => {
-        this.ngOnInit();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+      this.cartService.addToCart(g.id,this.user.id).subscribe({
+        next: () => {
+          this.cart.push(g);
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
   }
 
   onChangepriceRange(): void {
     const selectedPrice = Object.keys(this.priceRange.value).filter(option => this.priceRange.value[option]);
-    // console.log(selectedPrice);
   }
 
   onChangeOs(): void {
@@ -132,27 +149,17 @@ export class AllGamesComponent implements OnInit {
     else
       this.games = this.rawData
 
-    // console.log(selectedOS)
-    // this.filtersService.FilterByOS(selectedOS).subscribe({
-    //   next: (data) => {
-    //     this.filteredGames = data
-    //     this.games = this.filteredGames
-    //     console.log(data)
-    //   },
-    //   error: (err) => { }
-    // })
-    // console.log(selectedOS);
   }
 
   onChangeTags(): void {
     console.log(this.tags);
     this.rawData.forEach((game: any) => {
-      if (game.tag.some((tag: string) => this.tags.includes(tag))) {
-        if (!(this.filteredGames.some(obj => obj._id === game._id)))
+      if (game.tags.some((tag: string) => this.tags.includes(tag))) {
+        if (!(this.filteredGames.some(obj => obj.id === game.id)))
           this.filteredGames.push(game)
       }
       else
-        if (this.filteredGames.some(obj => obj._id === game._id))
+        if (this.filteredGames.some(obj => obj.id === game.id))
           this.filteredGames.splice(game)
     });
     console.log(this.filteredGames)
@@ -163,12 +170,12 @@ export class AllGamesComponent implements OnInit {
   }
   onChangeTypes(): void {
     this.rawData.forEach((game: any) => {
-      if (game.type.some((type: string) => this.types.includes(type))) {
-        if (!(this.filteredGames.some(obj => obj._id === game._id)))
+      if (game.types.some((type: string) => this.types.includes(type))) {
+        if (!(this.filteredGames.some(obj => obj.id === game.id)))
           this.filteredGames.push(game)
       }
       else
-        if (this.filteredGames.some(obj => obj._id === game._id))
+        if (this.filteredGames.some(obj => obj.id === game.id))
           this.filteredGames.splice(game)
     });
     console.log(this.filteredGames)
