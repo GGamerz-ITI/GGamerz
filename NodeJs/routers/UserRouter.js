@@ -24,4 +24,6 @@ router.post("/unban", userController.unBanUser);
 // Cart
 // router.put("/cart/:id", cartController.updateUserCart);
 
+//filter by preference
+router.post("/preference", userController.usersWithUserRole);
 module.exports = router;
