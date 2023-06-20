@@ -161,6 +161,10 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
   } catch (err) {
+    if(err.errors[0].message == "username must be unique")
+    {
+      return res.status(400).json({ message: "Username Already Taken" });
+    }
     return res.status(500).json({ message: err.message });
   }
 };
