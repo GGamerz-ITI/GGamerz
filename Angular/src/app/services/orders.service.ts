@@ -24,9 +24,9 @@ public orderUpdateChngObservable: Observable <void> = this.orderChngStatusSubjec
     return this.myClient.delete(this.Base_URL + '/' + id)
   }
 
-  createOrder(data: any): Observable<any> {
+  createOrder(data: any){
     // console.log('create');
-    return this.myClient.post(this.Base_URL + '/', data);
+    return this.myClient.post(this.Base_URL, data);
   }
 
   getAllOrders(){

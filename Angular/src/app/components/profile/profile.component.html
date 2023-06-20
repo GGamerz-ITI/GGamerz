@@ -20,7 +20,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
-                                   
+
                                     <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/enoiz019r2t41.png"
                                         (click)="changePP(2)"
                                         [ngClass]="{'selected img-thumbnail shadow-sm': selectedImage === 2}">
@@ -34,7 +34,7 @@
                                     <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/ValorantSkye.png"
                                         (click)="changePP(5)"
                                         [ngClass]="{'selected img-thumbnail shadow-sm': selectedImage === 5}">
-                                        <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/pubg.png"
+                                    <img class=" m-2 w-25 newPP " src="assets/images/thumbnails/pubg.png"
                                         (click)="changePP(1)"
                                         [ngClass]="{'selected img-thumbnail shadow-sm': selectedImage === 1}">
                                 </div>
@@ -43,16 +43,19 @@
                     </div>
                 </div>
                 <div>
+                    <!-- edit username -->
                     <div class="mb-2" *ngIf="editMode else elseblock">
                         <label class="fw-medium fs-4 text-light ">Username: <i class="fas fa-edit fa-sm"></i></label>
                         <input value={{user.username}} class="form-control bg-dark text-light p-2 mb-1"
                             [(ngModel)]="updatedName">
                     </div>
+                    <!-- show username -->
                     <ng-template #elseblock>
                         <p class="fw-bold fs-2 text-light overUser">{{user.username.toUpperCase()}}</p>
                     </ng-template>
                     <div class="fs-5">
                         <div>
+                            <!-- edit info -->
                             <div class="mb-2" *ngIf="editMode else elseblock2">
                                 <label class="fw-medium fs-4 text-light ">Discord Username: <i
                                         class="fas fa-edit fa-sm"></i></label>
@@ -64,9 +67,9 @@
                                 <button class="btn btn-dark " (blur)="refresh()" (click)="setDefault()">Default
                                     Theme</button>
                             </div>
+                            <!-- show info -->
                             <ng-template #elseblock2><i class="fa-brands fa-discord"> </i>
                                 <span class="text-light "> {{user.discord}}</span>
-
                             </ng-template>
                         </div>
 
@@ -131,11 +134,14 @@
                     </div>
                 </div>
             </div>
+            <!-- user level  -->
             <div class="level-container m-3">
                 <p class="fs-3">Level</p>
-                <img class="level" src="../../../assets/images/gladiator.png">
+                <img class="level" src={{user.level}}>
+                <!-- save edits -->
                 <button *ngIf="editMode else elseblock3" class="btn btn-outline-success btn-lg ps-5 pe-5 mt-4"
                     (click)="getData() ">Save</button>
+                <!-- activate edit mode -->
                 <ng-template #elseblock3>
                     <button (click)="toggleEditMode()"
                         class="btn btn-outline-dark btn-lg ps-5 pe-5 mt-4">Edit</button></ng-template>
@@ -145,14 +151,17 @@
         <div class="d-flex flex-row Preferences">
             <p class="m-2 p-3 fs-4 fw-medium text-light">Preferences: <i *ngIf="editMode" class="fas fa-edit fa-sm"></i>
             </p>
+            <!-- show preferences -->
             <div class="d-flex flex-row tags" *ngIf="!editMode else elseblock4">
-                <p class="tag ms-2 rounded text-center bg-dark text-light" *ngFor="let t of user.preferences">{{t}}
+                <p class="tag ms-2 rounded text-center bg-dark text-light" *ngFor="let t of updatedPreferences">{{t}}
                 </p>
             </div>
+            <!-- edit preferences -->
             <ng-template class="elseblock4" #elseblock4>
                 <input class="form-control tagEdit bg-dark text-light p-2 ms-2"
-                    *ngFor="let t of user.preferences;let i = index" value={{t}} [(ngModel)]="updatedPreferences[i]"
+                    *ngFor="let t of updatedPreferences;let i = index" value={{t}} [(ngModel)]="updatedPreferences[i]"
                     [name]="'preference' + i">
+                <!-- add new preference -->
                 <input class="form-control tagEdit bg-dark text-light p-2 ms-2" *ngFor="let t of inputs;let i = index"
                     value={{t}} [(ngModel)]="newPreferences[i]" [name]="'newPreferences' + i"> <i type="button"
                     (click)="addInput()" class="fa-solid fa-circle-plus fa-lg m-2"></i>
@@ -160,6 +169,7 @@
             </ng-template>
         </div>
         <hr class="m-2 separator rounded">
+        <!-- show games Purchased -->
         <p class="m-2 p-3 fs-4 fw-medium text-light">Games Purchased</p>
         <div></div>
         <div class="d-flex games-purchased flex-row m-3">
@@ -168,17 +178,18 @@
                     <img class="card-img rounded shadow-sm" src={{g.images[0]}}>
                 </div>
                 <div class="card-body">
-                    <p class="fs-5 title" routerLink="/games/{{g._id}}"> {{g.name}}</p>
+                    <p class="fs-5 title" routerLink="/games/{{g.id}}"> {{g.name}}</p>
                     <!-- <p class="desc" >{{g.description}}</p> -->
                 </div>
+            </div>
+            <!-- if no games -->
+            <div *ngIf="!games||games.length==0">
+                <p class="text-center text-light bg-dark rounded p-2 m-auto mb-4">Purchase some games and see them here!</p>
             </div>
         </div>
         <hr class="m-2 separator rounded">
         <p class="m-2 p-3 fs-4 fw-medium text-light">Most Purchased Genres</p>
-        <!-- <app-chart [tags]="tags" [tagCount]="tagCount" (chartCreated)="refresh()"></app-chart> -->
         <app-chart></app-chart>
-        <!-- <hr class="m-2 separator rounded"> -->
-
     </div>
 </div>
 <app-footer></app-footer>

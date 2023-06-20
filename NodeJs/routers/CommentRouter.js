@@ -6,7 +6,7 @@ const comentController = require(path.join(__dirname, "../controllers/CommentCon
 
 router.get("/review/:id", comentController.getAllReviewcomments);
 router.get("/:id", comentController.getCommentById);
-router.delete("/:id", comentController.createComment);
-router.post("/create", comentController.deleteComment);
+router.delete("/:id", comentController.deleteComment);
+router.post("/create", comentController.createComment);
 
 module.exports = router;

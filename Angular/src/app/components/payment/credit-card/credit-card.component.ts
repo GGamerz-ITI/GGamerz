@@ -30,7 +30,8 @@ export class CreditCardComponent {
   cartTotalPrice: number = 0;
   user: any
   filteredMonths: string[] = this.months;
-
+  coupon=null
+  
   creditcardForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.pattern(/^[A-Za-z]+$/), Validators.minLength(6)]),
     cardNumber: new FormControl(null, [Validators.required, Validators.pattern(/^\d{16}$/)]),
@@ -89,11 +90,8 @@ export class CreditCardComponent {
       //service to create oreder
       this.createOrder();
 
-      //service to clear cart
-      this.clearCart();
-
       //service to pament stripe
-      this.createPayment()
+      this.createPayment();
 
       this.router.navigate(['/orders']);
     } else {
@@ -107,21 +105,22 @@ export class CreditCardComponent {
   createOrder(): void {
     // properities to create order
     const orderData = {
-      gameItems: this.user.cart,
-      userID: this.user.id,
-      total: this.cartTotalPrice
+      userId: this.user.id,
+      total: this.cartTotalPrice,
+      couponId:this.coupon
     };
 
-    console.log(orderData)
-    this.orderService.createOrder(orderData).subscribe(
-      (response) => {
+    // console.log(orderData)
+    this.orderService.createOrder(orderData).subscribe({
+      next:(response) => {
         // Handle successful response here
         console.log('Order created successfully:', response);
+        this.clearCart();
       },
-      (error) => {
+      error:(error) => {
         // Handle error here
         console.error('Error creating order:', error);
-      }
+      }}
     );
   }
 
@@ -138,7 +137,7 @@ export class CreditCardComponent {
 
   createPayment(): void {
     // Your logic to get the required data for creating the payment
-    let id = this.user._id
+    let id = this.user.id
     let cardNumber = this.cardNumber.join('')
     let cardExpMonth = this.expirationDatemonth
     let cardExpYear = this.expirationDateyear

@@ -74,7 +74,7 @@ const deleteReview = async (req, res) => {
   }
 
   try {
-    const deleteReview = await models.User.destroy({ where: {id: reviewId}});
+    const deleteReview = await models.Review.destroy({ where: {id: reviewId}});
     if (deleteReview) {
       res.status(200).json({ message: "review Deleted" });
       return;
