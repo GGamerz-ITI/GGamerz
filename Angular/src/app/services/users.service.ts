@@ -14,19 +14,21 @@ export class UserService {
   value$: Observable<boolean> = this.valueSubject.asObservable();
 
 
-  public banSubject:Subject<void> = new Subject <any>
-public banChngObservable: Observable <void> = this.banSubject.asObservable();
+  public banSubject: Subject<void> = new Subject<any>
+  public banChngObservable: Observable<void> = this.banSubject.asObservable();
 
   constructor(private readonly myClient: HttpClient, private authService: AuthService) { }
 
-  private readonly Base_URL = environment.apiURL+"/users";
+  private readonly Base_URL = environment.apiURL + "/users";
 
   Login(body: any) {
     return this.myClient.post(this.Base_URL + "/login", body);
   }
+
   Register(body: any) {
     return this.myClient.post(this.Base_URL + "/register", body);
   }
+
   getCurrentUser() {
     const token = this.authService.getToken('user');
     try {
@@ -36,40 +38,34 @@ public banChngObservable: Observable <void> = this.banSubject.asObservable();
       }
     }
     catch (err) {
-
     }
     return null
   }
+
   getUserByID(id: any) {
     return this.myClient.get(this.Base_URL + '/' + id)
   }
-  updateUserCart(id: string, cart: any []) {
-    console.log(this.Base_URL + '/cart/' + id)
-    console.log("in cart service")
-    // console.log(typeof(cart))
-    console.log((cart))
 
-    return this.myClient.put(this.Base_URL + '/cart/' + id, {cart})
-  }
-  logout(){
+  logout() {
     this.valueSubject.next(false);
     localStorage.removeItem('user');
   }
-  updateUser(id:string, body:any){
+
+  updateUser(id: string, body: any) {
     console.log("in service")
-    return this.myClient.put(this.Base_URL +'/'+ id, body)
+    return this.myClient.put(this.Base_URL + '/' + id, body)
   }
 
-  getAllUsers(){
+  getAllUsers() {
     return this.myClient.get(this.Base_URL);
   }
 
-  ban(body:any){
-  return this.myClient.post(this.Base_URL + "/ban",body)
+  ban(body: any) {
+    return this.myClient.post(this.Base_URL + "/ban", body)
   }
 
-  unban(body:any){
-  return this.myClient.post(this.Base_URL + "/unban",body)
+  unban(body: any) {
+    return this.myClient.post(this.Base_URL + "/unban", body)
   }
 
 }
