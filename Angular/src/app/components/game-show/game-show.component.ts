@@ -5,6 +5,7 @@ import { GamesService } from 'src/app/services/products.service';
 import { UserService } from 'src/app/services/users.service';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { CartService } from 'src/app/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-game-show',
@@ -19,7 +20,7 @@ export class GameShowComponent implements OnInit {
   cart: any
   images: GalleryItem[] = [];
 
-  constructor(route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService, private cartService: CartService) {
+  constructor(private toastr: ToastrService,route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService, private cartService: CartService) {
     this.gameID = route.snapshot.params["id"]
   }
 
@@ -80,6 +81,7 @@ export class GameShowComponent implements OnInit {
         this.cartService.addToCart(this.game.id,this.user.id).subscribe({
           next: () => {
             this.cart.push(this.game);
+            this.toastr.success("Game added Successfully!", "Updating Cart");
           },
           error: (err) => {
             console.log(err);
@@ -89,6 +91,8 @@ export class GameShowComponent implements OnInit {
         this.cartService.removeItem(this.game.id,this.user.id).subscribe({
           next: () => {
             this.cart.splice(index, 1);
+            this.toastr.error("Game removed Successfully!", "Updating Cart");
+
           },
           error: (err) => {
             console.log(err);
@@ -100,6 +104,7 @@ export class GameShowComponent implements OnInit {
       this.cartService.addToCart(this.game.id,this.user.id).subscribe({
         next: () => {
           this.cart.push(this.game);
+          this.toastr.success("Game added Successfully!", "Updating Cart");
         },
         error: (err) => {
           console.log(err);

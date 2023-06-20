@@ -7,6 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { UserService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-games',
@@ -27,7 +28,7 @@ export class AllGamesComponent implements OnInit {
   cart: any
   isLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService, private gamesService: GamesService, private formBuilder: FormBuilder, private userService: UserService, private cartService: CartService) {
+  constructor(private toastr: ToastrService,private authService: AuthService, private gamesService: GamesService, private formBuilder: FormBuilder, private userService: UserService, private cartService: CartService) {
     this.priceRange = this.formBuilder.group({
       range1: false,
       range2: false,
@@ -99,6 +100,7 @@ export class AllGamesComponent implements OnInit {
         this.cartService.addToCart(g.id,this.user.id).subscribe({
           next: () => {
             this.cart.push(g);
+            this.toastr.success("Game added Successfully!", "Updating Cart");
           },
           error: (err) => {
             console.log(err);
@@ -108,6 +110,7 @@ export class AllGamesComponent implements OnInit {
         this.cartService.removeItem(g.id,this.user.id).subscribe({
           next: () => {
             this.cart.splice(index, 1);
+            this.toastr.error("Game removed Successfully!", "Updating Cart");
           },
           error: (err) => {
             console.log(err);
@@ -119,6 +122,7 @@ export class AllGamesComponent implements OnInit {
       this.cartService.addToCart(g.id,this.user.id).subscribe({
         next: () => {
           this.cart.push(g);
+          this.toastr.success("Game added Successfully!", "Updating Cart");
         },
         error: (err) => {
           console.log(err);
