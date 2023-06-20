@@ -54,7 +54,9 @@ export class GameShowComponent implements OnInit {
         }
       })
     }
+
   }
+
   assignImages() {
     this.game.images.forEach((img: string) => {
       this.images.push(new ImageItem({ src: img, thumb: img })

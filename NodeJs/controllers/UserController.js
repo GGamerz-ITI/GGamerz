@@ -139,15 +139,14 @@ const updateUser = async (req, res) => {
       var hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     }
 
-    const userID = req.params.id;
-    const user = await User.findById(userID);
+    const user = await  models.User.findOne({ where: { id: req.params.id } });
     if (user) {
       user.name = req.body.name || user.name;
       user.username = req.body.username || user.username;
       // user.email = req.body.email || user.email;
       user.password = hashedPassword || user.password;
       user.discord = req.body.discord || user.discord;
-      // user.preferences = req.body.preferences || user.preferences;
+      user.preferences = req.body.preferences || user.preferences;
       user.bgColor = req.body.bgColor || user.bgColor;
       user.character = req.body.character || user.character;
       user.level = req.body.level || user.level;
