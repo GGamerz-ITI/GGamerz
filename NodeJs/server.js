@@ -26,6 +26,7 @@ const CartRouter = require(path.join(__dirname ,"./routers/CartRouter"));
 const OrderRouter = require(path.join(__dirname ,"./routers/OrderRouter"));
 const CouponRouter = require(path.join(__dirname ,"./routers/CouponRouter"));
 const PaymentRouter = require(path.join(__dirname, "./routers/PaymentRouter"))
+const NewsRouter = require(path.join(__dirname, "./routers/NewsRouter"))
 
 // Routers
 app.use('/api/products',ProductRouter);
@@ -38,6 +39,7 @@ app.use('/api/comments',CommentRouter);
 app.use('/api/coupons',CouponRouter);
 app.use('/api/community',FollowRouter);
 app.use("/api/payment", PaymentRouter);
+app.use("/api/news", NewsRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
