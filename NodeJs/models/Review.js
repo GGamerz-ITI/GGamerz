@@ -16,6 +16,16 @@ module.exports = (sequelize, DataTypes)=>{
         },
       }, {});
     Review.associate = function (models) {
+        Review.hasMany(models.Comment, {
+            foreignKey: {
+              name: 'reviewId',
+              allowNull: true,
+              onDelete: 'CASCADE',
+              onUpdate: 'CASCADE'
+            }
+        });
+        Review.belongsTo(models.User);
+        Review.belongsTo(models.Game);
     };
     return Review;
 }
