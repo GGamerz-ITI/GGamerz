@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { GamesService } from 'src/app/services/products.service';
 import { UserService } from 'src/app/services/users.service';
 import { GalleryItem, ImageItem } from 'ng-gallery';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-game-show',
@@ -15,10 +16,10 @@ export class GameShowComponent implements OnInit {
   game: any;
   isLoggedIn: boolean = false;
   user: any;
-  cart: any[] = []
+  cart: any
   images: GalleryItem[] = [];
 
-  constructor(route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService) {
+  constructor(route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService, private cartService: CartService) {
     this.gameID = route.snapshot.params["id"]
   }
 
@@ -37,7 +38,15 @@ export class GameShowComponent implements OnInit {
       userObservable.subscribe({
         next: (data) => {
           this.user = data;
-          this.cart = this.user.cart
+          this.cartService.GetCart(this.user.id).subscribe({
+            next: (data) => {
+              this.cart = data;
+              console.log(this.cart)
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          })
           this.isloggedIn();
         },
         error: (err) => {
@@ -57,33 +66,43 @@ export class GameShowComponent implements OnInit {
   }
 
   isInCart(): boolean {
-    const index = this.cart.findIndex((item: any) => item._id === this.gameID);
-    if (index === -1) {
-      return false;
-    } else {
+    if (this.cart.some((item: any) => item.id ==this.gameID))
       return true
-    }
+    return false
   }
 
   addToCart() {
     if (this.cart.length > 0) {
-      const index = this.cart.findIndex((item: any) => item._id === this.gameID);
+      const index = this.cart.findIndex((item: any) => item.id === this.game.id);
       if (index === -1) {
-        this.cart.push(this.game);
+        this.cartService.addToCart(this.game.id,this.user.id).subscribe({
+          next: () => {
+            this.cart.push(this.game);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        })
       } else {
-        this.cart.splice(index, 1);
+        this.cartService.removeItem(this.game.id,this.user.id).subscribe({
+          next: () => {
+            this.cart.splice(index, 1);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        })
       }
     }
     else
-      this.cart.push(this.game);
-    this.userService.updateUserCart(this.user._id, this.cart).subscribe({
-      next: () => {
-        this.ngOnInit();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+      this.cartService.addToCart(this.game.id,this.user.id).subscribe({
+        next: () => {
+          this.cart.push(this.game);
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
   }
 
 }

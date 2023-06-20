@@ -22,18 +22,17 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column details">
-                            <h4 class="game-title" routerLink="/games/{{g._id}}">
+                            <h4 class="game-title" routerLink="/games/{{g.id}}">
                                 {{g.name}}
                             </h4>
                             <div class="d-flex flex-row">
                                 <!-- for tags -->
-                                <div *ngFor="let t of g.type">
+                                <div *ngFor="let t of g.types">
                                     <p class="tag p-1 text-center">{{t}}</p>
                                 </div>
-                                <div *ngFor="let tag of g.tag">
+                                <div *ngFor="let tag of g.tags">
                                     <p class="tag p-1 text-center">{{tag}}</p>
                                 </div>
-                                <!-- <p class="tag p-1 text-center   ">Singleplayer</p> -->
                             </div>
                             <div class="d-flex flex-row">
                                 <p>{{formatDate(g.releasedDate || '') }}</p>
