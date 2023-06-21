@@ -1,72 +1,79 @@
 <app-navbar></app-navbar>
+
 <body>
   <div class="container">
-<section class="container shadow-lg rounded">
+    <section class="container shadow-lg rounded">
 
-  <main>
+      <main>
 
-    <section class="promo m-2 p-3 mt-3 shadow-sm fs-3 rounded">
-
-        <div class="search-wrapper">
-          <div class="input-holder">
-              <input type="text" class="search-input" placeholder="Type to search" [(ngModel)]="searchTerm"/>
+        <section class="promo m-2 p-3 mt-3 shadow-sm fs-3 rounded d-flex flex-row title">
+          <div>
+            <span class="ml-5">Search for mates and match!</span>
+            <!-- <p class="spin-emoji">💫</p> -->
+            <img class="high-five" src="../../../assets/images/output-onlinegiftools.gif">
+          </div>
+          <div class="search-wrapper ">
+            <div class="input-holder">
+              <input type="text" class="search-input" placeholder="Type to search" [(ngModel)]="searchTerm" />
               <button class="search-icon" (mouseover)="searchToggle($event)" (click)="Search()"><span></span></button>
-          </div>
-          <span class="close" (click)="searchToggle($event)"></span>
-        </div>
-
-        <div>
-        <span class="ml-5">Filter Users By Preferences</span>
-        <p class="spin-emoji">💫</p>
-        </div>
-    </section>
-<div >
-    <section class="cart rounded shadow-lg">
-      <ul *ngIf="users.length > 0; else noUsersFound" class="d-flex flex-column">
-        <li *ngFor="let user of users" class="rounded d-flex flex-column">
-          <div class="item">
-            <div class="d-flex gap-5">
-              <div class="image ">
-                <img  src="{{ user.level }}">
-              </div>
-
-              <div>
-                <h3 class="name"> {{ user.username }} </h3>
-                <div class="user-data d-flex gap-2">
-                  <p>{{ user.email }}</p>
-                </div>
-                <div class="user-data d-flex gap-2">
-                  <p>{{ user.discord }}</p>
-                </div>
-              </div>
             </div>
-
-            <div class="right-col">
-              <p><button >Follow</button></p>
-            </div>
+            <span class="close" (click)="searchToggle($event)"></span>
           </div>
+        </section>
         <div>
-          <hr class="separator rounded">
+          <section class="cart rounded mt-4 shadow-lg">
+            <ul *ngIf="users.length > 0; else noUsersFound" class="d-flex flex-column">
+              <li *ngFor="let user of users" class="rounded d-flex flex-column">
+                <div class="item">
+                  <div class="d-flex gap-5">
+                    <div class="image w-50">
+                      <img src="{{ user.level }}">
+                    </div>
+
+                    <div>
+                      <h3 class="name"> {{ user.username }} </h3>
+                      <div class="user-data d-flex gap-2">
+                        <p class="text-info">{{ user.email }}</p>
+                      </div>
+                      <div class="user-data d-flex gap-2">
+                        <p class="text-info">{{ user.discord }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="right-col">
+                    <!-- <p><button>Follow</button></p> -->
+                    <button (click)="follow(user.id)" *ngIf="!isFollowing(user.id) else elseblock"
+                      class="btn btn-outline-dark btn-lg ps-5 pe-5 mt-4">Follow</button>
+                    <ng-template #elseblock>
+                      <button class="btn btn-outline-dark btn-lg ps-5 pe-5 mt-4" (click)="unfollow(user.id)">
+                        Unfollow
+                      </button>
+                    </ng-template>
+                  </div>
+                </div>
+                <div>
+                  <hr class="separator rounded">
+                </div>
+
+              </li>
+              <!-- <hr class="m-2 separator rounded"> -->
+            </ul>
+
+            <ng-template #noUsersFound>
+              <li class="mb-3 rounded" style=" list-style-type: none;">
+                <div class="p-2">
+                  <h4 class="text-center"> No users found. </h4>
+                </div>
+              </li>
+            </ng-template>
+
+          </section>
+
         </div>
-
-        </li>
-        <!-- <hr class="m-2 separator rounded"> -->
-      </ul>
-
-      <ng-template #noUsersFound>
-        <li class="mb-3 rounded" style=" list-style-type: none;">
-          <div class="p-2">
-              <h4 class="text-center"> No users found. </h4>
-          </div>
-        </li>
-      </ng-template>
+      </main>
 
     </section>
-
   </div>
-  </main>
-
-</section>
-</div>
 </body>
 <app-footer></app-footer>

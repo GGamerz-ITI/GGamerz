@@ -9,10 +9,13 @@ body{
   justify-content: center;
 }
 
-.search-wrapper {
-  position: absolute;
+.title{
+  justify-content: space-between;
 }
-
+.high-five{
+  width: 75px;
+  margin-left: 10px;
+}
 .search-wrapper .input-holder {
   height: 70px;
   width: 70px;
