@@ -31,4 +31,12 @@ export class NewsComponent implements OnInit {
         }
       } );
   }
+  formatDate(dateString: string | null): string {
+
+    if (dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    return '';
+  }
 }
