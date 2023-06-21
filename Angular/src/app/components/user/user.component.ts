@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/users.service';
-import { switchMap } from 'rxjs';
+import { timer } from 'rxjs';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserUpdateService } from 'src/app/services/emitters.service';
 import { FollowService } from 'src/app/services/follow.service';
@@ -52,7 +52,9 @@ export class UserComponent {
 
   redirect(id: any) {
     this.router.navigate(['/users', id]).then(() => {
-      this.ngOnInit()
+      timer(500).subscribe(() => {
+        this.ngOnInit()
+      })
     });
   }
 
@@ -150,7 +152,7 @@ export class UserComponent {
   }
 
   isFollower(): boolean {
-    console.log(this.userFollower.followers)
+    // console.log(this.userFollower.followers)
     if (this.userFollower.followers.some((follower: { id: any; }) => follower.id === this.user.id))
       return true
     else
@@ -158,7 +160,7 @@ export class UserComponent {
   }
 
   isFollowing(): boolean {
-    console.log(this.userFollowing.followings)
+    // console.log(this.userFollowing.followings)
     if (this.userFollowing.followings.some((following: { id: any; }) => following.id === this.user.id))
       return true
     else
@@ -166,8 +168,11 @@ export class UserComponent {
   }
 
   follow() {
-    this.followService.follow(this.currentUser.id, this.user.id).subscribe({
+    console.log("person to follow",this.userId)
+    console.log("my id",this.currentUser.id)
+    this.followService.follow(this.userId, this.currentUser.id).subscribe({
       next: () => {
+        this.ngOnInit()
       },
       error: (err: any) => {
         console.log(err);
@@ -176,8 +181,9 @@ export class UserComponent {
   }
 
   unfollow() {
-    this.followService.unfollow(this.currentUser.id, this.user.id).subscribe({
+    this.followService.unfollow(this.userId, this.currentUser.id).subscribe({
       next: () => {
+        this.ngOnInit()
       },
       error: (err: any) => {
         console.log(err);

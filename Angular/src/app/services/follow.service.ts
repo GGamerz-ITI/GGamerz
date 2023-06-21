@@ -19,10 +19,15 @@ export class FollowService {
   }
 
   follow( userId: any,id:any) {
+    console.log("in follow srvs")
+    console.log("person to follow",userId)
+    console.log("my id",id)
     return this.myClient.post(this.Base_URL +'/follow', { id: id, userId: userId })
   }
 
   unfollow(userId: any,id:any) {
+    console.log("in unfollow srvs")
+
     return this.myClient.post(this.Base_URL + '/unfollow', { id: id, userId: userId })
   }
 }

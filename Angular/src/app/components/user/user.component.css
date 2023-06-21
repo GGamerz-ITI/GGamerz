@@ -48,7 +48,7 @@
     padding: 3px 18px;
 
 }
-.stat:hover{
+.stat:hover, .username:hover{
     cursor: pointer;
 }
 .title:hover {
