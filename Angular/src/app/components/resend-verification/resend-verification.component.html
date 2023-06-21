@@ -1,0 +1,37 @@
+<div class="main">
+    <div class="d-flex flex-column text-light justify-content-center align-items-center container">
+        <div class="container body w-75 p-4 rounded d-flex align-items-center flex-column justify-content-center">
+            <h3 >
+                Re-send Verification
+            </h3>
+            <hr class="w-50 separator">
+
+            <form class="myForm row" (ngSubmit)="onSubmit()">
+              <div class="mycontainer w-75" [formGroup]="mainInfo">
+
+                  <div class="mt-4" [ngClass]="{'error':email.invalid && (email.dirty || email.touched)}">
+                    <span *ngIf="email.invalid && (email.dirty || email.touched)">
+                      <span class="ms-3 errMsg" *ngIf="email.hasError('required')">Required</span>
+                      <span class="ms-3 errMsg" *ngIf="email.hasError('email')">Invalid Email Format</span>
+                    </span>
+
+                    <input type="text" class="form-control mt-3 p-4 w-50 bg-dark text-light w-100"
+                    placeholder="Please enter your email address.." id="emailInput"
+                    name="email" aria-describedby="emailHelp" formControlName="email"
+                    [(ngModel)]="myEmail" (blur)="updateView()">
+                  </div>
+
+                  <p class="mt-4 w-100">To resend a new Verification link to your email, please enter a valid email address above.</p>
+
+                  <span class="btnWrapper">
+                    <button type="submit"  [disabled]="email.invalid || !isEdited" class="btn btn-lg btn-dark mt-3">Send</button>
+
+                  </span>
+              </div>
+            </form>
+            <!-- <input class="form-control p-4 mt-5 w-50 bg-dark text-light" placeholder="Please enter your email address.." [(ngModel)]="email"> -->
+            <!-- <p class="mt-4 w-50">To resend a new Verification link to your email, please enter a valid email address above.</p> -->
+            <!-- <button (click)="onSubmit()" class="btn btn-lg btn-dark mt-3">Send</button> -->
+        </div>
+    </div>
+</div>

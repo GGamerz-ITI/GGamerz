@@ -29,6 +29,10 @@ export class UserService {
     return this.myClient.post(this.Base_URL + "/register", body);
   }
 
+  updatePassword(body: any) {
+    return this.myClient.post(this.Base_URL + "/passReset", body);
+  }
+
   getCurrentUser() {
     const token = this.authService.getToken('user');
     try {
