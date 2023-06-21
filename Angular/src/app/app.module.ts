@@ -43,7 +43,7 @@ import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from './components/dashboard/header/header.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { WidgetComponent } from './components/dashboard/widget/widget.component';
-import { ChartoneComponent } from './components/dashboard/chartone/chartone.component';
+// import { ChartoneComponent } from './components/dashboard/chartone/chartone.component';
 import { TitleComponent } from './components/dashboard/title/title.component';
 import { UsersTableComponent } from './components/dashboard/users/users-table/users-table.component';
 // import { MatSidenavModule } from '@angular/material/select';
@@ -67,7 +67,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { GalleryModule } from 'ng-gallery';
 import { UserUpdateService } from './services/emitters.service';
 import { AboutUsComponent } from './components/about-us/about-us.component';
-import { ChartTwoComponent } from './components/chart-two/chart-two.component';
+import { ChartTwoComponent } from './components/dashboard/chart-two/chart-two.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UserComponent } from './components/user/user.component';
@@ -103,7 +103,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     SidenavComponent,
     HeaderComponent,
     WidgetComponent,
-    ChartoneComponent,
+    // ChartoneComponent,
     TitleComponent,
     UsersTableComponent,
     UserNavComponent,

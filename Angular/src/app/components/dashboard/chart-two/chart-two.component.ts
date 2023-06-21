@@ -27,7 +27,7 @@ export class ChartTwoComponent implements OnInit {
     if (ordersObservable) {
       ordersObservable.subscribe({
         next: (data: any) => {
-          this.orders = data; 
+          this.orders = data;
           this.getTags()
           setTimeout(() => {
             this.createChart();
@@ -46,24 +46,26 @@ export class ChartTwoComponent implements OnInit {
     this.orders = this.orders.filter(order => order.status == 'accepted')
     console.log(this.orders)
     this.orders.forEach((order: any) => {
-      order.Games.forEach((game: any) => {
-        game.tags.forEach((tag: string) => {
-          if (this.tags.length > 0) {
-            const index = this.tags.findIndex((item: any) => item === tag);
-            if (index === -1) {
-              this.tags.push(tag);
-              this.tagCount[this.tags.length - 1] = 1;
-            } else {
-              this.tagCount[index]++;
-            }
+      if (order.Games) {
+        order.Games.forEach((game: any) => {
+          if (game.tags) {
+            game.tags.forEach((tag: string) => {
+              if (this.tags.length > 0) {
+                const index = this.tags.findIndex((item: any) => item === tag);
+                if (index === -1) {
+                  this.tags.push(tag);
+                  this.tagCount[this.tags.length - 1] = 1;
+                } else {
+                  this.tagCount[index]++;
+                }
+              }
+              else
+                this.tags.push(tag);
+              this.tagCount[0] = 1;
+            });
           }
-          else
-            this.tags.push(tag);
-          this.tagCount[0] = 1;
         });
-
-      });
-
+      }
     })
   }
   createChart() {
