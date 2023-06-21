@@ -1,0 +1,30 @@
+<div class="animated-box in">
+    <app-title [titleContent]="updatedGameName"></app-title>
+  
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="formCont">
+        <form (ngSubmit)="update()" [formGroup]="gameForm" enctype="multipart/form-data">
+          <div class="col">
+            <div class="row mb-3">
+              <div class="col-10 offset-1">
+                <input formControlName="title" type="text" class="form-control rounded p-3" placeholder="Title"
+                  aria-label="title">
+              </div>
+            </div>
+  
+            <div class="row mb-3">
+              <div class="col-10 offset-1">
+                <textarea formControlName="content" class="form-control w-100 rounded p-3"
+                  id="exampleFormControlTextarea1" rows="3" cols="50" placeholder="Content"></textarea>
+              </div>
+            </div>
+          </div>
+  
+          <div class="text-center">
+            <button type="submit" class="btn btn-outline-secondary" style="color: white;">Update Announcement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
