@@ -27,6 +27,7 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { DashboardOrdersComponent } from './components/dashboard/dashboard-orders/dashboard-orders.component';
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
 
@@ -52,6 +53,8 @@ const routes: Routes = [
           {path:'payment',component:PaymentComponent},
           {path:'orders',component:OrdersComponent},
           {path:'profile',component:ProfileComponent},
+          {path:'users/:id',component:UserComponent},
+
         ]
       },
     ]
