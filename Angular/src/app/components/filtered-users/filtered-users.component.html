@@ -7,28 +7,37 @@
 
     <section class="promo m-2 p-3 mt-3 shadow-sm fs-3 rounded">
       <div>
-        <!-- <p class="spin-emoji">🌟</p> -->
-        <app-search-input> </app-search-input>
-        Filtr Users By Preferences
+        <div class="search-wrapper">
+          <div class="input-holder">
+              <input type="text" class="search-input" placeholder="Type to search" [(ngModel)]="searchTerm"/>
+              <button class="search-icon" (mouseover)="searchToggle($event)" (click)="Search()"><span></span></button>
+          </div>
+          <span class="close" (click)="searchToggle($event)"></span>
+        </div>
+
+        Filter Users By Preferences
         <p class="spin-emoji">💫</p>
       </div>
     </section>
 <div >
+  <ul>
+    <li *ngFor="let user of users">{{ user.name }}</li>
+  </ul>
     <section class="cart rounded shadow-lg">
-      <ul >
+      <ul *ngFor="let user of users">
         <li class="item mb-3 rounded">
           <div class="d-flex gap-4">
             <div class="image ">
-              <img  src="../../../assets/images/bgggg.jpg">
+              <!-- <img  src={{ user.character}}> -->
             </div>
 
             <div>
-              <h4 class="name"> Username </h4>
+              <h4 class="name"> {{ user.username }} </h4>
               <div class="os d-flex gap-2">
-                <p>Link discord</p>
+                <p>{{ user.email }}</p>
             </div>
             <div class="os d-flex gap-2">
-              <p>level</p>
+              <p>{{ user.discord }}</p>
           </div>
             </div>
           </div>
@@ -46,37 +55,7 @@
       </section> -->
     </section>
 
-    <section class="cart rounded shadow-lg">
-      <ul >
-        <li class="item mb-3 rounded">
-          <div class="d-flex gap-4">
-            <div class="image ">
-              <img  src="../../../assets/images/bgggg.jpg">
-            </div>
 
-            <div>
-              <h4 class="name"> Username </h4>
-              <div class="os d-flex gap-2">
-                  <p>Link discord</p>
-              </div>
-              <div class="os d-flex gap-2">
-                <p>level</p>
-            </div>
-            </div>
-          </div>
-
-          <div class="right-col d-flex flex-column">
-            <!-- <p class="price">{{cart.price}} $</p> -->
-            <p><button >Follow</button></p>
-          </div>
-        </li>
-        <hr class="m-2 separator rounded">
-      </ul>
-
-      <!-- <section class="d-flex justify-content-around">
-        <a routerLink="/games"><button class="bottmom-button">Continue Shipping</button></a>
-      </section> -->
-    </section>
 
   </div>
   </main>
