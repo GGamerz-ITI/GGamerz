@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from 'src/app/services/orders.service';
 // import { UserService } from 'src/app/services/users.service';
 
@@ -12,7 +13,7 @@ export class OrderItemComponent implements OnInit {
   @Input() filteredOrders: any
   @Output() itemDeleted: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private orderService: OrdersService, private cdr: ChangeDetectorRef) { }
+  constructor(private toastr: ToastrService,private orderService: OrdersService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
 
@@ -38,8 +39,11 @@ export class OrderItemComponent implements OnInit {
           // this.ngOnInit()
         },
         error: (err) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000); 
+              }
       })
   }
 }

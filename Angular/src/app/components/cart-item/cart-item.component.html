@@ -13,7 +13,7 @@
         <li class="item mb-3 rounded">
           <div class="d-flex gap-4">
             <div class="image ">
-              <img  src={{item.images[0]}}>
+              <img src={{item.images[0]}}>
             </div>
 
             <div>
@@ -27,12 +27,13 @@
                 </div>
               </div>
               <div class="os d-flex gap-2">
-                  <i *ngFor="let p of item.os" class="fa" [ngClass]="{
+                <i *ngFor="let p of item.os" class="fa" [ngClass]="{
                 'fa-apple': p === 'mac',
                 'fa-windows': p === 'windows',
                 'fa-linux': p === 'linux'
                 }"></i>
               </div>
+              <p class="m-2 text-info fs-6 mt-4">{{item.points}} points</p>
             </div>
           </div>
 
@@ -54,7 +55,23 @@
       <div class="items">🛒 {{cart.length}} items</div>
       <div class="total"> {{total.toFixed(2)}} 💲</div>
     </section>
-
+    <section class="summary shadow-lg mb-3 d-flex flex-column">
+      <p>Apply a coupon!</p>
+      <!-- <div class="input-group">
+        <select class="custom-select fs-6 p-3" id="inputGroupSelect04" [(ngModel)]="selectedCouponId">
+          <option *ngFor="let coupon of coupons" [value]="coupon.id">{{coupon.name}}</option>
+        </select>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" (click)="applyCoupon()">Apply</button>
+        </div>
+      </div> -->
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Available coupons</mat-label>
+        <mat-select  [(ngModel)]="selectedCouponId">
+          <mat-option *ngFor="let coupon of coupons" [value]="coupon.id">{{coupon.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>    
     <section class="actions shadow-lg" *ngIf="cart.length > 0">
       <a routerLink="/payment"><button (click)="checkout()">Checkout 💳</button></a>
     </section>

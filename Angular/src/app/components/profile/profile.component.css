@@ -109,7 +109,7 @@
     flex-wrap: wrap;
 }
 
-.cam:hover{
+.cam:hover, .username:hover{
     cursor: pointer;
 }
 .newPP:hover{

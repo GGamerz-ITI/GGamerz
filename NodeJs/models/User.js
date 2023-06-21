@@ -111,7 +111,7 @@ module.exports = (sequelize, DataTypes)=>{
 
         User.belongsToMany(models.User,{
           foreignKey: {
-            name: "followerId",
+            name: "followingId",
             allowNull: false,
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
@@ -119,6 +119,9 @@ module.exports = (sequelize, DataTypes)=>{
           as: 'following', // People I follow them
           through: models.Follower
         });
+
+        User.hasOne(models.VerificationToken);
+        User.hasOne(models.ResetPasswordToken);
       };
       return User;
 }

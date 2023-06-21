@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GamesService } from 'src/app/services/products.service';
 import { GalleryItem, ImageItem } from 'ng-gallery';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard-product-details',
@@ -18,7 +19,8 @@ export class DashboardProductDetailsComponent implements OnInit {
   ID: any;
   game: any;
 
-  constructor(private route: ActivatedRoute, private gameService: GamesService) { }
+  constructor(
+    private toastr: ToastrService,private route: ActivatedRoute, private gameService: GamesService) { }
 
   ngOnInit(): void {
     this.ID=this.route.snapshot.params["id"]
@@ -39,8 +41,10 @@ export class DashboardProductDetailsComponent implements OnInit {
           this.assignImages()
         },
         error: (err) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);         }
       }
     );
   }

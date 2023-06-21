@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators,FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { GamesService } from 'src/app/services/products.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class UpdateProductComponent {
   osList = ['Linux', 'MacOs', 'Windows'];
 
   constructor(
+    private toastr: ToastrService,
     public gamesService: GamesService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -52,8 +54,10 @@ export class UpdateProductComponent {
       this.game = data;
     },
     error: (err) => {
-      console.log(err);
-    }
+      this.toastr.error(err, "Error");
+      setTimeout(() => {
+        this.toastr.clear()
+      }, 3000);     }
   });
 
   const tagControl = this.gameForm.get('tag');
@@ -166,8 +170,10 @@ export class UpdateProductComponent {
             this.router.navigate(['/dashboard/games/'+this.updatedProductId]);
           },
           error:(err)=>{
-            console.log(err)
-          }
+            this.toastr.error(err, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 3000);           }
         })
 
     }

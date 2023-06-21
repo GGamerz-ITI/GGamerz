@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from 'src/app/services/orders.service';
 
 
@@ -19,7 +20,7 @@ export class RejectedOrdersComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private ordersService:OrdersService) { 
+  constructor(private toastr: ToastrService,private ordersService:OrdersService) { 
     this.filterPendingOrders()
 
   }
@@ -41,8 +42,10 @@ export class RejectedOrdersComponent {
            this.dataSource.paginator = this.paginator;
          },
          error:(error) => {
-           console.log(error);
-         }}
+          this.toastr.error(error, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);          }}
        );
   }
 

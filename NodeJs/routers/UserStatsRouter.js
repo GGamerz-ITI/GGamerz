@@ -6,6 +6,4 @@ const userStatsController = require(path.join(__dirname, "../controllers/UserSta
 
 router.put("/points", userStatsController.updatePoints);
 
-router.put("/level", userStatsController.updateLevel);
-
 module.exports = router;

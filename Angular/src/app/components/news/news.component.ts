@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { NewsService } from 'src/app/services/news.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { NewsService } from 'src/app/services/news.service';
 export class NewsComponent implements OnInit {
   newsList: any[] = [];
 
-  constructor(private newsService: NewsService) { }
+  constructor(
+    private toastr: ToastrService, private newsService: NewsService) { }
 
   ngOnInit(): void {
     this.getAllNews();
@@ -17,13 +19,16 @@ export class NewsComponent implements OnInit {
 
   getAllNews(): void {
     this.newsService.getAllNews()
-      .subscribe(
-        (news: Object) => {
+      .subscribe({
+        next: (news: Object) => {
           this.newsList = news as any[]; // Cast the 'news' object to 'any[]' type
         },
-        (error) => {
-          console.error(error);
+        error: (error) => {
+          this.toastr.error(error, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);
         }
-      );
+      } );
   }
 }

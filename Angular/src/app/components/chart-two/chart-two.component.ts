@@ -1,5 +1,6 @@
 import {Component,OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserService } from 'src/app/services/users.service';
 
@@ -16,7 +17,7 @@ export class ChartTwoComponent implements OnInit{
   user: any;
   orders: any[] = [];
 
-  constructor(private userService: UserService, private orderService: OrdersService) { }
+  constructor(private toastr: ToastrService, private orderService: OrdersService) { }
 
   ngOnInit(): void {
     this.fetchData()
@@ -31,8 +32,11 @@ export class ChartTwoComponent implements OnInit{
           this.createChart();
         },
         error: (err: any) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000); 
+            }
       });
     }
   }

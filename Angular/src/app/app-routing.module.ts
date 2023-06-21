@@ -8,9 +8,6 @@ import { LoginComponent } from './components/login/login.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ForbiddenComponent } from './components/errors/forbidden/forbidden.component';
-import { AdminOnlyComponent } from './components/admin-only/admin-only.component';
-import { UserOnlyComponent } from './components/user-only/user-only.component';
-import { AuthOnlyComponent } from './components/auth-only/auth-only.component';
 import { AdminGuard } from './guards/admin.guard';
 import { UserGuard } from './guards/user.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -29,11 +26,15 @@ import { CreateProductComponent } from './components/dashboard/create-product/cr
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
 
+import { UserComponent } from './components/user/user.component';
+import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const routes: Routes = [
 
   {path:'register', component:RegisterComponent},
   {path:'login',component:LoginComponent},
+  {path:'verify', component:VerifyEmailComponent},
   // All users + guests
   {
     path: "",
@@ -44,6 +45,7 @@ const routes: Routes = [
       {path:'games',component:AllGamesComponent},
       {path:'games/:id',component:GameShowComponent},
       {path:'cart',component:CartComponent},
+      {path:'filteruser', component:FilteredUsersComponent},
 
       // Only logged in users
       {
@@ -54,6 +56,8 @@ const routes: Routes = [
           {path:'payment',component:PaymentComponent},
           {path:'orders',component:OrdersComponent},
           {path:'profile',component:ProfileComponent},
+          {path:'users/:id',component:UserComponent},
+
         ]
       },
     ]
@@ -81,11 +85,6 @@ const routes: Routes = [
 
   // Error routes
   { path: '403', component: ForbiddenComponent },
-
-  // Checking auth demo routes
-  { path: 'admin', component: AdminOnlyComponent, canActivate: [AdminGuard] },
-  { path: 'user', component: UserOnlyComponent, canActivate: [UserGuard] },
-  { path: 'auth', component: AuthOnlyComponent, canActivate: [AuthGuard] },
 
   // Other PAths
   { path: '**', component: NotfoundComponent }
