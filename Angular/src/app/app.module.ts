@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -73,8 +74,12 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { NewsComponent } from './components/news/news.component';
+import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
+// import { AnnouncementDetailsComponent } from './components/dashboard/announcement-details/announcement-details.component';
 import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { CreateAnnouncementComponent } from './components/dashboard/create-announcement/create-announcement.component';
+import { UpdateAnnouncementComponent } from './components/dashboard/update-announcement/update-announcement.component';
 
 
 
@@ -128,8 +133,12 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     UserComponent,
     FilteredUsersComponent,
     NewsComponent,
+    DashboardAnnouncementsComponent,
+    // AnnouncementDetailsComponent,
     ResendVerificationComponent,
     VerifyEmailComponent,
+    CreateAnnouncementComponent,
+    UpdateAnnouncementComponent,
 
 
   ],
@@ -151,6 +160,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     MatToolbarModule,
     MatListModule,
     MatMenuModule,
+    MatTooltipModule,
     MatTabsModule,
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right",
