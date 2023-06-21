@@ -27,11 +27,13 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { DashboardOrdersComponent } from './components/dashboard/dashboard-orders/dashboard-orders.component';
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const routes: Routes = [
 
   {path:'register', component:RegisterComponent},
   {path:'login',component:LoginComponent},
+  {path:'verify', component:VerifyEmailComponent},
   // All users + guests
   {
     path: "",

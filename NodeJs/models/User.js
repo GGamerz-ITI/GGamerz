@@ -119,6 +119,9 @@ module.exports = (sequelize, DataTypes)=>{
           as: 'following', // People I follow them
           through: models.Follower
         });
+
+        User.hasOne(models.VerificationToken);
+        User.hasOne(models.ResetPasswordToken);
       };
       return User;
 }
