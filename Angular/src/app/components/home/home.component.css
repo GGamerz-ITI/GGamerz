@@ -5,7 +5,9 @@ video{
  position: relative;
  top:0px;
 }
-
+.game-icon{
+  width: 75px;
+}
 .prev, .next{
   cursor: pointer;
   height: 10vh; /*middle of div*/

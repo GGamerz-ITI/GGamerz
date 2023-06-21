@@ -144,7 +144,11 @@ body{
   left: 0px;
   top: 10px;
 }
+.name:hover{
+cursor: pointer;
+color: #007bff;
 
+}
 .container {
   margin-bottom: 5vh;
   font-family: 'Nova Flat';

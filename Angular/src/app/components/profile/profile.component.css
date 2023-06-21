@@ -55,7 +55,7 @@
 .stat:hover{
     cursor: pointer;
 }
-.title:hover {
+.title:hover,  .username:hover {
     cursor: pointer;
     color: #007bff;
 }
@@ -109,7 +109,7 @@
     flex-wrap: wrap;
 }
 
-.cam:hover, .username:hover{
+.cam:hover{
     cursor: pointer;
 }
 .newPP:hover{

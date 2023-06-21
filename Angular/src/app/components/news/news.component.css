@@ -1,20 +1,27 @@
 .Cards {
-    display: -webkit-box !important;
-      overflow-x: auto;
-      overflow-y: auto;
-    padding: 20px 0;
-    box-sizing: border-box;
-    width:98%
-  }
-  
-  .card {
-    width: 250px; 
-    height: 250px; 
-    margin-right: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: wrap;
-    
-    
-  }
-  
+  display: -webkit-box !important;
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 20px 0;
+  box-sizing: border-box;
+  width: 98%;
+  height: 400px;
+  background-image: url("../../../assets/images/istockphoto-1127916497-612x612.jpg");
+  background-size: cover;
+}
+
+.card {
+  width: 350px;
+  /* height: 250px;  */
+  margin-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: wrap;
+
+}
+
+.news {
+  background-color: rgba(31, 30, 30, 0.521);
+    /* border:4px solid black;  */
+
+}
