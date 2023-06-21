@@ -35,7 +35,7 @@ export class CreditCardComponent {
   coupon = null
 
   creditcardForm = new FormGroup({
-    name: new FormControl(null, [Validators.required, Validators.pattern(/^[A-Za-z]+$/), Validators.minLength(6)]),
+    name: new FormControl(null, [Validators.required, Validators.pattern(/^([A-Za-z]{3,}\s){1,}[A-Za-z]{3,}$/),Validators.minLength(6)]),
     cardNumber: new FormControl(null, [Validators.required, Validators.pattern(/^\d{16}$/)]),
     expirationMonth: new FormControl(null, [Validators.required]),
     expirationYear: new FormControl(null, [Validators.required]),
@@ -60,7 +60,7 @@ export class CreditCardComponent {
           this.toastr.error(err, "Error");
           setTimeout(() => {
             this.toastr.clear()
-          }, 3000); 
+          }, 3000);
               }
       })
     }
