@@ -3,7 +3,14 @@ const { Order, User, Coupon, Game, OrderGame, Cart } = require('../models');
 // Get all orders
 async function getAllOrders(req, res) {
   try {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll({
+      include: [
+        {
+          model: Game,
+          through: OrderGame
+        }
+      ]
+    });
     res.json(orders);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
