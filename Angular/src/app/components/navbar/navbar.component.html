@@ -15,8 +15,9 @@
         <li *ngIf="isLoggedIn">
           <a routerLink="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
         </li>
-        <!-- <li></li>
-        <li><app-search-input> </app-search-input></li><li></li><li></li> -->
+        <li>
+          <a routerLink="/filteruser"><i class="fa-solid fa-search-plus"></i></a>
+        </li>
         <div class="d-flex user-nav"><app-user-nav (loggedOut)="refresh()"></app-user-nav></div>
       </ul>
     </div>

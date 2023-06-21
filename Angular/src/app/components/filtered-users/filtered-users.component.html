@@ -6,7 +6,7 @@
   <main>
 
     <section class="promo m-2 p-3 mt-3 shadow-sm fs-3 rounded">
-      <div>
+
         <div class="search-wrapper">
           <div class="input-holder">
               <input type="text" class="search-input" placeholder="Type to search" [(ngModel)]="searchTerm"/>
@@ -15,47 +15,53 @@
           <span class="close" (click)="searchToggle($event)"></span>
         </div>
 
-        Filter Users By Preferences
+        <div>
+        <span class="ml-5">Filter Users By Preferences</span>
         <p class="spin-emoji">💫</p>
-      </div>
+        </div>
     </section>
 <div >
-  <ul>
-    <li *ngFor="let user of users">{{ user.name }}</li>
-  </ul>
     <section class="cart rounded shadow-lg">
-      <ul *ngFor="let user of users">
-        <li class="item mb-3 rounded">
-          <div class="d-flex gap-4">
-            <div class="image ">
-              <!-- <img  src={{ user.character}}> -->
+      <ul *ngIf="users.length > 0; else noUsersFound" class="d-flex flex-column">
+        <li *ngFor="let user of users" class="rounded d-flex flex-column">
+          <div class="item">
+            <div class="d-flex gap-5">
+              <div class="image ">
+                <img  src="{{ user.character }}">
+              </div>
+
+              <div>
+                <h3 class="name"> {{ user.username }} </h3>
+                <div class="user-data d-flex gap-2">
+                  <p>{{ user.email }}</p>
+                </div>
+                <div class="user-data d-flex gap-2">
+                  <p>{{ user.discord }}</p>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <h4 class="name"> {{ user.username }} </h4>
-              <div class="os d-flex gap-2">
-                <p>{{ user.email }}</p>
-            </div>
-            <div class="os d-flex gap-2">
-              <p>{{ user.discord }}</p>
-          </div>
+            <div class="right-col">
+              <p><button >Follow</button></p>
             </div>
           </div>
+        <div>
+          <hr class="separator rounded">
+        </div>
 
-          <div class="right-col d-flex flex-column">
-            <!-- <p class="price">{{cart.price}} $</p> -->
-            <p><button >Follow</button></p>
-          </div>
         </li>
-        <hr class="m-2 separator rounded">
+        <!-- <hr class="m-2 separator rounded"> -->
       </ul>
 
-      <!-- <section class="d-flex justify-content-around">
-        <a routerLink="/games"><button class="bottmom-button">Continue Shipping</button></a>
-      </section> -->
+      <ng-template #noUsersFound>
+        <li class="mb-3 rounded" style=" list-style-type: none;">
+          <div class="p-2">
+              <h4 class="text-center"> No users found. </h4>
+          </div>
+        </li>
+      </ng-template>
+
     </section>
-
-
 
   </div>
   </main>

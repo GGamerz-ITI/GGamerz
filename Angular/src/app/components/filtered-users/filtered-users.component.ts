@@ -27,20 +27,35 @@ export class FilteredUsersComponent {
 
   searchTerm = "";
   users: any[] = [];
+  lastsearch: any[] = [];
 
   constructor(private userService: UserService) {}
 
+
   Search() {
+
     this.userService.searchUsers(this.searchTerm).subscribe({
       next: (data) => {
-        // Assign the response data to the users property
+
         this.users = data;
-        console.log(data)
+
+        //for save last search when no searchterm appear last search
+        if(!this.searchTerm)
+          {
+            this.users = this.lastsearch;
+          }
+
+        // console.log(this.searchTerm)
+        // console.log("data",data)
+        // console.log("users",this.users)
+        // console.log("late",this.lastsearch)
       },
       error: (err) => {
-        // Handle any errors here
+        this.users = [];
         console.error(err);
       }
     })
+
+    this.lastsearch = this.users;
   }
 }
