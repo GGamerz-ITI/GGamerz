@@ -28,6 +28,7 @@ import { DashboardOrdersComponent } from './components/dashboard/dashboard-order
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { UserComponent } from './components/user/user.component';
+import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 
 const routes: Routes = [
 
@@ -43,6 +44,7 @@ const routes: Routes = [
       {path:'games',component:AllGamesComponent},
       {path:'games/:id',component:GameShowComponent},
       {path:'cart',component:CartComponent},
+      {path:'filteruser', component:FilteredUsersComponent},
 
       // Only logged in users
       {

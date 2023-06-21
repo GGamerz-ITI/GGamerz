@@ -76,6 +76,7 @@ import { ChartTwoComponent } from './components/chart-two/chart-two.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UserComponent } from './components/user/user.component';
+import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { NewsComponent } from './components/news/news.component';
 
 
@@ -133,6 +134,7 @@ import { NewsComponent } from './components/news/news.component';
     UpdateProductComponent,
     FeedbackComponent,
     UserComponent,
+    FilteredUsersComponent,
     NewsComponent,
 
 
