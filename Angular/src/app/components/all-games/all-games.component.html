@@ -5,7 +5,7 @@
         <div class="header m-2 p-3 mt-3 shadow-sm fs-3 rounded"> ALL YOUR FAVORITE GAMES IN ONE PLACE<img class="gif"
                 src="../../../assets/images/icon.gif"></div>
         <div class="d-flex flex-row page-display">
-            <div *ngIf="games.length>0  " class="d-flex flex-column">
+            <div *ngIf="games&&games.length>0  " class="d-flex flex-column">
                 <div class="game-container bg-dark d-flex flex-row shadow  mb-3 p-2  rounded" *ngFor="let g of games">
                     <div class="d-flex flex-row ">
                         <div class="image">

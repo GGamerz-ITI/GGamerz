@@ -85,10 +85,7 @@ export class AllGamesComponent implements OnInit {
         });
       }
     } catch (error) {
-      this.toastr.error("An error occurred while retrieving the games " + error, "Error");
-      setTimeout(() => {
-        this.toastr.clear()
-      }, 2000);
+      console.log("An error occurred while retrieving the games " + error);
     }
   }
 
