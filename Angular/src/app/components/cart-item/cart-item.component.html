@@ -10,7 +10,7 @@
 
     <section class="cart rounded shadow-lg">
       <ul *ngFor="let item of cart">
-        <li class="item mb-3 rounded border">
+        <li class="item mb-3 rounded ">
           <div class="d-flex gap-4">
             <div class="image ">
               <img  src={{item.images[0]}}>
@@ -44,7 +44,7 @@
         <hr class="m-2 separator rounded">
       </ul>
 
-      <section class="d-flex justify-content-around">
+      <section class="buttons d-flex justify-content-around">
         <a routerLink="/games"><button class="bottmom-button">Continue Shipping</button></a>
         <button class="bottmom-button" *ngIf="cart.length > 0" (click)="clearCart()">Remove All</button>
       </section>
