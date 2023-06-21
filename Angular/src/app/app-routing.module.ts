@@ -27,6 +27,8 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { DashboardOrdersComponent } from './components/dashboard/dashboard-orders/dashboard-orders.component';
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
+import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
+
 
 const routes: Routes = [
 
@@ -68,6 +70,7 @@ const routes: Routes = [
       {path:'', component:DashboardHomeComponent},
       {path:'users', component:UsersTableComponent},
       {path:'games',component:DashboardProductsComponent},
+      {path:'announcements',component:DashboardAnnouncementsComponent},
       {path:'games/add',component:CreateProductComponent},
       {path:'orders',component:DashboardOrdersComponent},
       {path:'games/:id',component:DashboardProductDetailsComponent},

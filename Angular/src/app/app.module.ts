@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -76,6 +77,8 @@ import { ChartTwoComponent } from './components/chart-two/chart-two.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { NewsComponent } from './components/news/news.component';
+import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
+import { AnnouncementDetailsComponent } from './components/dashboard/announcement-details/announcement-details.component';
 
 
 
@@ -132,6 +135,8 @@ import { NewsComponent } from './components/news/news.component';
     UpdateProductComponent,
     FeedbackComponent,
     NewsComponent,
+    DashboardAnnouncementsComponent,
+    AnnouncementDetailsComponent,
 
 
   ],
@@ -153,6 +158,7 @@ import { NewsComponent } from './components/news/news.component';
     MatToolbarModule,
     MatListModule,
     MatMenuModule,
+    MatTooltipModule,
     MatTabsModule,
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right",
