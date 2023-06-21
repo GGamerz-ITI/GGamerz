@@ -76,6 +76,7 @@ import { FilteredUsersComponent } from './components/filtered-users/filtered-use
 import { NewsComponent } from './components/news/news.component';
 import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
 import { AnnouncementDetailsComponent } from './components/dashboard/announcement-details/announcement-details.component';
+import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 
@@ -132,6 +133,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     NewsComponent,
     DashboardAnnouncementsComponent,
     AnnouncementDetailsComponent,
+    ResendVerificationComponent,
     VerifyEmailComponent,
 
 
