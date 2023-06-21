@@ -30,11 +30,13 @@ import { UpdateProductComponent } from './components/dashboard/update-product/up
 import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const routes: Routes = [
 
   {path:'register', component:RegisterComponent},
   {path:'login',component:LoginComponent},
+  {path:'verify', component:VerifyEmailComponent},
   // All users + guests
   {
     path: "",

@@ -54,6 +54,10 @@ get password() {return this.mainInfo.get("password"); }
           this.errorMsg = err.error.message;
           break;
 
+          case 402:
+          this.errorMsg = err.error.message;
+          break;
+
           case 404:
           this.errorMsg = err.error.message;
           break;

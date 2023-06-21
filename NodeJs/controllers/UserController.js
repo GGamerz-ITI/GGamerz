@@ -30,6 +30,12 @@ const login = async (req, res) => {
     if (user.isBanned) {
       return res.status(403).json({ message: "User Banned" });
     }
+
+    // Check if user is Verified
+    if(!user.emailVerifiedAt)
+    {
+      return res.status(402).json({ message: "User is not verified"});
+    }
     // User is found and valdated => creating token and send it
     userDataForToken = {
       id: user.id,
