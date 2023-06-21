@@ -74,6 +74,7 @@ import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { NewsComponent } from './components/news/news.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 
@@ -128,6 +129,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     FilteredUsersComponent,
     NewsComponent,
     VerifyEmailComponent,
+    ResetPasswordComponent,
 
 
   ],
