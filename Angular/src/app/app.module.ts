@@ -73,6 +73,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { NewsComponent } from './components/news/news.component';
+import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 
@@ -127,6 +128,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     UserComponent,
     FilteredUsersComponent,
     NewsComponent,
+    ResendVerificationComponent,
     VerifyEmailComponent,
 
 

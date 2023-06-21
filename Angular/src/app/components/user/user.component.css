@@ -48,10 +48,10 @@
     padding: 3px 18px;
 
 }
-.stat:hover, .username:hover{
+.stat:hover{
     cursor: pointer;
 }
-.title:hover {
+.title:hover,  .username:hover {
     cursor: pointer;
     color: #007bff;
 }
