@@ -1,4 +1,4 @@
-const { Order, User, Coupon, Game, OrderGame,Cart } = require('../models');
+const { Order, User, Coupon, Game, OrderGame, Cart } = require('../models');
 
 // Get all orders
 async function getAllOrders(req, res) {
@@ -7,6 +7,37 @@ async function getAllOrders(req, res) {
     res.json(orders);
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+//Get user orders
+
+async function getUserOrders(req, res) {
+  const userId = parseInt(req.params.id);
+  try {
+    const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: Order,
+          include: [
+            {
+              model: Game,
+              through: OrderGame
+            }
+          ]
+        }
+      ]
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const orders = user.Orders; // Assuming the association accessor is named "Games"
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+    return;
   }
 }
 
@@ -29,24 +60,31 @@ async function getOrderById(req, res) {
 
 // Create a new order
 async function createOrder(req, res) {
-  // console.log(req.body)
-  const { total, userId, couponId} = req.body;
+  console.log(req.body)
+  // const { total, userId, couponId } = req.body;
+  const total = req.body.total
+  const userId = req.body.userId
+  const couponId = req.body.couponId
+
   // console.log(total, userId, couponId)
   try {
+    console.log("user found")
+
     const createdOrder = await Order.create({
-      total:total,
+      total: total,
       userId: userId,
-      couponId: couponId,
+      couponId: couponId
     });
+
     const user = await User.findByPk(userId, {
       include: [
         {
           model: Game,
-          through:Cart
+          through: Cart
         }
       ]
     });
-
+    console.log("user found")
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -66,7 +104,7 @@ async function createOrder(req, res) {
     await OrderGame.bulkCreate(orderGames);
 
     res.json(createdOrder);
-    
+
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: 'Internal server error' });
@@ -131,4 +169,5 @@ module.exports = {
   createOrder,
   updateOrder,
   deleteOrder,
+  getUserOrders
 };

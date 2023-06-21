@@ -10,14 +10,18 @@ const updatePoints = async (req,res) => {
             return res.status(400).json({ message: "Points Must be Integer" });
         }
 
-        points < 0 ? points = 0 : points
+        
         const user = await  models.User.findOne({ where: { id:  req.body.id } });
         if(!user)
         {
             return res.status(404).json({ message: "User not found" });
         }
 
-        user.points = points;
+        user.points = user.points + points;
+        if(user.points < 0)
+        {
+            return res.status(400).json({ message: "Error total points can't be negative" });
+        }
         const updated = await user.save();
         if (!updated) {
             return res.status(401).json({ message: "Failed to update points" });

@@ -189,3 +189,7 @@ i {
 /* #falseBlock{
     width:100% !important;
 } */
+.points {
+    border-radius: 50%;
+    background: #777a52;
+}

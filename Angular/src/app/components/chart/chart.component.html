@@ -1,3 +1,8 @@
 <div class="chart-container container">
-  <canvas class="chart" id="MyChart" >{{ chart }}</canvas>
+  <div *ngIf="orders && orders.length>0 else falseblock">
+    <canvas class="chart" id="MyChart">{{ chart }}</canvas></div>
+  <ng-template #falseblock>
+    <p class="text-center text-light bg-dark rounded p-2 w-50 m-auto mb-4">Purchase some games and see the analysis
+      here!</p>
+  </ng-template>
 </div>

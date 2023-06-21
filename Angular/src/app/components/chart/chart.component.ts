@@ -35,7 +35,7 @@ export class ChartComponent implements OnInit{
         switchMap((userData) => { //to switch to the orders Observable inside the user Observable subscription
           this.user = userData;
           // Fetch user orders
-          const ordersObservable = this.orderService.GetUserOrders(this.user._id);
+          const ordersObservable = this.orderService.GetUserOrders(this.user.id);
           if (ordersObservable) {
             return ordersObservable;
           } else {
@@ -46,7 +46,9 @@ export class ChartComponent implements OnInit{
         next: (data: any) => {
           this.orders = data;
           this.getTags()
-          this.createChart();
+          setTimeout(() => {
+
+          this.createChart();},100)
         },
         error: (err: any) => {
           console.log(err);
@@ -57,11 +59,11 @@ export class ChartComponent implements OnInit{
   getTags() {
     this.orders.forEach((order: any) => { //looping user orders
       if (order.status == 'accepted') {
-        order.gameItems.forEach((game: any) => { // looping games included in each order
-          if (game.tag) {
-            game.tag.forEach((tag: string) => { //looping tags of each game
+        order.Games.forEach((game: any) => { // looping games included in each order
+          if (game.tags) {
+            game.tags.forEach((tag: string) => { //looping tags of each game
               if (this.tags.length > 0) {
-                const index = this.tags.findIndex((item: any) => item === tag);
+                const index = this.tags.findIndex((item: any) => item == tag);
                 if (index === -1) {
                   this.tags.push(tag);
                   this.tagCount[this.tags.length - 1] = 1;
@@ -77,6 +79,8 @@ export class ChartComponent implements OnInit{
         });
       }
     })
+    console.log( this.tags,
+    this.tagCount)
   }
   createChart() {
     this.chart = new Chart("MyChart", {

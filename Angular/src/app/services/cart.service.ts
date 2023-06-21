@@ -28,6 +28,7 @@ export class CartService {
 
   gettotalPriceFromLocalStorage(): number {
     const cartTotalPrice = localStorage.getItem('cartTotalPrice');
+    console.log(cartTotalPrice)
     return cartTotalPrice !== null ? parseFloat(cartTotalPrice) : 0;
   }
 
