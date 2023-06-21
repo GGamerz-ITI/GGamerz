@@ -22,10 +22,6 @@
     text-overflow: ellipsis;
 }
 
-.theme {
-    align-items: center;
-}
-
 .profile-pic {
     width: 250px;
     height: 250px;
@@ -52,7 +48,7 @@
     padding: 3px 18px;
 
 }
-.stat:hover{
+.stat:hover, .username:hover{
     cursor: pointer;
 }
 .title:hover {
@@ -75,9 +71,6 @@
     padding: 5px 18px;
 }
 
-.tagEdit {
-    width: fit-content;
-}
 
 .level-container {
     color: black;
@@ -107,21 +100,4 @@
 .games-purchased {
     justify-content: center;
     flex-wrap: wrap;
-}
-
-.cam:hover, .username:hover{
-    cursor: pointer;
-}
-.newPP:hover{
-    cursor: pointer;
-    transform: scale(1.2);
-}
-.newPP{
-    transition: transform 0.3s ease;
-    /* width: 200px;
-height: 170px; */
-}
-.selected{
-    transform: scale(1.2);
-    background-color: #777a52d0;
 }
