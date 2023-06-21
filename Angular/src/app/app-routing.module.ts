@@ -8,9 +8,6 @@ import { LoginComponent } from './components/login/login.component';
 import { CartComponent } from './components/cart/cart.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ForbiddenComponent } from './components/errors/forbidden/forbidden.component';
-import { AdminOnlyComponent } from './components/admin-only/admin-only.component';
-import { UserOnlyComponent } from './components/user-only/user-only.component';
-import { AuthOnlyComponent } from './components/auth-only/auth-only.component';
 import { AdminGuard } from './guards/admin.guard';
 import { UserGuard } from './guards/user.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -87,11 +84,6 @@ const routes: Routes = [
 
   // Error routes
   { path: '403', component: ForbiddenComponent },
-
-  // Checking auth demo routes
-  { path: 'admin', component: AdminOnlyComponent, canActivate: [AdminGuard] },
-  { path: 'user', component: UserOnlyComponent, canActivate: [UserGuard] },
-  { path: 'auth', component: AuthOnlyComponent, canActivate: [AuthGuard] },
 
   // Other PAths
   { path: '**', component: NotfoundComponent }

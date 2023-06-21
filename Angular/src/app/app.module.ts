@@ -12,8 +12,6 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormMainInfoComponent } from './components/register/form-main-info/form-main-info.component';
-import { FormDiscordComponent } from './components/register/form-discord/form-discord.component';
-import { FormCharacterComponent } from './components/register/form-character/form-character.component';
 import { AllGamesComponent } from './components/all-games/all-games.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { LoginComponent } from './components/login/login.component';
@@ -24,9 +22,6 @@ import { ForbiddenComponent } from './components/errors/forbidden/forbidden.comp
 import { NotfoundComponent } from './components/errors/notfound/notfound.component';
 
 import { ToastrModule } from 'ngx-toastr';
-import { AdminOnlyComponent } from './components/admin-only/admin-only.component';
-import { UserOnlyComponent } from './components/user-only/user-only.component';
-import { AuthOnlyComponent } from './components/auth-only/auth-only.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -92,8 +87,6 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     FooterComponent,
     RegisterComponent,
     FormMainInfoComponent,
-    FormDiscordComponent,
-    FormCharacterComponent,
     AllGamesComponent,
     ChartComponent,
     LoginComponent,
@@ -102,9 +95,6 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     LoginComponent,
     ForbiddenComponent,
     NotfoundComponent,
-    AdminOnlyComponent,
-    UserOnlyComponent,
-    AuthOnlyComponent,
     OrdersComponent,
     OrderItemComponent,
     CreditCardComponent,
