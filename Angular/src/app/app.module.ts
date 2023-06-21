@@ -75,11 +75,13 @@ import { FilteredUsersComponent } from './components/filtered-users/filtered-use
 import { NewsComponent } from './components/news/news.component';
 import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { DashboardCouponsComponent } from './components/dashboard/dashboard-coupons/dashboard-coupons.component';
 
 
 
 @NgModule({
   declarations: [
+    DashboardCouponsComponent,
     AppComponent,
     HomeCardsComponent,
     NavbarComponent,
@@ -130,6 +132,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     NewsComponent,
     ResendVerificationComponent,
     VerifyEmailComponent,
+    DashboardCouponsComponent,
 
 
   ],

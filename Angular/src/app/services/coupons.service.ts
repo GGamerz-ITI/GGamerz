@@ -14,4 +14,8 @@ export class CouponsService {
   getUserCoupons(id: any) {
     return this.myClient.get(this.Base_URL + '/' + id)
   }
+
+  getCoupons() {
+    return this.myClient.get<any[]>(this.Base_URL);
+  }
 }
