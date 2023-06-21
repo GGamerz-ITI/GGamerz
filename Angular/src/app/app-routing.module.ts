@@ -27,6 +27,7 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { DashboardOrdersComponent } from './components/dashboard/dashboard-orders/dashboard-orders.component';
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
+import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 
 const routes: Routes = [
 
@@ -42,6 +43,7 @@ const routes: Routes = [
       {path:'games',component:AllGamesComponent},
       {path:'games/:id',component:GameShowComponent},
       {path:'cart',component:CartComponent},
+      {path:'filteruser', component:FilteredUsersComponent},
 
       // Only logged in users
       {

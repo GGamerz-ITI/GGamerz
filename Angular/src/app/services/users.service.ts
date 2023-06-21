@@ -72,4 +72,7 @@ public banChngObservable: Observable <void> = this.banSubject.asObservable();
   return this.myClient.post(this.Base_URL + "/unban",body)
   }
 
+  searchUsers(searchTerm: string): Observable<any> {
+    return this.myClient.post(this.Base_URL + "/preference", { searchTerm });
+  }
 }

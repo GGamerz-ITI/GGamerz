@@ -255,17 +255,46 @@ const validateUpdate = (data) => {
   return userSchema.validate(data);
 };
 
+// const usersWithUserRole = async (req, res) => {
+//   try {
+//     const { searchTerm } = req.body;
+//     console.log(req.body)
+    
+//     // Split the search term into an array of separate terms
+//     const searchTerms = searchTerm.split(/\s+/);
 
-const usersWithUserRole = async (req, res) => {
+//     // Search for users whose preferences contain any of the search terms
+//     const users = await models.User.findAll({
+//       where: {
+//         preferences: {
+//           [Op.or]: searchTerms.map(term => ({ [Op.like]: `%${term}%` }))
+//         }
+//       }
+//     });
+
+//     if (users.length === 0) {
+//       return res.status(404).json({ message: 'No users found' });
+//     }
+
+//     res.json(users);
+//   } catch (err) {
+//     console.error(`Error fetching users: ${err.message}`);
+//     res.status(500).json({ message: 'Error fetching users' });
+//   }
+// };
+
+
+const usersWithUserPreference = async (req, res) => {
   try {
     const { searchTerm } = req.body;
+    console.log(req.body)
     const users = await models.User.findAll({
       where: {
         preferences: {
           [Op.like]: `%${searchTerm}%`
         }
       }
-    });
+    });console.log(users)
     if (users.length === 0) { // check if the users array is empty
       return res.status(404).json({ message: 'No users found' }); // send a 404 error response
     }
@@ -277,9 +306,8 @@ const usersWithUserRole = async (req, res) => {
   }
 };
 
-
 module.exports = {
-  usersWithUserRole,
+  usersWithUserPreference,
   getAllUsers,
   getUserById,
   createUser,
