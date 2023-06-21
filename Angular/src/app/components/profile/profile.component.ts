@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserUpdateService } from 'src/app/services/emitters.service';
 import { FollowService } from 'src/app/services/follow.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +30,7 @@ export class ProfileComponent implements OnInit {
   followers: any
   following: any
 
-  constructor(private userService: UserService, private orderService: OrdersService,
+  constructor(private userService: UserService, private orderService: OrdersService, private router: Router,
     private cdr: ChangeDetectorRef, private userUpdateService: UserUpdateService, private followService: FollowService) { }
 
   ngOnInit() {
@@ -170,4 +171,10 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
+  redirect(id: any) {
+    this.router.navigate(['/users', id]).then(() => {
+      this.ngOnInit()
+    });
+  }
+
 }

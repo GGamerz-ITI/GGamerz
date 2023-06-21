@@ -111,7 +111,7 @@ module.exports = (sequelize, DataTypes)=>{
 
         User.belongsToMany(models.User,{
           foreignKey: {
-            name: "followerId",
+            name: "followingId",
             allowNull: false,
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'

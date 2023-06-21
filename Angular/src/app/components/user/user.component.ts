@@ -29,13 +29,18 @@ export class UserComponent {
   userFollowing: any
 
   constructor(private router: Router, private userService: UserService, private orderService: OrdersService,
-    private cdr: ChangeDetectorRef, private followService: FollowService, route: ActivatedRoute) {
-    this.userId = route.snapshot.params["id"]
+    private cdr: ChangeDetectorRef, private followService: FollowService, private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.userId = this.route.snapshot.params["id"]
+    this.fetchData()
     const userObservable = this.userService.getCurrentUser(); //get current user
     if (userObservable) {
       userObservable.subscribe({
         next: (data: any) => {
           this.currentUser = data;
+          if (this.currentUser.id == this.userId)
+            this.router.navigate(['/profile']);
           this.getCurrentUserFollowersAndFollowing()
         },
         error: (err: any) => {
@@ -45,14 +50,18 @@ export class UserComponent {
     }
   }
 
-  ngOnInit() {
-    this.fetchData()
+  redirect(id: any) {
+    this.router.navigate(['/users', id]).then(() => {
+      this.ngOnInit()
+    });
   }
+
   setValues(user: any) {
     this.bgcolor = user.bgColor
     this.character = user.character
     this.bgImg = "url(" + this.character + ")"
   }
+
   getGames() {
     this.orders.forEach((order: any) => {
       if (order.status == 'accepted') {
@@ -68,6 +77,7 @@ export class UserComponent {
       }
     })
   }
+
   fetchData() {
     const userObservable = this.userService.getUserByID(this.userId); //get current user
     if (userObservable) {
@@ -119,6 +129,7 @@ export class UserComponent {
       }
     })
   }
+
   getCurrentUserFollowersAndFollowing() {
     this.followService.getFollowers(this.currentUser.id).subscribe({
       next: (data) => {
@@ -137,6 +148,7 @@ export class UserComponent {
       }
     })
   }
+
   isFollower(): boolean {
     console.log(this.userFollower.followers)
     if (this.userFollower.followers.some((follower: { id: any; }) => follower.id === this.user.id))
@@ -144,11 +156,32 @@ export class UserComponent {
     else
       return false
   }
+
   isFollowing(): boolean {
     console.log(this.userFollowing.followings)
     if (this.userFollowing.followings.some((following: { id: any; }) => following.id === this.user.id))
       return true
     else
       return false
+  }
+
+  follow() {
+    this.followService.follow(this.currentUser.id, this.user.id).subscribe({
+      next: () => {
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
+  }
+
+  unfollow() {
+    this.followService.unfollow(this.currentUser.id, this.user.id).subscribe({
+      next: () => {
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
   }
 }

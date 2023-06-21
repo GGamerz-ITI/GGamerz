@@ -5,22 +5,22 @@ require("dotenv").config({ path: __dirname + "/.env" });
 
 const follow = async (req,res) => {
     try {
-        const  followerId = parseInt(req.body.userId);
+        const  follwingId = parseInt(req.body.userId);
         const  userId = parseInt(req.body.id); //my ID
         
-        if (isNaN(followerId) || isNaN(userId)) {
+        if (isNaN(follwingId) || isNaN(userId)) {
             res.status(400).json({ message: "Invalid user ID" });
             return;
           }
         
-        if( userId == followerId)
+        if( userId == follwingId)
         {
             return res.status(400).json({ message: "Can't follow yourself" });
         }
         // Check if the user and follower exist
         const [user, follower] = await Promise.all([
           models.User.findByPk(userId),
-          models.User.findByPk(followerId),
+          models.User.findByPk(follwingId),
         ]);
 
         if (!user || !follower) {
@@ -32,12 +32,12 @@ const follow = async (req,res) => {
             where: {
                 [Op.and]: [
                     { userId : userId },
-                    { followerId: followerId}
+                    { follwingId: follwingId}
                 ]
             },
             defaults: {
                  userId : userId,
-                 followerId: followerId
+                 follwingId: follwingId
             }
         });
   
@@ -54,15 +54,15 @@ const follow = async (req,res) => {
 
 const unfollow = async (req,res) => {
     try {
-        const  followerId = parseInt(req.body.userId);
+        const  follwingId = parseInt(req.body.userId);
         const  userId = parseInt(req.body.id); //my ID
         
-        if (isNaN(followerId) || isNaN(userId)) {
+        if (isNaN(follwingId) || isNaN(userId)) {
             res.status(400).json({ message: "Invalid user ID" });
             return;
           }
         
-        if( userId == followerId)
+        if( userId == follwingId)
         {
             return res.status(400).json({ message: "Can't follow/unfollow yourself" });
         }
@@ -71,7 +71,7 @@ const unfollow = async (req,res) => {
             where: {
                 [Op.and]: [
                     { userId : userId },
-                    { followerId: followerId}
+                    { follwingId: follwingId}
                 ]
             }
         })
