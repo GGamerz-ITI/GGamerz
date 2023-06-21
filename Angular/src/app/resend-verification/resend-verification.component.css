@@ -1,0 +1,21 @@
+.main{
+    background-image: url("../../assets/images/email-icon-vector-illustration.png");
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+}
+.body{
+    margin-top: 150px;
+    background-color:#5c527aa8;
+    height: 500px;
+}
+.separator{
+border: 2px solid white;
+}
+.btn{
+    padding-left: 30px;
+    padding-right:  30px;
+    padding-top:  10px;
+    padding-bottom:  10px;
+
+}

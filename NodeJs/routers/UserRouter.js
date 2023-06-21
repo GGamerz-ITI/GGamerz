@@ -21,6 +21,8 @@ router.post("/ban", userController.banUser);
 //Unban
 router.post("/unban", userController.unBanUser);
 
+// Update Password
+router.post("/passReset", userController.passUpdate);
 
 // filter by prefernce
 router.post("/preference", userController.usersWithUserPreference);

@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.DATE,
             allowNull: false,
           },
-      }, {tableName: 'ResetPasswordToken'});
+      }, {tableName: 'ResetPasswordTokens'});
       ResetPasswordToken.associate = function(models) {
         // associations can be defined here
         ResetPasswordToken.belongsTo(models.User, {
