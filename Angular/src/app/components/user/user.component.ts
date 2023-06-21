@@ -6,6 +6,7 @@ import { UserUpdateService } from 'src/app/services/emitters.service';
 import { FollowService } from 'src/app/services/follow.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user',
@@ -28,7 +29,7 @@ export class UserComponent {
   userFollower: any
   userFollowing: any
 
-  constructor(private router: Router, private userService: UserService, private orderService: OrdersService,
+  constructor(private toastr: ToastrService, private router: Router, private userService: UserService, private orderService: OrdersService,
     private cdr: ChangeDetectorRef, private followService: FollowService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -44,7 +45,10 @@ export class UserComponent {
           this.getCurrentUserFollowersAndFollowing()
         },
         error: (err: any) => {
-          console.log(err);
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);
         }
       });
     }
@@ -96,13 +100,21 @@ export class UserComponent {
                 this.getGames()
               },
               error: (err: any) => {
-                console.log(err);
+                this.toastr.error(err, "Error");
+                setTimeout(() => {
+                  this.toastr.clear()
+                }, 3000);
+
               }
             })
           }
         },
         error: (err: any) => {
-          console.log(err);
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);
+
         }
       });
     }
@@ -118,7 +130,11 @@ export class UserComponent {
         this.followers = data
       },
       error: (err: any) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
     this.followService.getFollowing(this.user.id).subscribe({
@@ -127,7 +143,11 @@ export class UserComponent {
 
       },
       error: (err: any) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
   }
@@ -138,7 +158,11 @@ export class UserComponent {
         this.userFollower = data
       },
       error: (err: any) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
     this.followService.getFollowing(this.currentUser.id).subscribe({
@@ -146,7 +170,11 @@ export class UserComponent {
         this.userFollowing = data
       },
       error: (err: any) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
   }
@@ -168,14 +196,18 @@ export class UserComponent {
   }
 
   follow() {
-    console.log("person to follow",this.userId)
-    console.log("my id",this.currentUser.id)
+    console.log("person to follow", this.userId)
+    console.log("my id", this.currentUser.id)
     this.followService.follow(this.userId, this.currentUser.id).subscribe({
       next: () => {
         this.ngOnInit()
       },
       error: (err: any) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
   }
@@ -186,7 +218,11 @@ export class UserComponent {
         this.ngOnInit()
       },
       error: (err: any) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
   }

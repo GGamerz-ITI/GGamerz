@@ -48,7 +48,7 @@ export class CreditCardComponent {
     this.cart.length = this.cartService.getallItemsFromLocalStorage();
   }
 
-  constructor(private toastr: ToastrService,private cartService: CartService, userService: UserService, private orderService: OrdersService, private router: Router, private paymentService: PaymentService, private statsService: StatsService) {
+  constructor(private toastr: ToastrService, private cartService: CartService, userService: UserService, private orderService: OrdersService, private router: Router, private paymentService: PaymentService, private statsService: StatsService) {
 
     const userObservable = userService.getCurrentUser()
     if (userObservable) {
@@ -57,8 +57,11 @@ export class CreditCardComponent {
           this.user = data;
         },
         error: (err) => {
-          console.log(err)
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000); 
+              }
       })
     }
 
@@ -121,7 +124,10 @@ export class CreditCardComponent {
       },
       error: (error) => {
         // Handle error here
-        console.error('Error creating order:', error);
+        this.toastr.error('Error creating order: ' + error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
       }
     }
     );
@@ -133,7 +139,10 @@ export class CreditCardComponent {
         this.ngOnInit();
       },
       error: (err) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
       }
     })
   }
@@ -168,13 +177,20 @@ export class CreditCardComponent {
 
           }, error: (error) => {
             // Handle error here
-            console.error('Error creating payment:', error);
+            this.toastr.error('Error creating payment: ' + error, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 3000);
           }
         })
       },
       error: (error) => {
         // Handle error here
-        console.error('Error creating payment:', error);
+        this.toastr.error('Error creating payment: ' + error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
   }

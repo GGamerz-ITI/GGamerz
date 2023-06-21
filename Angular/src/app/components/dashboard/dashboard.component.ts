@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 constructor(){
-  console.log("hiiii")
+  // console.log("hiiii")
 }
 }

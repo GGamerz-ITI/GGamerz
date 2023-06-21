@@ -28,7 +28,7 @@ export class AllGamesComponent implements OnInit {
   cart: any
   isLoggedIn: boolean = false;
 
-  constructor(private toastr: ToastrService,private authService: AuthService, private gamesService: GamesService, private formBuilder: FormBuilder, private userService: UserService, private cartService: CartService) {
+  constructor(private toastr: ToastrService, private authService: AuthService, private gamesService: GamesService, private formBuilder: FormBuilder, private userService: UserService, private cartService: CartService) {
     this.priceRange = this.formBuilder.group({
       range1: false,
       range2: false,
@@ -54,15 +54,21 @@ export class AllGamesComponent implements OnInit {
           this.cartService.GetCart(this.user.id).subscribe({
             next: (data) => {
               this.cart = data;
-              console.log(this.cart)
+              // console.log(this.cart)
             },
             error: (err) => {
-              console.log(err);
+              this.toastr.error(err, "Error");
+              setTimeout(() => {
+                this.toastr.clear()
+              }, 2000);
             }
           })
         },
         error: (err) => {
-          console.log(err)
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 2000);
         }
       })
     }
@@ -79,7 +85,10 @@ export class AllGamesComponent implements OnInit {
         });
       }
     } catch (error) {
-      console.error("An error occurred while retrieving the games", error);
+      this.toastr.error("An error occurred while retrieving the games " + error, "Error");
+      setTimeout(() => {
+        this.toastr.clear()
+      }, 2000);
     }
   }
 
@@ -97,36 +106,42 @@ export class AllGamesComponent implements OnInit {
     if (this.cart.length > 0) {
       const index = this.cart.findIndex((item: any) => item.id === g.id);
       if (index === -1) {
-        this.cartService.addToCart(g.id,this.user.id).subscribe({
+        this.cartService.addToCart(g.id, this.user.id).subscribe({
           next: () => {
             this.cart.push(g);
             this.toastr.success("Game added Successfully!", "Updating Cart");
           },
           error: (err) => {
-            console.log(err);
-          }
+            this.toastr.error(err, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 2000);          }
         })
       } else {
-        this.cartService.removeItem(g.id,this.user.id).subscribe({
+        this.cartService.removeItem(g.id, this.user.id).subscribe({
           next: () => {
             this.cart.splice(index, 1);
             this.toastr.error("Game removed Successfully!", "Updating Cart");
           },
           error: (err) => {
-            console.log(err);
-          }
+            this.toastr.error(err, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 2000);          }
         })
       }
     }
     else
-      this.cartService.addToCart(g.id,this.user.id).subscribe({
+      this.cartService.addToCart(g.id, this.user.id).subscribe({
         next: () => {
           this.cart.push(g);
           this.toastr.success("Game added Successfully!", "Updating Cart");
         },
         error: (err) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 2000);        }
       })
   }
 

@@ -5,6 +5,7 @@ import { OrdersService } from 'src/app/services/orders.service';
 import { UserUpdateService } from 'src/app/services/emitters.service';
 import { FollowService } from 'src/app/services/follow.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit {
   followers: any
   following: any
 
-  constructor(private userService: UserService, private orderService: OrdersService, private router: Router,
+  constructor(private toastr: ToastrService,private userService: UserService, private orderService: OrdersService, private router: Router,
     private cdr: ChangeDetectorRef, private userUpdateService: UserUpdateService, private followService: FollowService) { }
 
   ngOnInit() {
@@ -65,8 +66,11 @@ export class ProfileComponent implements OnInit {
         this.refresh()
       },
       error: (err) => {
-        console.log(err)
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
     })
   }
   emitValue(data: any): void {
@@ -106,14 +110,20 @@ export class ProfileComponent implements OnInit {
                 this.getGames()
               },
               error: (err: any) => {
-                console.log(err);
-              }
+                this.toastr.error(err, "Error");
+                setTimeout(() => {
+                  this.toastr.clear()
+                }, 3000); 
+                          }
             })
           }
         },
         error: (err: any) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000); 
+              }
       });
     }
   }
@@ -158,8 +168,11 @@ export class ProfileComponent implements OnInit {
         
       },
       error: (err: any) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
     })
     this.followService.getFollowing(this.user.id).subscribe({
       next: (data) => {
@@ -167,8 +180,11 @@ export class ProfileComponent implements OnInit {
         this.following = data
       },
       error: (err: any) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
     })
   }
   redirect(id: any) {

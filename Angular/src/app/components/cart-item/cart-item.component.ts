@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/users.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CouponsService } from 'src/app/services/coupons.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart-item',
@@ -18,7 +19,7 @@ export class CartItemComponent {
   selectedCouponId: any
   orderPts = 0
 
-  constructor(private userService: UserService, private cartService: CartService, private couponsService: CouponsService) { }
+  constructor(private toastr: ToastrService,private userService: UserService, private cartService: CartService, private couponsService: CouponsService) { }
 
   getAvailcoupons() {
     this.couponsService.getUserCoupons(this.user.id).subscribe({
@@ -26,8 +27,10 @@ export class CartItemComponent {
         this.coupons = data
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 2000);      }
     });
   }
 
@@ -45,13 +48,17 @@ export class CartItemComponent {
               this.updateTotal()
             },
             error: (err) => {
-              console.log(err);
-            }
+              this.toastr.error(err, "Error");
+              setTimeout(() => {
+                this.toastr.clear()
+              }, 2000);                 }
           })
         },
         error: (err) => {
-          console.log(err)
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 2000);             }
       })
     }
   }
@@ -62,8 +69,10 @@ export class CartItemComponent {
         this.ngOnInit()
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 2000);           }
     });
   }
 
@@ -73,8 +82,10 @@ export class CartItemComponent {
         this.ngOnInit();
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 2000);           }
     })
   }
 
@@ -97,7 +108,7 @@ export class CartItemComponent {
       this.orderPts += game.points
     });
     localStorage.setItem('orderPts', this.orderPts.toString());
-    console.log(this.orderPts)
+    // console.log(this.orderPts)
   }
 
   applyCoupon() {

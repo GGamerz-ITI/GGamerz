@@ -31,8 +31,11 @@ export class GameShowComponent implements OnInit {
         this.assignImages()
       },
       error: (err) => {
-        console.log(err)
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
     })
     const userObservable = this.userService.getCurrentUser()
     if (userObservable) {
@@ -45,14 +48,18 @@ export class GameShowComponent implements OnInit {
               console.log(this.cart)
             },
             error: (err) => {
-              console.log(err);
-            }
+              this.toastr.error(err, "Error");
+              setTimeout(() => {
+                this.toastr.clear()
+              }, 3000);             }
           })
           this.isloggedIn();
         },
         error: (err) => {
-          console.log(err)
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);         }
       })
     }
 
@@ -84,8 +91,10 @@ export class GameShowComponent implements OnInit {
             this.toastr.success("Game added Successfully!", "Updating Cart");
           },
           error: (err) => {
-            console.log(err);
-          }
+            this.toastr.error(err, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 3000);           }
         })
       } else {
         this.cartService.removeItem(this.game.id,this.user.id).subscribe({
@@ -95,8 +104,10 @@ export class GameShowComponent implements OnInit {
 
           },
           error: (err) => {
-            console.log(err);
-          }
+            this.toastr.error(err, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 3000);           }
         })
       }
     }
@@ -107,8 +118,10 @@ export class GameShowComponent implements OnInit {
           this.toastr.success("Game added Successfully!", "Updating Cart");
         },
         error: (err) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);         }
       })
   }
 
