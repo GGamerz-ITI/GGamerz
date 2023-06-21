@@ -35,9 +35,6 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let announcement">
-      <a [routerLink]="'/dashboard/announcements/' + announcement.id">
-        <i class="material-icons button--rounded">visibility</i>
-      </a> 
       
       <a [routerLink]="'/dashboard/announcements/update/' + announcement.id">
         <i class="material-icons button--rounded m-2">edit</i>

@@ -24,12 +24,15 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { DashboardOrdersComponent } from './components/dashboard/dashboard-orders/dashboard-orders.component';
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
-import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
 
 import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
+import { CreateAnnouncementComponent } from './components/dashboard/create-announcement/create-announcement.component';
+import { UpdateAnnouncementComponent } from './components/dashboard/update-announcement/update-announcement.component';
+
 
 const routes: Routes = [
 
@@ -76,11 +79,13 @@ const routes: Routes = [
       {path:'', component:DashboardHomeComponent},
       {path:'users', component:UsersTableComponent},
       {path:'games',component:DashboardProductsComponent},
-      {path:'announcements',component:DashboardAnnouncementsComponent},
       {path:'games/add',component:CreateProductComponent},
-      {path:'orders',component:DashboardOrdersComponent},
       {path:'games/:id',component:DashboardProductDetailsComponent},
-      {path:'games/update/:id',component:UpdateProductComponent}
+      {path:'games/update/:id',component:UpdateProductComponent},
+      {path:'announcements',component:DashboardAnnouncementsComponent},
+      {path:'announcements/add',component:CreateAnnouncementComponent},
+      {path:'announcements/update/:id',component:UpdateAnnouncementComponent},
+      {path:'orders',component:DashboardOrdersComponent}
     ]
   },
 

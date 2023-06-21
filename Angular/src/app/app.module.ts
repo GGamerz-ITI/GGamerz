@@ -75,9 +75,11 @@ import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { NewsComponent } from './components/news/news.component';
 import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
-import { AnnouncementDetailsComponent } from './components/dashboard/announcement-details/announcement-details.component';
+// import { AnnouncementDetailsComponent } from './components/dashboard/announcement-details/announcement-details.component';
 import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { CreateAnnouncementComponent } from './components/dashboard/create-announcement/create-announcement.component';
+import { UpdateAnnouncementComponent } from './components/dashboard/update-announcement/update-announcement.component';
 
 
 
@@ -132,9 +134,11 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     FilteredUsersComponent,
     NewsComponent,
     DashboardAnnouncementsComponent,
-    AnnouncementDetailsComponent,
+    // AnnouncementDetailsComponent,
     ResendVerificationComponent,
     VerifyEmailComponent,
+    CreateAnnouncementComponent,
+    UpdateAnnouncementComponent,
 
 
   ],
