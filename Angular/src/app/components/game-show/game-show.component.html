@@ -22,7 +22,7 @@
                     <!-- points -->
                     <div class="m-3 text-center ">
                         <label class="fs-4 text-secondary">Points</label>
-                        <div class="points p-3 fs-5">100</div>
+                        <div class="points p-3 fs-5">{{game.points}}</div>
                     </div>
                     <!-- add to cart -->
                     <div class="mt-4 " *ngIf="isLoggedIn">
@@ -79,11 +79,11 @@
                 </div>
                 <hr class="text-secondary">
                 <div class="d-flex flex-wrap flex-row">
-                    <p class="m-1 tag p-1 text-center" *ngFor="let t of game.tag">{{t}}</p>
+                    <p class="m-1 tag p-1 text-center" *ngFor="let t of game.tags">{{t}}</p>
                 </div>
                 <hr class="text-secondary">
                 <div class="d-flex flex-wrap flex-row">
-                    <p class="m-1 tag p-1 text-center" *ngFor="let t of game.type">{{t}}</p>
+                    <p class="m-1 tag p-1 text-center" *ngFor="let t of game.types">{{t}}</p>
                 </div>
                 <hr class="text-secondary">
                 <div class="d-flex flex-wrap os flex-row">

@@ -47,18 +47,19 @@ const getCommentById = async (req, res) => {
 const createComment = async (req, res) => {
   try {
     let newcomment = {
-        content: req.body.content,
-        reviewId: req.body.reviewId,
-        userId: req.body.userId
+      content: req.body.content,
+      reviewId: req.body.reviewId,
+      userId: req.body.userId
     };
     // Save comment
-    try {
-      const newcommentt = await models.Comment.create(newcomment);
-      res.status(200).json(newcommentt);
-      return;
-    } catch (err) {
-        return res.status(400).json({ message: err.message})
-    }
+   try {
+   const newcommentt = await models.Comment.create(newcomment);
+   res.status(200).json(newcommentt);
+   return;
+} catch (err) {
+   console.log(err.message);
+   return res.status(400).json({ message: err.message})
+}
   } catch (err) {
     res.status(400).json({ message: err.message});
   }

@@ -23,7 +23,8 @@
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
     "sequelize": "^6.32.0",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "stripe": "^12.9.0"
   },
   "devDependencies": {
     "sequelize-cli": "^6.6.1"

@@ -11,51 +11,39 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartItemComponent {
 
   user: any;
-  total: number = 0;
-  cart: any[] = []
+  total: any;
+  cart: any
 
-  constructor(private userService: UserService, private cartService: CartService) {
+  constructor(private userService: UserService, private cartService: CartService) { }
 
-    const userObservable = userService.getCurrentUser()
-    if (userObservable) {
-      userObservable.subscribe({
-        next: (data) => {
-          this.user = data;
-        },
-        error: (err) => {
-          console.log(err)
-        }
-      })
-    }
+  removeCartItem(id: any) {
+    this.cartService.removeItem(id, this.user.id).subscribe({
+      next: () => {
+        this.ngOnInit()
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
-  removeCartItem(cart: any) {
-    if (this.cart.length > 0) {
-      let index = this.cart.indexOf(cart);
-      this.cart.splice(index, 1);
-      this.userService.updateUserCart(this.user._id, this.cart).subscribe({
-        next: () => {
-          this.updateTotal()
-          this.updateCartItems()
-        },
-
-        error: (err) => {
-          console.log(err);
-        }
-      });
-    }
-  }
 
   async ngOnInit(): Promise<void> {
+    this.total=0
     const userObservable = this.userService.getCurrentUser()
     if (userObservable) {
       userObservable.subscribe({
         next: (data) => {
           this.user = data;
-          this.cart = this.user.cart
-          this.updateTotal()
-          this.updateCartItems()
-          this.cartService.updateCartItems(this.cart);
+          this.cartService.GetCart(this.user.id).subscribe({
+            next: (data) => {
+              this.cart = data;
+              this.updateTotal()
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          })
         },
         error: (err) => {
           console.log(err)
@@ -64,8 +52,8 @@ export class CartItemComponent {
     }
   }
 
-  clearCart(){
-    this.userService.updateUserCart(this.user._id, []).subscribe({
+  clearCart() {
+    this.cartService.emptyCart(this.user.id).subscribe({
       next: () => {
         this.ngOnInit();
       },
@@ -76,18 +64,14 @@ export class CartItemComponent {
   }
 
   updateTotal() {
-    this.total = this.cart.reduce((acc, item) => acc + item.price, 0);
-    const totalPrice = this.total;
-    this.cartService.updateTotal(totalPrice);
-    localStorage.setItem('cartTotalPrice', totalPrice.toString());
-    console.log(typeof totalPrice);
+    console.log(this.cart)
+    this.cart.forEach((item:any) => {
+      this.total+= parseFloat( item.price)
+    });
   }
 
-  updateCartItems(){
-    const allItems = this.cart.length;
-    this.cartService.updateTotal(allItems);
-    localStorage.setItem('allCartItems', allItems.toString());
-    console.log(allItems);
+  checkout(){
+    localStorage.setItem('cartTotalPrice', this.total.toString());
+    localStorage.setItem('allCartItems', this.cart.length.toString());
   }
-
 }
