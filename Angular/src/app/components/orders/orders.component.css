@@ -21,15 +21,25 @@
     margin-top: 150px !important;
 
 }
-
-.order-filter {
+@media (max-width: 600px){
+  .order-filter {
     display: flex;
-    justify-content: space-between;
-    background-color: lightgray;
-    color: #1B2838;
+    flex-direction: column;
+}
+}
+@media (min-width: 600px){
+  .order-filter {
+    display: flex;
     width: 80%;
 }
+}
 
+.order-filter {
+  display: flex;
+  justify-content: space-between;
+  background-color: lightgray;
+  color: #1B2838;
+}
 .order-type {
     transition: transform 0.3s ease;
     width: 100%;

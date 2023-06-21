@@ -67,15 +67,63 @@ hr {
 
 .game-container {
     font-family: 'Nova Flat';
-    width: 800px;
     height: fit-content;
     color: white;
-    justify-content: space-between;
     transition: transform 0.3s ease;
     margin: 5px;
 
 }
-
+@media (max-width: 600px){
+  .game-data,.game-container{
+    display: flex;
+    flex-direction: column;
+    gap:8px;
+  }
+  .game-container{
+    width: 100%;
+  }
+  .all-games{
+    width:100%
+  }
+  .page-display {
+    /* margin-top: 40px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+ @media (min-width: 610px) and (max-width: 1300px){
+  .game-container{
+    justify-content: space-between;
+  }
+  .last-col {
+    align-items: center;
+    justify-content: space-around;
+  }
+  .page-display {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+@media (min-width: 1301px){
+  .game-data,.game-container{
+    display: flex;
+    flex-direction: row;
+  }
+  .game-container{
+    width: 800px;
+    justify-content: space-between;
+  }
+  .last-col {
+    align-items: center;
+    justify-content: space-around;
+  }
+  .page-display {
+    /* margin-top: 40px; */
+    display: flex;
+    justify-content: space-between;
+  }
+}
 .game-container:hover {
     transform: scale(1.05);
 
@@ -96,9 +144,9 @@ hr {
     margin-left: 15px;
 }
 
-.last-col {
-    align-items: center;
-    justify-content: space-around;
+.right-col {
+  justify-content: space-between;
+  align-items: self-end;
 }
 
 img {
@@ -172,10 +220,7 @@ i {
 }
 
 
-.right-col {
-    justify-content: space-between;
-    align-items: self-end;
-}
+
 
 .star {
     transition: transform 0.3s ease;

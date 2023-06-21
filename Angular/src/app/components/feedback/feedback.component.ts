@@ -36,6 +36,14 @@ export class FeedbackComponent {
         // console.log(this.reviews);
         this.reviews.forEach((review: any) => {
           this.fetchComments(review.id);
+          this.userService.getUserByID(review.userId).subscribe({
+            next: (user) => {
+              review.user = user;
+            },
+            error: (error) => {
+              console.error('Error getting user:', error);
+            },
+          });
         });
       },
       error: (err) => {
@@ -60,6 +68,16 @@ export class FeedbackComponent {
     this.commentService.getAllReviewcomments(reviewId).subscribe({
       next: (data) => {
         this.comments[reviewId] = data;
+        this.comments[reviewId].forEach((comment: any) => {
+          this.userService.getUserByID(comment.userId).subscribe({
+            next: (user) => {
+              comment.user = user;
+            },
+            error: (error) => {
+              console.error('Error getting user:', error);
+            },
+          });
+        });
       },
       error: (err) => {
         console.log(err);
@@ -80,7 +98,7 @@ export class FeedbackComponent {
 
   create_review() {
     const review = {
-      userId: 3,
+      userId: 1,
       gameId: this.gameID,
       content: this.reviewText,
     };
@@ -94,26 +112,34 @@ export class FeedbackComponent {
     });
     window.location.reload();
     }
-      create_comment(review: any) {
-        if (this.commentText.value === '') {
-          console.error('Comment content is empty');
-          return;
-        }
-        const comment = {
-          userId: 3,
-          reviewId: review.id,
-          content: this.commentText.value,
-        };
+
+    create_comment(review: any) {
+      if (this.commentText.value === '') {
+        console.error('Comment content is empty');
+        return;
+      }
+      const comment = {
+        userId: 1,
+        reviewId: review.id,
+        content: this.commentText.value,
+      };
       this.commentService.createComment(comment).subscribe({
         next: (response) => {
-          console.log('Comment created successfully:', response);},
-        error: (error) => {
-          console.error('Error creating comment:', error);  },
-      });
-      // this.commentText = '';
-    } // Reset the comment text after creating the comment
+          console.log('Comment created successfully:', response);
 
-delete_review(reviewId: string) {
+        },
+        error: (error) => {
+          console.error('Error creating comment:', error);
+        },
+      });
+
+      // Clear the comment text
+      // this.commentText.reset();
+    }
+
+
+
+    delete_review(reviewId: string) {
   this.reviewService.deleteReview(reviewId).subscribe({
     next: (response) => {
       console.log('Review deleted successfully:', response);
