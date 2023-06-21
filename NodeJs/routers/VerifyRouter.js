@@ -5,6 +5,9 @@ const path = require("path");
 const VerifyController = require(path.join(__dirname, "../controllers/VerifyController"));
 
 router.post("/email", VerifyController.verifyEmail);
+
+router.post("/passwordReset", VerifyController.passReset);
+
 router.get("/emailVerify/:userId/:token", VerifyController.verify);
 
 module.exports = router;

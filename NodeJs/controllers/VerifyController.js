@@ -36,7 +36,7 @@ const verifyEmail = async (req,res) =>{
         const currentDate = new Date();
         const expiryDate = new Date(currentDate.getTime() + 3 * 60 * 60 * 1000);
 
-        // Check if there is already token in db if yes created token we made will not be used
+        // Check if there is already token in db if yes token will be deleted to make another one
         const checkToken = await models.VerificationToken.findOne({ where: { email: userEmail } });
         if(checkToken)
         {
@@ -44,13 +44,6 @@ const verifyEmail = async (req,res) =>{
             if (!deleteToken) {
                return res.status(400).json({ message: "Expired Token found and couldn't delete" });
               }
-            // if(checkToken.expiryDate < currentDate)
-            // {
-
-            // }
-            // else{
-            //    return res.status(400).json({ message: "Token Already found please check your email" });
-            // }
         }
 
         // Token table match requirements and we will create new token
@@ -68,15 +61,6 @@ const verifyEmail = async (req,res) =>{
         }
 
         // Token created and will be sent by email
-        const transporter = nodemailer.createTransport({
-          host: process.env.EMAILHOST,
-          port: 2525,
-          auth: {
-            user: process.env.EMAILUSER,
-            pass: process.env.EMAILPASS
-          }
-        });
-
           const mailOptions = {
             from: 'ggamerz.iti@gmail.com',
             to: userEmail,
@@ -85,7 +69,7 @@ const verifyEmail = async (req,res) =>{
             <a href="${process.env.FRONTEND}verify?userId=${user.id}&token=${token}">Verify Email</a></p>`
           };
              
-          let send = await sendEmail(transporter,mailOptions);
+          let send = await sendEmail(mailOptions);
 
           if(!send)
           {
@@ -125,7 +109,7 @@ const verify = async (req,res) =>{
     
         const deleteToken = await models.VerificationToken.destroy({ where: { email: userEmail } });
         if (!deleteToken) {
-           return res.status(400).json({ message: "Expired Token found and couldn't delete" });
+           return res.status(400).json({ message: "Couldn't delete token" });
         }
             
         const newEmailVerifiedAt = new Date();
@@ -148,8 +132,90 @@ const verify = async (req,res) =>{
     }
 }
 
-async function sendEmail(transporter, mailOptions) {
+const passReset = async (req,res) =>{
+  try
+  {
+      userEmail = req.body.email
+
+      const user = await models.User.findOne({ where: { email: userEmail } });
+      // check if there is a user
+      if(!user)
+      {
+          return res.status(404).json({ message: "Email not registered" });
+      }
+      
+      // creating token
+      userDataForToken = {
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          email: user.email,
+        };
+      const token = jwt.sign(userDataForToken, process.env.SECRET_KEY);
+
+
+      const currentDate = new Date();
+      const expiryDate = new Date(currentDate.getTime() + 3 * 60 * 60 * 1000);
+
+      // Check if there is already token in db if yes token will be deleted to make another one
+      const checkToken = await models.ResetPasswordToken.findOne({ where: { email: userEmail } });
+      if(checkToken)
+      {
+          const deleteToken = await models.ResetPasswordToken.destroy({ where: { id: checkToken.id } });
+          if (!deleteToken) {
+             return res.status(400).json({ message: "Expired Token found and couldn't delete" });
+            }
+      }
+
+      // Token table match requirements and we will create new token
+      let myToken = {
+        userId: user.id,
+        email: user.email.toLowerCase(),
+        token: token,
+        expiryDate: expiryDate
+      };
+
+      const newToken = await models.ResetPasswordToken.create(myToken);
+      if(!newToken)
+      {
+          return res.status(400).json({ message: "Failed to create token in Reset Password Table" });
+      }
+
+      // Token created and will be sent by email
+        const mailOptions = {
+          from: 'ggamerz.iti@gmail.com',
+          to: userEmail,
+          subject: 'Reset Password',
+          html: `<p>Please click the following link to verify your email:
+          <a href="${process.env.FRONTEND}passReset?userId=${user.id}&token=${token}">Reset Password</a></p>`
+        };
+           
+        let send = await sendEmail(mailOptions);
+
+        if(!send)
+        {
+          return res.status(400).json({ message: "Email not sent" });
+        }
+
+        // Email sent with token successfully and token is stored in database
+        return res.status(200).json({ message: "Email Sent Successfully" });
+  }catch(err)
+  {
+      console.log(err)
+      return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+async function sendEmail(mailOptions) {
     try {
+      const transporter = nodemailer.createTransport({
+        host: process.env.EMAILHOST,
+        port: 2525,
+        auth: {
+          user: process.env.EMAILUSER,
+          pass: process.env.EMAILPASS
+        }
+      });
       let info = await transporter.sendMail(mailOptions);
       console.log('Email sent: ' + info.response);
       return true;
@@ -161,5 +227,6 @@ async function sendEmail(transporter, mailOptions) {
 
 module.exports = {
     verifyEmail,
-    verify
+    verify,
+    passReset
 }
