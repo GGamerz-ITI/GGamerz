@@ -12,8 +12,6 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormMainInfoComponent } from './components/register/form-main-info/form-main-info.component';
-import { FormDiscordComponent } from './components/register/form-discord/form-discord.component';
-import { FormCharacterComponent } from './components/register/form-character/form-character.component';
 import { AllGamesComponent } from './components/all-games/all-games.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { LoginComponent } from './components/login/login.component';
@@ -24,9 +22,6 @@ import { ForbiddenComponent } from './components/errors/forbidden/forbidden.comp
 import { NotfoundComponent } from './components/errors/notfound/notfound.component';
 
 import { ToastrModule } from 'ngx-toastr';
-import { AdminOnlyComponent } from './components/admin-only/admin-only.component';
-import { UserOnlyComponent } from './components/user-only/user-only.component';
-import { AuthOnlyComponent } from './components/auth-only/auth-only.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -75,8 +70,10 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ChartTwoComponent } from './components/chart-two/chart-two.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
 import { NewsComponent } from './components/news/news.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 
 
@@ -89,8 +86,6 @@ import { NewsComponent } from './components/news/news.component';
     FooterComponent,
     RegisterComponent,
     FormMainInfoComponent,
-    FormDiscordComponent,
-    FormCharacterComponent,
     AllGamesComponent,
     ChartComponent,
     LoginComponent,
@@ -99,9 +94,6 @@ import { NewsComponent } from './components/news/news.component';
     LoginComponent,
     ForbiddenComponent,
     NotfoundComponent,
-    AdminOnlyComponent,
-    UserOnlyComponent,
-    AuthOnlyComponent,
     OrdersComponent,
     OrderItemComponent,
     CreditCardComponent,
@@ -132,8 +124,10 @@ import { NewsComponent } from './components/news/news.component';
     ChartTwoComponent,
     UpdateProductComponent,
     FeedbackComponent,
+    UserComponent,
     FilteredUsersComponent,
     NewsComponent,
+    VerifyEmailComponent,
 
 
   ],

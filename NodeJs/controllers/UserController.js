@@ -30,6 +30,12 @@ const login = async (req, res) => {
     if (user.isBanned) {
       return res.status(403).json({ message: "User Banned" });
     }
+
+    // Check if user is Verified
+    if(!user.emailVerifiedAt)
+    {
+      return res.status(402).json({ message: "User is not verified"});
+    }
     // User is found and valdated => creating token and send it
     userDataForToken = {
       id: user.id,
@@ -259,6 +265,57 @@ const validateUpdate = (data) => {
   return userSchema.validate(data);
 };
 
+// Reset User Password
+const passUpdate = async (req,res) =>{
+  try
+  {
+      id = req.body.userId;
+      token = req.body.token
+      password = req.body.password
+
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      
+      const decoded = jwt.decode(token);
+      let userEmail = decoded.email;
+  
+      const user = await models.ResetPasswordToken.findOne({ where: { email: userEmail } });
+      if(!user)
+      {
+          return res.status(404).json({ message: "Please request new password reset" });
+      }
+  
+      if(user.token != token)
+      {
+          return res.status(401).json({ message: "Invalid token" });
+      }
+  
+      const deleteToken = await models.ResetPasswordToken.destroy({ where: { email: userEmail } });
+      if (!deleteToken) {
+         return res.status(400).json({ message: "Couldn't delete token" });
+      }
+          
+     
+      
+      const updateUserPass = await models.User.update({ password: hashedPassword }, {
+        where: {
+          email: userEmail
+        }
+      });
+
+      if (!updateUserPass) {
+          return res.status(400).json({ message: "Failed to update password" });
+       }
+
+       return res.status(200).json({ message: "Updated Successfully" });
+  }catch(err)
+  {
+      console.log(err)
+      return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+
 const usersWithUserPreference = async (req, res) => {
   try {
     const { searchTerm } = req.body;
@@ -302,4 +359,5 @@ module.exports = {
   login,
   banUser,
   unBanUser,
+  passUpdate
 };

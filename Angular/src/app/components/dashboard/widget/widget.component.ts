@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from 'src/app/services/orders.service';
 import { GamesService } from 'src/app/services/products.service';
 import { UserService } from 'src/app/services/users.service';
@@ -17,7 +18,7 @@ export class WidgetComponent {
   countAcceptedOrders: number = 0
   revenue:number = 0
 
-  constructor(private gamesService: GamesService, private userService: UserService, private orderService:OrdersService) {
+  constructor(private toastr: ToastrService,private gamesService: GamesService, private userService: UserService, private orderService:OrdersService) {
     this.getAllItemsCount();
     this.getAllUsersCount();
     this.getAllOrdersCount();
@@ -30,8 +31,11 @@ export class WidgetComponent {
         this.itemsCount = Object.keys(items).length;
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
   });
   }
 
@@ -41,8 +45,11 @@ export class WidgetComponent {
         this.usersCount = Object.keys(users).length;
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
   });
   }
 
@@ -56,8 +63,11 @@ export class WidgetComponent {
         }
         },
         error: (err) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000); 
+              }
     });
   }
 
@@ -67,8 +77,11 @@ export class WidgetComponent {
         this.ordersCount = Object.keys(orders).length;
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
   });
   }
 

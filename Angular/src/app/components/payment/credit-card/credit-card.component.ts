@@ -3,8 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/users.service';
 import { OrdersService } from 'src/app/services/orders.service';
-import { PaymentService } from 'src/app/services/payment.servce';
+import { PaymentService } from 'src/app/services/payment.service';
 import { Router } from '@angular/router';
+import { StatsService } from 'src/app/services/stats.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-credit-card',
@@ -30,7 +32,7 @@ export class CreditCardComponent {
   cartTotalPrice: number = 0;
   user: any
   filteredMonths: string[] = this.months;
-  coupon=null
+  coupon = null
 
   creditcardForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.pattern(/^([A-Za-z]{3,}\s){1,}[A-Za-z]{3,}$/),Validators.minLength(6)]),
@@ -42,11 +44,11 @@ export class CreditCardComponent {
 
   ngOnInit(): void {
     this.cartTotalPrice = this.cartService.gettotalPriceFromLocalStorage();
-    console.log( this.cartTotalPrice)
+    console.log(this.cartTotalPrice)
     this.cart.length = this.cartService.getallItemsFromLocalStorage();
   }
 
-  constructor(private cartService: CartService, private userService: UserService, private orderService: OrdersService, private router: Router, private paymentService: PaymentService) {
+  constructor(private toastr: ToastrService, private cartService: CartService, userService: UserService, private orderService: OrdersService, private router: Router, private paymentService: PaymentService, private statsService: StatsService) {
 
     const userObservable = userService.getCurrentUser()
     if (userObservable) {
@@ -55,8 +57,11 @@ export class CreditCardComponent {
           this.user = data;
         },
         error: (err) => {
-          console.log(err)
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);
+              }
       })
     }
 
@@ -87,13 +92,13 @@ export class CreditCardComponent {
       // Form is valid, perform further actions or submit the form
       console.log("Form is valid");
 
-      //service to create oreder
-      this.createOrder();
-
       //service to pament stripe
+      this.toastr.info("You'll be redirected shortly", "Payment Processing");
+      setTimeout(() => {
+        this.toastr.clear()
+      }, 3000);
       this.createPayment();
 
-      this.router.navigate(['/orders']);
     } else {
       // Form is invalid, handle validation errors
       console.log("Form is invalid");
@@ -107,20 +112,24 @@ export class CreditCardComponent {
     const orderData = {
       userId: this.user.id,
       total: this.cartTotalPrice,
-      couponId:this.coupon
+      couponId: this.coupon
     };
 
     // console.log(orderData)
     this.orderService.createOrder(orderData).subscribe({
-      next:(response) => {
+      next: (response) => {
         // Handle successful response here
         console.log('Order created successfully:', response);
         this.clearCart();
       },
-      error:(error) => {
+      error: (error) => {
         // Handle error here
-        console.error('Error creating order:', error);
-      }}
+        this.toastr.error('Error creating order: ' + error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+      }
+    }
     );
   }
 
@@ -130,7 +139,10 @@ export class CreditCardComponent {
         this.ngOnInit();
       },
       error: (err) => {
-        console.log(err);
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
       }
     })
   }
@@ -154,13 +166,31 @@ export class CreditCardComponent {
     }
     console.log(paymentData)
     this.paymentService.createPayment(paymentData).subscribe({
-      next: (response) => {
-        // Handle successful response here
-        console.log('Payment created successfully:', response);
+      next: () => {
+        this.createOrder();
+        this.statsService.updatePoints(this.user.id).subscribe({
+          next: () => {
+            localStorage.removeItem('allCartItems');
+            localStorage.removeItem('orderPts');
+            localStorage.removeItem('cartTotalPrice');
+            this.router.navigate(['/orders']);
+
+          }, error: (error) => {
+            // Handle error here
+            this.toastr.error('Error creating payment: ' + error, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 3000);
+          }
+        })
       },
       error: (error) => {
         // Handle error here
-        console.error('Error creating payment:', error);
+        this.toastr.error('Error creating payment: ' + error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+
       }
     })
   }

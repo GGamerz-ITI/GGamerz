@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
 // import { UserUpdateService } from 'src/app/services/emitters.service';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -22,7 +23,7 @@ export class ChartComponent implements OnInit{
   user: any;
   orders: any[] = [];
 
-  constructor(private userService: UserService, private orderService: OrdersService) { }
+  constructor(private toastr: ToastrService,private userService: UserService, private orderService: OrdersService) { }
 
   ngOnInit(): void {
     console.log("in child");
@@ -40,6 +41,7 @@ export class ChartComponent implements OnInit{
             return ordersObservable;
           } else {
             throw new Error('Failed to fetch user orders');
+            
           }
         })
       ).subscribe({
@@ -51,8 +53,10 @@ export class ChartComponent implements OnInit{
           this.createChart();},100)
         },
         error: (err: any) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 2000);             }
       });
     }
   }
@@ -79,8 +83,8 @@ export class ChartComponent implements OnInit{
         });
       }
     })
-    console.log( this.tags,
-    this.tagCount)
+    // console.log( this.tags,
+    // this.tagCount)
   }
   createChart() {
     this.chart = new Chart("MyChart", {
