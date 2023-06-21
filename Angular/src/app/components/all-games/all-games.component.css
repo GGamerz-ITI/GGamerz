@@ -92,7 +92,7 @@ hr {
     justify-content: space-between;
   }
 }
- @media (min-width: 610px) and (max-width: 1449px){
+ @media (min-width: 610px) and (max-width: 1300px){
   .game-container{
     justify-content: space-between;
   }
@@ -105,7 +105,7 @@ hr {
     justify-content: space-around;
   }
 }
-@media (min-width: 1500px){
+@media (min-width: 1301px){
   .game-data,.game-container{
     display: flex;
     flex-direction: row;
