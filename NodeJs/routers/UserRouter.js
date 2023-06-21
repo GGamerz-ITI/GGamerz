@@ -22,6 +22,7 @@ router.post("/ban", userController.banUser);
 router.post("/unban", userController.unBanUser);
 
 
-//filter by preference
-router.post("/preference", userController.usersWithUserRole);
+// filter by prefernce
+router.post("/preference", userController.usersWithUserPreference);
+
 module.exports = router;

@@ -1,0 +1,11 @@
+<!-- <h3 class="title1 text-white">Check Our Latest News.</h3> -->
+    <div class="Cards">
+      <div class="card" *ngFor="let newsItem of newsList" class="card">
+        <div class="card-body">
+          <h5 class="card-title"> {{ newsItem.title }}</h5>
+          <p class="card-text">{{ newsItem.content }}</p>
+          <p class="card-text">Created at:{{ newsItem.createdAt }}</p>
+        </div>
+      </div>
+    </div>
+  
