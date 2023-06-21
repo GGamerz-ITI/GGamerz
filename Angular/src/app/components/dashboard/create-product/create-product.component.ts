@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, Form  } from '@angular/forms';
 import { GamesService } from 'src/app/services/products.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-product',
@@ -25,7 +26,7 @@ export class CreateProductComponent  {
   osList = ['linux', 'mac', 'windows'];
 
 
-  constructor(public gamesService: GamesService,  private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {}
+  constructor(private toastr: ToastrService,public gamesService: GamesService,  private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {}
 
 
   ngOnInit(): void {
@@ -112,7 +113,12 @@ export class CreateProductComponent  {
               this.router.navigate(['/dashboard/games']);
             }
             ,
-            error:(err)=>{console.log(err)}
+            error:(err)=>{  
+              this.toastr.error(err, "Error");
+              setTimeout(() => {
+                this.toastr.clear()
+              }, 3000); 
+            }
           });
      } 
     else{

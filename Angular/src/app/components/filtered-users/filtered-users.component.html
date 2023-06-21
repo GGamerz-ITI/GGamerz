@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+<body>
+  <div class="container">
+<section class="container shadow-lg rounded">
+
+  <main>
+
+    <section class="promo m-2 p-3 mt-3 shadow-sm fs-3 rounded">
+
+        <div class="search-wrapper">
+          <div class="input-holder">
+              <input type="text" class="search-input" placeholder="Type to search" [(ngModel)]="searchTerm"/>
+              <button class="search-icon" (mouseover)="searchToggle($event)" (click)="Search()"><span></span></button>
+          </div>
+          <span class="close" (click)="searchToggle($event)"></span>
+        </div>
+
+        <div>
+        <span class="ml-5">Filter Users By Preferences</span>
+        <p class="spin-emoji">💫</p>
+        </div>
+    </section>
+<div >
+    <section class="cart rounded shadow-lg">
+      <ul *ngIf="users.length > 0; else noUsersFound" class="d-flex flex-column">
+        <li *ngFor="let user of users" class="rounded d-flex flex-column">
+          <div class="item">
+            <div class="d-flex gap-5">
+              <div class="image ">
+                <img  src="{{ user.level }}">
+              </div>
+
+              <div>
+                <h3 class="name"> {{ user.username }} </h3>
+                <div class="user-data d-flex gap-2">
+                  <p>{{ user.email }}</p>
+                </div>
+                <div class="user-data d-flex gap-2">
+                  <p>{{ user.discord }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="right-col">
+              <p><button >Follow</button></p>
+            </div>
+          </div>
+        <div>
+          <hr class="separator rounded">
+        </div>
+
+        </li>
+        <!-- <hr class="m-2 separator rounded"> -->
+      </ul>
+
+      <ng-template #noUsersFound>
+        <li class="mb-3 rounded" style=" list-style-type: none;">
+          <div class="p-2">
+              <h4 class="text-center"> No users found. </h4>
+          </div>
+        </li>
+      </ng-template>
+
+    </section>
+
+  </div>
+  </main>
+
+</section>
+</div>
+</body>
+<app-footer></app-footer>

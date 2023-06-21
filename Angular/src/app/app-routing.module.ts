@@ -27,11 +27,15 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { DashboardOrdersComponent } from './components/dashboard/dashboard-orders/dashboard-orders.component';
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
+import { UserComponent } from './components/user/user.component';
+import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const routes: Routes = [
 
   {path:'register', component:RegisterComponent},
   {path:'login',component:LoginComponent},
+  {path:'verify', component:VerifyEmailComponent},
   // All users + guests
   {
     path: "",
@@ -42,6 +46,7 @@ const routes: Routes = [
       {path:'games',component:AllGamesComponent},
       {path:'games/:id',component:GameShowComponent},
       {path:'cart',component:CartComponent},
+      {path:'filteruser', component:FilteredUsersComponent},
 
       // Only logged in users
       {
@@ -52,6 +57,8 @@ const routes: Routes = [
           {path:'payment',component:PaymentComponent},
           {path:'orders',component:OrdersComponent},
           {path:'profile',component:ProfileComponent},
+          {path:'users/:id',component:UserComponent},
+
         ]
       },
     ]

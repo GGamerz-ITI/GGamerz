@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GamesService } from 'src/app/services/products.service';
 import { Location } from '@angular/common';
 import { error } from 'jquery';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard-products',
@@ -19,7 +20,8 @@ export class DashboardProductsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private gamesService: GamesService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private toastr: ToastrService,private gamesService: GamesService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.gamesService.GetAllGames().subscribe(
@@ -30,8 +32,10 @@ export class DashboardProductsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       error:(error) => {
-        console.log(error);
-      }}
+        this.toastr.error(error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);       }}
     );
   }
 
@@ -44,8 +48,10 @@ export class DashboardProductsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);       }
     }
     );
   }

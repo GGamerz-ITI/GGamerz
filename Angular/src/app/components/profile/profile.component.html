@@ -12,10 +12,10 @@
                     </div>
                     <!-- profile picture change -->
                     <div class="modal fade" id="pp" index="-1">
-                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-dialog modal-lg  modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header text-dark p-3">
-                                    <h5>Pick Your Fighter!</h5>
+                                    <h4>Pick Your Fighter!</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -78,27 +78,33 @@
                         <!-- followers -->
                         <div data-bs-toggle="modal" data-bs-target="#followers"
                             class="mt-2 m-2 rounded text-center stat text-light">
-                            <span>3</span><br>
+                            <span>{{ followers.followers.length}}</span><br>
                             <label>Followers</label>
-                            <div class="modal fade" id="followers" index="-1">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header text-dark p-3">
-                                            <h5>Followers List</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
-                                            <!-- <div *ngFor="let follower of followers"
+                        </div>
+                        <div class="modal fade" id="followers" index="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header text-dark p-3">
+                                        <h5>Followers List</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
+                                        <div *ngIf=" followers.followers.length>0 else zeroFollowers">
+
+                                            <div *ngFor="let follower of followers.followers"
                                                 class="text-dark d-flex flex-row align-items-center">
-                                                <img class="w-25 m-4" src={{follower.character}}>
+                                                <img class="w-25 m-4" src={{follower.level}}>
                                                 <div>
-                                                    <p class="m-2 fw-bold">{{follower.username}}</p>
-                                                    <p class="bg-dark m-2 text-light pt-1 pb-1 ps-2 pe-2">
-                                                        {{follower.level}}</p>
+                                                    <p class="m-2 username fw-bold" data-bs-dismiss="modal" (click)="redirect(follower.id)">{{ follower.username }}</p>
+                                                    <p class="m-2 text-secondary">
+                                                        {{follower.discord}}</p>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
+                                        <ng-template #zeroFollowers>
+                                            <p class="text-center text-info">User has no followers</p>
+                                        </ng-template>
                                     </div>
                                 </div>
                             </div>
@@ -106,27 +112,34 @@
                         <!-- following -->
                         <div data-bs-toggle="modal" data-bs-target="#following"
                             class="mt-2 m-2 rounded text-center stat text-light">
-                            <span>5</span><br>
+                            <span>{{following.followings.length}}</span><br>
                             <label>Following</label>
-                            <div class="modal fade" id="following" index="-1">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header text-dark p-3">
-                                            <h5>Following List</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+
+                        </div>
+                        <div class="modal fade" id="following" index="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header text-dark p-3">
+                                        <h5>Following List</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
+                                        <div *ngIf="  following.followings.length>0 else zeroFollowing">
+
+                                        <div *ngFor="let person of following.followings"
+                                            class="text-dark d-flex flex-row align-items-center">
+                                            <img class="w-25 m-4" src={{person.level}}>
+                                            <div>
+                                                <p class="m-2 username fw-bold" data-bs-dismiss="modal" (click)="redirect(person.id)">{{ person.username }}</p>
+                                                <p class="m-2 text-secondary">
+                                                    {{person.discord}}</p>
+                                            </div>
                                         </div>
-                                        <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
-                                            <!-- <div *ngFor="let person of following"
-                                                class="text-dark d-flex flex-row align-items-center">
-                                                <img class="w-25 m-4" src={{person.character}}>
-                                                <div>
-                                                    <p class="m-2 fw-bold">{{person.username}}</p>
-                                                    <p class="bg-dark m-2 text-light pt-1 pb-1 ps-2 pe-2">
-                                                        {{person.level}}</p>
-                                                </div>
-                                            </div> -->
                                         </div>
+                                        <ng-template #zeroFollowing>
+                                            <p class="text-center text-info">User is not currently following anyone</p>
+                                        </ng-template>
                                     </div>
                                 </div>
                             </div>
@@ -153,7 +166,7 @@
             </p>
             <!-- show preferences -->
             <div class="d-flex flex-row tags" *ngIf="!editMode else elseblock4">
-                <p class="tag ms-2 rounded text-center bg-dark text-light" *ngFor="let t of updatedPreferences">{{t}}
+                <p class="tag ms-2 rounded text-center bg-dark text-light" *ngFor="let t of user.preferences">{{t}}
                 </p>
             </div>
             <!-- edit preferences -->
@@ -184,7 +197,8 @@
             </div>
             <!-- if no games -->
             <div *ngIf="!games||games.length==0">
-                <p class="text-center text-light bg-dark rounded p-2 m-auto mb-4">Purchase some games and see them here!</p>
+                <p class="text-center text-light bg-dark rounded p-2 m-auto mb-4">Purchase some games and see them here!
+                </p>
             </div>
         </div>
         <hr class="m-2 separator rounded">
