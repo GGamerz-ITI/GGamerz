@@ -29,11 +29,13 @@ import { CreateProductComponent } from './components/dashboard/create-product/cr
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const routes: Routes = [
 
   {path:'register', component:RegisterComponent},
   {path:'login',component:LoginComponent},
+  {path:'verify', component:VerifyEmailComponent},
   // All users + guests
   {
     path: "",
