@@ -78,7 +78,7 @@
                         <!-- followers -->
                         <div data-bs-toggle="modal" data-bs-target="#followers"
                             class="mt-2 m-2 rounded text-center stat text-light">
-                            <span>3</span><br>
+                            <span>{{ followers.followers.length}}</span><br>
                             <label>Followers</label>
                             <div class="modal fade" id="followers" index="-1">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -89,15 +89,13 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
-                                            <!-- <div *ngFor="let follower of followers"
+                                            <div *ngFor="let follower of followers.followers"
                                                 class="text-dark d-flex flex-row align-items-center">
-                                                <img class="w-25 m-4" src={{follower.character}}>
+                                                <img class="w-25 m-4" src={{follower.level}}>
                                                 <div>
                                                     <p class="m-2 fw-bold">{{follower.username}}</p>
-                                                    <p class="bg-dark m-2 text-light pt-1 pb-1 ps-2 pe-2">
-                                                        {{follower.level}}</p>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +104,7 @@
                         <!-- following -->
                         <div data-bs-toggle="modal" data-bs-target="#following"
                             class="mt-2 m-2 rounded text-center stat text-light">
-                            <span>5</span><br>
+                            <span>{{following.followings.length}}</span><br>
                             <label>Following</label>
                             <div class="modal fade" id="following" index="-1">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -117,15 +115,15 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
-                                            <!-- <div *ngFor="let person of following"
+                                            <div *ngFor="let person of following.followings"
                                                 class="text-dark d-flex flex-row align-items-center">
-                                                <img class="w-25 m-4" src={{person.character}}>
+                                                <img class="w-25 m-4" src={{person.level}}>
                                                 <div>
                                                     <p class="m-2 fw-bold">{{person.username}}</p>
-                                                    <p class="bg-dark m-2 text-light pt-1 pb-1 ps-2 pe-2">
-                                                        {{person.level}}</p>
+                                                    <!-- <p class="bg-dark m-2 text-light pt-1 pb-1 ps-2 pe-2">
+                                                        {{person.level}}</p> -->
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -153,7 +151,7 @@
             </p>
             <!-- show preferences -->
             <div class="d-flex flex-row tags" *ngIf="!editMode else elseblock4">
-                <p class="tag ms-2 rounded text-center bg-dark text-light" *ngFor="let t of updatedPreferences">{{t}}
+                <p class="tag ms-2 rounded text-center bg-dark text-light" *ngFor="let t of user.preferences">{{t}}
                 </p>
             </div>
             <!-- edit preferences -->

@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/users.service';
 import { switchMap } from 'rxjs';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserUpdateService } from 'src/app/services/emitters.service';
+import { FollowService } from 'src/app/services/follow.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,24 +13,24 @@ import { UserUpdateService } from 'src/app/services/emitters.service';
 export class ProfileComponent implements OnInit {
 
   user: any;
-  games:  any[] = [];
+  games: any[] = [];
   orders: any;
-  tags: any[] = [];
-  tagCount: any[] = [];
   editMode: boolean = false
   bgcolor: any;
   default: any;
   updatedName: any;
   updatedDiscord: any;
-  updatedPreferences: any[] = [];
-  newPreferences: any[] = [];
+  updatedPreferences: string[] = [];
+  newPreferences: string[] = [];
   inputs: any[] = []
   character = ""
   bgImg = ""
   selectedImage: any
+  followers: any
+  following: any
 
   constructor(private userService: UserService, private orderService: OrdersService,
-    private cdr: ChangeDetectorRef, private userUpdateService: UserUpdateService) { }
+    private cdr: ChangeDetectorRef, private userUpdateService: UserUpdateService, private followService: FollowService) { }
 
   ngOnInit() {
     this.fetchData()
@@ -46,7 +47,7 @@ export class ProfileComponent implements OnInit {
   getData() {
     if (this.newPreferences.length > 0)
       this.updatedPreferences = Array.from(new Set(this.updatedPreferences.concat(this.newPreferences)));
-    this.updatedPreferences.filter(value => value.length > 0);
+      this.updatedPreferences = this.updatedPreferences.filter((value:String) => value.length > 0);
     console.log(this.updatedPreferences)
     const updatedUser = {
       "username": this.updatedName,
@@ -61,8 +62,6 @@ export class ProfileComponent implements OnInit {
         this.fetchData()
         this.toggleEditMode()
         this.refresh()
-        ///////////////////////////
-        this.user.preferences = this.updatedPreferences;
       },
       error: (err) => {
         console.log(err)
@@ -78,7 +77,7 @@ export class ProfileComponent implements OnInit {
   getGames() {
     this.orders.forEach((order: any) => {
       if (order.status == 'accepted') {
-        console.log(  order.Games)
+        console.log(order.Games)
         order.Games.forEach((game: any) => {
           if (this.games.length > 0) {
             if (!this.games.some((obj: any) => obj.id === game.id))
@@ -96,6 +95,7 @@ export class ProfileComponent implements OnInit {
       userObservable.subscribe({
         next: (data: any) => {
           this.user = data;
+          this.getFollowersAndFollowing()
           this.setValues(data)
           const ordersObservable = this.orderService.GetUserOrders(data.id);
           if (ordersObservable) {
@@ -148,5 +148,26 @@ export class ProfileComponent implements OnInit {
     this.bgImg = "url(" + this.character + ")"
     this.selectedImage = char;
     //update user
+  }
+  getFollowersAndFollowing() {
+    this.followService.getFollowers(this.user.id).subscribe({
+      next: (data) => {
+        // console.log(data)
+        this.followers = data
+        
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
+    this.followService.getFollowing(this.user.id).subscribe({
+      next: (data) => {
+        // console.log(data)
+        this.following = data
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    })
   }
 }
