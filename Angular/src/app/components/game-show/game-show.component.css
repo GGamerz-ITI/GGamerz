@@ -20,6 +20,21 @@ body {
 .image-container {
     background: none;
 }
+@media (max-width: 600px){
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    gap:8px
+  }
+  .about-game{
+    width:100%
+  }
+}
+@media (min-width: 600px){
+  .info-container {
+    display: flex;
+  }
+}
 .info-container {
     justify-content: space-between;
 }
