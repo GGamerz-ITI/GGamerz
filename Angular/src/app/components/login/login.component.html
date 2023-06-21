@@ -8,7 +8,13 @@
 
         <!-- Print Error if any -->
         <span *ngIf="errorMsg">
+
           <h5 class="text-center mt-3 errMsg">{{errorMsg}}</h5>
+
+          <span *ngIf="needVerify">
+            <p class="text-center mt-3 errMsg"><a [routerLink]="['/re-send']" [queryParams]="{ value: 'email' }">Resend Email Verification</a></p>
+          </span>
+
         </span>
 
         <form class="myForm" (ngSubmit)="onSubmit()">
@@ -50,6 +56,10 @@
                   up</a></p>
               <button type="submit" [disabled]="!mainInfo.valid"
                 class="btn btn-outline-light col-md-3 offset-md-3">Login</button>
+            </div>
+
+            <div class="row">
+              <p class="col-md-6"><a [routerLink]="['/re-send']" [queryParams]="{ value: 'pass' }">Forgot Password? </a></p>
             </div>
           </div>
         </form>

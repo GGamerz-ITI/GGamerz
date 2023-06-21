@@ -26,14 +26,16 @@ import { CreateProductComponent } from './components/dashboard/create-product/cr
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
 import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
-import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
+import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
 
   {path:'register', component:RegisterComponent},
   {path:'login',component:LoginComponent},
   {path:'verify', component:VerifyEmailComponent},
+  {path:'passReset', component:ResetPasswordComponent},
   // All users + guests
   {
     path: "",
@@ -45,7 +47,7 @@ const routes: Routes = [
       {path:'games/:id',component:GameShowComponent},
       {path:'cart',component:CartComponent},
       {path:'filteruser', component:FilteredUsersComponent},
-      {path:'verification/re-send',component:ResendVerificationComponent},
+      {path:'re-send',component:ResendVerificationComponent},
 
       // Only logged in users
       {
