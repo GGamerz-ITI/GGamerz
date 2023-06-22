@@ -13,16 +13,16 @@
         <h5 class="desc">{{ game.description }}</h5>
         <hr />
         <h6><i class="fa fa-money"></i> {{ game.price }}$</h6>
-        <h6><i class="fa fa-calendar"></i> {{ game.releasedDate | date:
+        <h6><i class="fa fa-calendar"></i> {{ game.releaseDate | date:
           'dd/MM/yyyy' }}</h6>
         <hr />
         <div class="tag">
-        <h5 class="bg-dark p-1 m-1" *ngFor="let gameTag of game.tag">
+        <h5 class="bg-dark p-1 m-1" *ngFor="let gameTag of game.tags">
           {{gameTag}}
         </h5>
       </div>
        <hr />
-        <div class="type" *ngFor="let gameType of game.type">
+        <div class="type" *ngFor="let gameType of game.types">
           <i class="fa" [ngClass]="{
             'fa-user': gameType === 'singleplayer',
             'fa-users': gameType === 'multiplayer'

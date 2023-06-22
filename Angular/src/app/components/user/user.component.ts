@@ -71,7 +71,7 @@ export class UserComponent {
   getGames() {
     this.orders.forEach((order: any) => {
       if (order.status == 'accepted') {
-        console.log(order.Games)
+        // console.log(order.Games)
         order.Games.forEach((game: any) => {
           if (this.games.length > 0) {
             if (!this.games.some((obj: any) => obj.id === game.id))
@@ -196,8 +196,8 @@ export class UserComponent {
   }
 
   follow() {
-    console.log("person to follow", this.userId)
-    console.log("my id", this.currentUser.id)
+    // console.log("person to follow", this.userId)
+    // console.log("my id", this.currentUser.id)
     this.followService.follow(this.userId, this.currentUser.id).subscribe({
       next: () => {
         this.ngOnInit()

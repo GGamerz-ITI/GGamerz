@@ -24,20 +24,27 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { DashboardOrdersComponent } from './components/dashboard/dashboard-orders/dashboard-orders.component';
 import { CreateProductComponent } from './components/dashboard/create-product/create-product.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
+
 import { UserComponent } from './components/user/user.component';
 import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
-import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
+import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { DashboardCouponsComponent } from './components/dashboard/dashboard-coupons/dashboard-coupons.component';
 import { CreateCouponComponent } from './components/dashboard/create-coupon/create-coupon.component';
 import { UpdateCouponComponent } from './components/dashboard/update-coupon/update-coupon.component';
 
+import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
+import { CreateAnnouncementComponent } from './components/dashboard/create-announcement/create-announcement.component';
+import { UpdateAnnouncementComponent } from './components/dashboard/update-announcement/update-announcement.component';
+
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
 
   {path:'register', component:RegisterComponent},
   {path:'login',component:LoginComponent},
   {path:'verify', component:VerifyEmailComponent},
+  {path:'passReset', component:ResetPasswordComponent},
   // All users + guests
   {
     path: "",
@@ -49,7 +56,7 @@ const routes: Routes = [
       {path:'games/:id',component:GameShowComponent},
       {path:'cart',component:CartComponent},
       {path:'filteruser', component:FilteredUsersComponent},
-      {path:'verification/re-send',component:ResendVerificationComponent},
+      {path:'re-send',component:ResendVerificationComponent},
 
       // Only logged in users
       {
@@ -79,12 +86,15 @@ const routes: Routes = [
       {path:'users', component:UsersTableComponent},
       {path:'games',component:DashboardProductsComponent},
       {path:'games/add',component:CreateProductComponent},
-      {path:'orders',component:DashboardOrdersComponent},
       {path:'games/:id',component:DashboardProductDetailsComponent},
       {path:'games/update/:id',component:UpdateProductComponent},
       {path:'coupons', component:DashboardCouponsComponent},
       {path:'coupons/add', component:CreateCouponComponent},
       {path:'coupons/update/:id',component:UpdateCouponComponent},
+      {path:'announcements',component:DashboardAnnouncementsComponent},
+      {path:'announcements/add',component:CreateAnnouncementComponent},
+      {path:'announcements/update/:id',component:UpdateAnnouncementComponent},
+      {path:'orders',component:DashboardOrdersComponent}
     ]
   },
 

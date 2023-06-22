@@ -1,0 +1,98 @@
+<!-- abdelrahim -->
+
+<div class="container p-3">
+  <div class="row">
+    <div class="col d-flex justify-content-end">
+      <button class="btn btn-dark ml-auto" (click)="showForm()">WRITE A REVIEW</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col ">
+      <form class="comment-container rounded mt-3 h-75" id="review-form" [hidden]="!isFormVisible">
+        <textarea id="review-text" name="review-text" class="form-control w-50 h-25" placeholder="Write a review..."
+          [(ngModel)]="reviewText"></textarea>
+        <button class="btn btn-dark rounded mt-3" type="submit" (click)="create_review()">Submit Review</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  -->
+<div class="container p-3" *ngFor="let review of reviews">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="comment-container mt-3">
+        <div class="comment d-flex align-items-start justify-content-between">
+          <!-- circular picture and username -->
+          <div class="d-flex align-items-center">
+            <div class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center mr-3"
+              style="width: 40px; height: 40px;">
+              <span class="fas fa-user">{{ review.user.image }}</span>
+            </div>
+            <div>
+              <p class="font-weight-bold mb-0" style="color: green;">{{ review.user.username }}</p>
+            </div>
+          </div>
+          <!-- dropdown -->
+          <div>
+            <div class="dropdown">
+              <button class="bg-dark text-white border-0 rounded-0" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fas fa-ellipsis-h"></span>
+              </button>
+              <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" style="box-shadow: none;">
+                <a class="dropdown-item" (click)="delete_review( review.id )">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- review content and reply button -->
+        <div class="d-flex justify-content-between">
+          <p class="comment-content mb-2">{{ review.content }}</p>
+          <button class="btn btn-dark reply-link" (click)="showReply(review)"
+            *ngIf="!review.showReplyForm">Reply</button>
+        </div>
+        <!-- comments -->
+        <div class="col mt-3" *ngFor="let comment of comments[review.id]">
+          <hr class="text-secondary">
+          <div class="comment d-flex align-items-start justify-content-between">
+            <!-- circular picture and username -->
+            <div class="d-flex align-items-center">
+              <div class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center mr-3"
+                style="width: 40px; height: 40px;">
+                <span class="fas fa-user"></span>
+              </div>
+              <div>
+                <p class="font-weight-bold mb-0" style="color: yellow;">{{ comment.user.username }}</p>
+              </div>
+            </div>
+            <!-- dropdown -->
+            <div>
+              <div class="dropdown">
+                <button class="bg-dark text-white border-0 rounded-0" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="fas fa-ellipsis-h"></span>
+                </button>
+                <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" style="box-shadow: none;">
+                  <a class="dropdown-item" (click)="delete_comment(comment.id )">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- comment content and reply button -->
+          <div class="d-flex justify-content-between">
+            <p class="comment-content mb-2">{{ comment.content }}</p>
+          </div>
+        </div>
+
+        <!-- reply form -->
+        <div *ngIf="review.showReplyForm" class="col">
+          <form class="comment-container rounded mt-3 h-75" id="review-form">
+            <input class="form-control" [formControl]="commentText">
+            <button class="btn btn-dark mt-3" type="button" (click)="create_comment(review)">Comment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->

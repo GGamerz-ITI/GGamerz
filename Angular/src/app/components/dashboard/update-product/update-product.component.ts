@@ -112,7 +112,7 @@ export class UpdateProductComponent {
         
           
         if(this.updatedTypes.length==0 )
-         this.updatedTypes=  this.game.type
+         this.updatedTypes=  this.game.types
         else
          { 
           this.updatedTypes=this.gameForm.value.type
@@ -125,7 +125,7 @@ export class UpdateProductComponent {
 
 
         if(this.updatedTags.length==0 )
-         this.updatedTags=  this.game.tag
+         this.updatedTags=  this.game.tags
         else
         {
           this.updatedTags=this.gameForm.value.tag

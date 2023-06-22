@@ -11,14 +11,14 @@
             <gallery class="w-100 p-2 image-container shadow-lg rounded bg-dark" thumbPosition="bottom"
                 [items]="images"></gallery>
         </div>
-        <div class="m-5 info-container d-flex flex-row">
-            <div class="col-left bg-dark shadow-lg rounded">
+        <div class="m-5 info-container">
+            <div class="about bg-dark shadow-lg rounded">
                 <div class="p-3">
                     <h3 class="pb-3">About</h3>
                     <p>{{game.description}}</p>
                 </div>
                 <hr class="text-secondary">
-                <div class="d-flex flex-row  p-2 actions-container">
+                <div class="p-2 actions-container">
                     <!-- points -->
                     <div class="m-3 text-center ">
                         <label class="fs-4 text-secondary">Points</label>
@@ -97,13 +97,11 @@
                         'fa-linux': p === 'linux'
                       }"></i>
                 </div>
-                <hr class="text-secondary">
-                <p class="text-primary text-center">10,000 users</p>
             </div>
         </div>
         <div class="col-left bg-dark shadow-lg rounded ml-5">
-        <app-feedback ></app-feedback>
-      </div>
+          <app-feedback ></app-feedback>
+        </div>
     </div>
 </body>
 <app-footer></app-footer>

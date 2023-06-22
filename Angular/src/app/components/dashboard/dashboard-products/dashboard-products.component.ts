@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./dashboard-products.component.css']
 })
 export class DashboardProductsComponent implements OnInit {
-  displayedColumns: string[] = ['_id', 'name', 'date', 'price', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'date', 'price', 'actions'];
   dataSource!: MatTableDataSource<any>;
   productsTitle: string = "Games";
   games: any[] = [];
@@ -57,7 +57,7 @@ export class DashboardProductsComponent implements OnInit {
   }
 
   removeDeletedProduct(id: any) {
-    this.games = this.games.filter(game => game._id !== id);
+    this.games = this.games.filter(game => game.id !== id);
   }
 
    formatDate(dateString: string): string {
@@ -69,7 +69,7 @@ export class DashboardProductsComponent implements OnInit {
   }
 
   // navigateToEdit(game: any) {
-  //   this.router.navigate(['./add'], { relativeTo: this.route, queryParams: { gameId: game._id }, state: { game: game } });
+  //   this.router.navigate(['./add'], { relativeTo: this.route, queryParams: { gameId: game.id }, state: { game: game } });
   // }
 
 }

@@ -170,7 +170,7 @@ export class AllGamesComponent implements OnInit {
   onChangeTags(): void {
     console.log(this.tags);
     this.rawData.forEach((game: any) => {
-      if (game.tags.some((tag: string) => this.tags.includes(tag))) {
+      if (game.tags&&game.tags.some((tag: string) => this.tags.includes(tag))) {
         if (!(this.filteredGames.some(obj => obj.id === game.id)))
           this.filteredGames.push(game)
       }
@@ -186,7 +186,7 @@ export class AllGamesComponent implements OnInit {
   }
   onChangeTypes(): void {
     this.rawData.forEach((game: any) => {
-      if (game.types.some((type: string) => this.types.includes(type))) {
+      if (game.types&&game.types.some((type: string) => this.types.includes(type))) {
         if (!(this.filteredGames.some(obj => obj.id === game.id)))
           this.filteredGames.push(game)
       }

@@ -1,5 +1,5 @@
 .main{
-    background-image: url("../../assets/images/email-icon-vector-illustration.png");
+    background-image: url("../../../assets/images/email-icon-vector-illustration.png");
     background-size: cover;
     background-attachment: fixed;
     height: 100vh;
@@ -17,5 +17,21 @@ border: 2px solid white;
     padding-right:  30px;
     padding-top:  10px;
     padding-bottom:  10px;
+}
 
+.btnWrapper{
+  display: flex;
+  justify-content: center;
+}
+.myForm{
+  display: flex;
+  justify-content: center;
+}
+
+.errMsg{
+  color: red;
+}
+
+.error input{
+  border: 3px solid red;
 }
