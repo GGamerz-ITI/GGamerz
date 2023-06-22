@@ -76,11 +76,12 @@ import { FilteredUsersComponent } from './components/filtered-users/filtered-use
 import { NewsComponent } from './components/news/news.component';
 import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
 // import { AnnouncementDetailsComponent } from './components/dashboard/announcement-details/announcement-details.component';
-import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { CreateAnnouncementComponent } from './components/dashboard/create-announcement/create-announcement.component';
 import { UpdateAnnouncementComponent } from './components/dashboard/update-announcement/update-announcement.component';
 import { UserReviewsComponent } from './components/user-reviews/user-reviews.component';
+import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 
@@ -141,6 +142,7 @@ import { UserReviewsComponent } from './components/user-reviews/user-reviews.com
     CreateAnnouncementComponent,
     UpdateAnnouncementComponent,
     UserReviewsComponent,
+    ResetPasswordComponent,
 
 
   ],

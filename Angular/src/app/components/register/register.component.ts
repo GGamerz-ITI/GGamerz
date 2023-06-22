@@ -59,10 +59,8 @@ export class RegisterComponent {
       error: (err)=>{
         if(err.status = 409)
         {
-
           this.toastr.error('User Already Verified');
-          this.router.navigate(['/']);
-
+          this.router.navigate(['/login']);
         }else
         if(err.status = 404){
 
@@ -70,8 +68,8 @@ export class RegisterComponent {
           this.router.navigate(['/register']);
         }
         else{
-          this.toastr.error('Verification Failed');
-          // Navigate to verification component
+          this.toastr.error('Failed! make new verification request');
+          this.router.navigate(['/re-send'], { queryParams: { value: 'email' } });
         }
       }
     });
