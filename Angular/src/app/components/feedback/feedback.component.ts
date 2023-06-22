@@ -100,9 +100,7 @@ export class FeedbackComponent {
   showForm() {
     this.isFormVisible = true;
   }
-  // showReply() {
-  //   this.isReplyVisible = true;
-  // }
+ 
   showReply(review: any) {
     review.showReplyForm = !review.showReplyForm;
   }
