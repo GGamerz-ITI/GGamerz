@@ -7,6 +7,7 @@ import { GamesService } from 'src/app/services/products.service';
 import { UserService } from 'src/app/services/users.service';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-feedback',
@@ -24,12 +25,24 @@ export class FeedbackComponent {
   images: GalleryItem[] = [];
   commentText = new FormControl('');
   reviewId: any ; // default review ID
-  constructor(route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService, private reviewService: ReviewService,private commentService:CommentService) {
+  constructor(route: ActivatedRoute,private toastr: ToastrService, private gameService: GamesService, private authService: AuthService, private userService: UserService, private reviewService: ReviewService,private commentService:CommentService) {
     this.gameID = route.snapshot.params["id"];
   }
   buttonHidden = false;
   ngOnInit(): void {
-    // console.log(this.user.id);
+    const userObservable = this.userService.getCurrentUser()
+    if (userObservable) {
+      userObservable.subscribe({
+        next: (data) => {
+          this.user = data;
+
+        },
+        error: (error) => {
+                console.error('Error getting user:', error);
+
+                      }
+      })
+    }
     this.reviewService.getAllGameReviews(this.gameID).subscribe({
       next: (data) => {
         this.reviews = data
@@ -97,29 +110,34 @@ export class FeedbackComponent {
   }
 
   create_review() {
-    const review = {
-      userId: 1,
-      gameId: this.gameID,
-      content: this.reviewText,
-    };
-    this.reviewService.createReview(review).subscribe({
-      next: (response) => {
-        console.log('Review created successfully:', response);
-      },
-      error: (error) => {
-        console.error('Error creating review:', error);
-      },
-    });
-    window.location.reload();
+    if (this.user) {
+      const review = {
+        userId: this.user.id,
+        gameId: this.gameID,
+        content: this.reviewText,
+      };
+      this.reviewService.createReview(review).subscribe({
+        next: (response) => {
+          console.log('Review created successfully:', response);
+        },
+        error: (error) => {
+          console.error('Error creating review:', error);
+        },
+      });
+      window.location.reload();
+    } else {
+      this.toastr.warning('You have to login first', 'Warning');
     }
+  }
 
     create_comment(review: any) {
+      if (this.user) {
       if (this.commentText.value === '') {
         console.error('Comment content is empty');
         return;
       }
       const comment = {
-        userId: 1,
+        userId: this.user.id,
         reviewId: review.id,
         content: this.commentText.value,
       };
@@ -132,36 +150,72 @@ export class FeedbackComponent {
           console.error('Error creating comment:', error);
         },
       });
-
-      // Clear the comment text
-      // this.commentText.reset();
+      window.location.reload();
+    }else {
+      this.toastr.warning('You have to login first', 'Warning');
+    }
     }
 
 
 
-    delete_review(reviewId: string) {
-  this.reviewService.deleteReview(reviewId).subscribe({
-    next: (response) => {
-      console.log('Review deleted successfully:', response);
-      // You may want to reload the reviews list or update the view here
-    },
-    error: (error) => {
-      console.error('Error deleting review:', error);
-    },
-  });
-  window.location.reload();
+    delete_review(review: any) {
+      if (this.user) {
+      this.reviewService.deleteReview(review.id).subscribe({
+        next: (response) => {
+          if (this.user.id == review.userId) {
+            console.log('Review deleted successfully:', response);
+            // You may want to reload the reviews list or update the view here
+          } else {
+            console.error('Error: User ID does not match the review owner.');
+          }
+        },
+        error: (error) => {
+          console.error('Error deleting review:', error);
+        },
+        complete: () => {
+          // The complete callback is invoked after the request completes
+          // You can put any post-processing logic here, like reloading the reviews list
+          window.location.reload();
+        }
+      });
+    }else {
+      this.toastr.warning('You have to login first', 'Warning');
+    }
+    }
+    delete_comment(comment: any) {
+      if (this.user) {
+      if (this.user.id === comment.userId) {
+        this.commentService.deleteComment(comment.id).subscribe({
+          next: (response) => {
+            console.log('Comment deleted successfully:', response);
+            // You may want to reload the comments list or update the view here
+          },
+          error: (error) => {
+            console.error('Error deleting comment:', error);
+          },
+          complete: () => {
+            // The complete callback is invoked after the request completes
+            // You can put any post-processing logic here, like reloading the comments list
+            window.location.reload();
+          }
+        });
+      } else {
+        console.error('Error: User ID does not match the comment owner.');
+      }
+    }else {
+      this.toastr.warning('You have to login first', 'Warning');
+    } }
+   check_acessbility(incommingid:any){
+    if (this.user) {
+    if (incommingid == this.user.id){
+      return true;
+     }
+     else {
+      return false;
+     }
+   }  else {
+    this.toastr.warning('You have to login first', 'Warning');
+    return false;
+  }
 }
-delete_comment(commentId:any){
-  this.commentService.deleteComment(commentId).subscribe({
-    next: (response) => {
-      console.log('comment deleted successfully:', response);
-      // You may want to reload the reviews list or update the view here
-    },
-    error: (error) => {
-      console.error('Error deleting comment:', error);
-    },
-  });
-  window.location.reload();
-
-}
-}
+ }

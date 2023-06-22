@@ -31,13 +31,13 @@
                     </div>
                   </div>
                   <!-- dropdown -->
-                  <div>
+                  <div *ngIf="check_acessbility(review.userId)">
                     <div class="dropdown">
                       <button class="bg-dark text-white border-0 rounded-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="fas fa-ellipsis-h"></span>
                       </button>
                       <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" style="box-shadow: none;">
-                        <a class="dropdown-item" (click)="delete_review( review.id )">Delete</a>
+                        <a class="dropdown-item" (click)="delete_review( review )">Delete</a>
                       </div>
                     </div>
                   </div>
@@ -59,13 +59,13 @@
                         <p class="font-weight-bold mb-0" style="color: yellow;">{{ comment.user.username }}</p>                      </div>
                     </div>
                     <!-- dropdown -->
-                    <div>
+                    <div *ngIf="check_acessbility(comment.userId)">
                       <div class="dropdown">
                         <button class="bg-dark text-white border-0 rounded-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span class="fas fa-ellipsis-h"></span>
                         </button>
                         <div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" style="box-shadow: none;">
-                          <a class="dropdown-item" (click)="delete_comment(comment.id )">Delete</a>
+                          <a class="dropdown-item" (click)="delete_comment(comment )">Delete</a>
                         </div>
                       </div>
                     </div>
