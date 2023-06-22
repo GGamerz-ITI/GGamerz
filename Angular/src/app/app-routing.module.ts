@@ -29,6 +29,7 @@ import { FilteredUsersComponent } from './components/filtered-users/filtered-use
 import { ResendVerificationComponent } from './resend-verification/resend-verification.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { DashboardCouponsComponent } from './components/dashboard/dashboard-coupons/dashboard-coupons.component';
+import { CreateCouponComponent } from './components/dashboard/create-coupon/create-coupon.component';
 
 
 const routes: Routes = [
@@ -80,7 +81,8 @@ const routes: Routes = [
       {path:'orders',component:DashboardOrdersComponent},
       {path:'games/:id',component:DashboardProductDetailsComponent},
       {path:'games/update/:id',component:UpdateProductComponent},
-      {path:'coupons', component:DashboardCouponsComponent}
+      {path:'coupons', component:DashboardCouponsComponent},
+      {path:'coupons/add', component:CreateCouponComponent}
     ]
   },
 

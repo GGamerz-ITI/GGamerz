@@ -63,7 +63,7 @@ export class CreateProductComponent  {
     console.log(this.updatedOs)
   }
   }
-  
+
   onChangeFile(event: any) {
     const files = event.target.files;
     this.selectedImages = [];
@@ -74,7 +74,7 @@ export class CreateProductComponent  {
       this.selectedImages.push(files[i]);
       imagesControl.push(this.formBuilder.control(files[i]));
     }
-    
+
   }
 
   add(){
@@ -102,10 +102,10 @@ export class CreateProductComponent  {
           formData.append('releasedDate', formattedDate);
           formData.append('name', this.gameForm.get('name')!.value);
               formData.append('price', this.gameForm.get('price')!.value);
-             
+
               formData.append('description', this.gameForm.get('description')!.value);
 
-             
+
               console.log(formData);
 
           this.gamesService.AddNewProduct( formData).subscribe({
@@ -113,16 +113,16 @@ export class CreateProductComponent  {
               this.router.navigate(['/dashboard/games']);
             }
             ,
-            error:(err)=>{  
+            error:(err)=>{
               this.toastr.error(err, "Error");
               setTimeout(() => {
                 this.toastr.clear()
-              }, 3000); 
+              }, 3000);
             }
           });
-     } 
+     }
     else{
-      console.log("engzzzzzzzzz")
+      console.log("Not valid")
     }
   }
 }

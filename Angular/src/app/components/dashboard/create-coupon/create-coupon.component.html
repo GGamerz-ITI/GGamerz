@@ -1,0 +1,48 @@
+<div class=" animated-box in">
+
+  <app-title [titleContent]="createdGame"></app-title>
+
+  <div class="d-flex ustify-content-center align-items-center ">
+
+      <div class=" formCont col-12">
+          <form (ngSubmit)="add()" [formGroup]="couponForm"
+              >
+              <div class="col">
+                  <div class="row mb-3">
+                      <div class="col-6">
+                          <input formControlName="name" type="text"
+                              class="form-control rounded p-3"
+                              placeholder=" Name"
+                              aria-label="name">
+                      </div>
+                      <div class="col-6">
+                          <input formControlName="amount" type="number"
+                              class="form-control rounded p-3"
+                              placeholder="Amount" aria-label="amount">
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-6">
+                          <input formControlName="points" type="number"
+                              class="form-control rounded p-3"
+                              placeholder=" Points"
+                              aria-label="points">
+                      </div>
+                      <div class="col-6">
+                          <input formControlName="expDate" type="date"
+                              class="form-control rounded p-3"
+                              placeholder="expDate" aria-label="expDate">
+                      </div>
+                  </div>
+              </div>
+
+              <div class="text-center">
+                  <button type="submit" class="btn btn-outline-secondary  "
+                      style="color: white;">Add Coupon</button>
+              </div>
+
+          </form>
+      </div>
+  </div>
+</div>

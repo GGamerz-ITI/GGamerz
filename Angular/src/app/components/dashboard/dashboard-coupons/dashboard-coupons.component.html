@@ -1,5 +1,9 @@
 <app-title [titleContent]="productsTitle"></app-title>
 
+<div class="d-flex justify-content-center align-content-center">
+  <i type="button" [routerLink]="['./add']" class="fa-solid fa-circle-plus fa-xl " style="color: white;"></i>
+</div>
+
 <table mat-table [dataSource]="dataSource">
 
   <ng-container matColumnDef="id">
@@ -25,7 +29,7 @@
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let coupon">
       <a [routerLink]="'/dashboard/games/' + coupon.id">
-        <i class="material-icons button--rounded">visibility</i>
+        <i class="material-icons button--rounded">edit</i>
       </a>
       <i class="material-icons button--rounded m-2" data-bs-toggle="modal" [attr.data-bs-target]="'#confirmation' + coupon._id">delete</i>
       <div class="modal fade" [id]="'confirmation' + coupon.id" index="-1">
