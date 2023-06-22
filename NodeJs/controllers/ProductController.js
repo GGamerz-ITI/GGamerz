@@ -80,8 +80,8 @@ const updateProduct=async (req, res) => {
           product.name = req.body.name || product.name;
           product.price = req.body.price || product.price ;
           product.os = req.body.os || product.os;
-          product.tags = req.body.tag || product.tags ;
-          product.types = req.body.type || product.types;
+          product.tags = req.body.tags || product.tags ;
+          product.types = req.body.types || product.types;
           product.description = req.body.description ||product.description;
           product.releasedDate = req.body.releasedDate || product.releasedDate;
           product.points = req.body.points || product.points;

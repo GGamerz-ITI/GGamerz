@@ -27,7 +27,7 @@
                             <mat-form-field appearance="outline"
                                 style=" width: 100%;">
                                 <mat-label>Tags</mat-label>
-                                <mat-select formControlName="tag" multiple>
+                                <mat-select formControlName="tags" multiple>
                                     <mat-option *ngFor="let tag of tagsList"
                                         [value]="tag">{{tag}}</mat-option>
                                 </mat-select>
@@ -44,19 +44,24 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
+
                         <div class="col-6">
 
                             <mat-form-field appearance="outline"
                                 style=" width: 100%;">
                                 <mat-label>types</mat-label>
-                                <mat-select formControlName="type" multiple>
+                                <mat-select formControlName="types" multiple>
                                     <mat-option *ngFor="let type of typesList"
                                         [value]="type">{{type}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
 
-                        
+                        <div class="col-6">
+                            <input formControlName="points" type="number"
+                                class="form-control rounded p-3"
+                                placeholder="Points" aria-label="Points">
+                        </div>
 
                         <div formArrayName="imageURL" class="col-6">
                             <div class="input-group mb-3">
@@ -67,6 +72,15 @@
 
                             </div>
 
+                        </div>
+                        <div class="col-6 ">
+                            <div class="input-group mb-3 ">
+                                <input formControlName="character"
+                                    class="form-control rounded p-3"
+                                    id="inputGroupFile02" name="character"
+                                    type="file"
+                                    (change)="onSingleImageSelected($event)">
+                            </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-13">

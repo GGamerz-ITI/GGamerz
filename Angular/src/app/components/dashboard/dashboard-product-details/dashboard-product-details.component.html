@@ -16,24 +16,26 @@
         <h6><i class="fa fa-calendar"></i> {{ game.releaseDate | date:
           'dd/MM/yyyy' }}</h6>
         <hr />
-        <div class="tag">
-        <h5 class="bg-dark p-1 m-1" *ngFor="let gameTag of game.tags">
-          {{gameTag}}
-        </h5>
-      </div>
-       <hr />
-        <div class="type" *ngFor="let gameType of game.types">
+        <div class="tag" >
+          
+          <h5 class="bg-dark p-1 m-1" *ngFor="let gameTag of tags">
+            {{gameTag}}
+          </h5>
+        </div>
+        
+        <hr />
+        <div class="type" *ngFor="let gameType of types">
           <i class="fa" [ngClass]="{
             'fa-user': gameType === 'singleplayer',
             'fa-users': gameType === 'multiplayer'
           }">
-         
-        </i>
-        <p h3>{{gameType}}</p> 
+
+          </i>
+          <h5 h3>{{gameType}}</h5>
         </div>
         <hr />
         <div class="OS">
-          <i *ngFor="let operatingSystem of game.os" class="fa" [ngClass]="{
+          <i *ngFor="let operatingSystem of os" class="fa" [ngClass]="{
             'fa-apple': operatingSystem === 'mac',
             'fa-windows': operatingSystem === 'windows',
             'fa-linux': operatingSystem === 'linux'
