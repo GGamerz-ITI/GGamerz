@@ -28,7 +28,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let coupon">
-      <a [routerLink]="'/dashboard/games/' + coupon.id">
+      <a [routerLink]="'/dashboard/coupons/update/' + coupon.id">
         <i class="material-icons button--rounded">edit</i>
       </a>
 

@@ -25,8 +25,12 @@ export class CouponsService {
   }
 
   deleteCoupon(id: any) {
-    console.log(this.Base_URL + '/' + id)
     return this.myClient.delete(this.Base_URL + '/' + id)
   }
-  
+
+  updateCoupon(id:any, updatedProduct:any){
+    console.log(updatedProduct)  
+    return this.myClient.put(this.Base_URL+ '/'+ id,updatedProduct)
+  }
+
 }

@@ -77,6 +77,7 @@ import { ResendVerificationComponent } from './resend-verification/resend-verifi
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { DashboardCouponsComponent } from './components/dashboard/dashboard-coupons/dashboard-coupons.component';
 import { CreateCouponComponent } from './components/dashboard/create-coupon/create-coupon.component';
+import { UpdateCouponComponent } from './components/dashboard/update-coupon/update-coupon.component';
 
 
 
@@ -135,6 +136,7 @@ import { CreateCouponComponent } from './components/dashboard/create-coupon/crea
     VerifyEmailComponent,
     DashboardCouponsComponent,
     CreateCouponComponent,
+    UpdateCouponComponent,
 
 
   ],
