@@ -3,6 +3,9 @@ import { UserService } from 'src/app/services/users.service';
 import { switchMap } from 'rxjs';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserUpdateService } from 'src/app/services/emitters.service';
+import { FollowService } from 'src/app/services/follow.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -14,55 +17,60 @@ export class ProfileComponent implements OnInit {
   user: any;
   games: any[] = [];
   orders: any;
-  tags: any[] = [];
-  tagCount: any[] = [];
   editMode: boolean = false
   bgcolor: any;
   default: any;
   updatedName: any;
   updatedDiscord: any;
-  updatedPreferences: any[] = [];
-  newPreferences: any[] = [];
+  updatedPreferences: string[] = [];
+  newPreferences: string[] = [];
   inputs: any[] = []
-  character = 'assets/images/Characters/PkBYcGy.png'
-  bgImg = "url(" + this.character + ")"
-  selectedImage:any
+  character = ""
+  bgImg = ""
+  selectedImage: any
+  followers: any
+  following: any
 
-  constructor(private userService: UserService, private orderService: OrdersService,
-    private cdr: ChangeDetectorRef, private userUpdateService: UserUpdateService) { }
+  constructor(private toastr: ToastrService,private userService: UserService, private orderService: OrdersService, private router: Router,
+    private cdr: ChangeDetectorRef, private userUpdateService: UserUpdateService, private followService: FollowService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.fetchData()
   }
-  setValues() {
-    this.bgcolor = this.user.bgColor
-    this.default = this.user.bgColor
-    this.updatedName = this.user.username
-    this.updatedDiscord = this.user.discord
-    this.updatedPreferences = this.user.preferences.filter((value: string[]) => value.length > 0);
+  setValues(user: any) {
+    this.bgcolor = user.bgColor
+    this.character = user.character
+    this.bgImg = "url(" + this.character + ")"
+    this.default = user.bgColor
+    this.updatedName = user.username
+    this.updatedDiscord = user.discord
+    this.updatedPreferences = user.preferences.filter((value: any) => value.length > 0);
   }
   getData() {
     if (this.newPreferences.length > 0)
       this.updatedPreferences = Array.from(new Set(this.updatedPreferences.concat(this.newPreferences)));
-    this.updatedPreferences.filter(value => value.length > 0);
+      this.updatedPreferences = this.updatedPreferences.filter((value:String) => value.length > 0);
+    console.log(this.updatedPreferences)
     const updatedUser = {
       "username": this.updatedName,
       "discord": this.updatedDiscord,
       "preferences": this.updatedPreferences,
       "bgColor": this.bgcolor,
-      // "character":this.character
+      "character": this.character
     }
     this.emitValue(updatedUser);
-    this.userService.updateUser(this.user._id, updatedUser).subscribe({
+    this.userService.updateUser(this.user.id, updatedUser).subscribe({
       next: () => {
         this.fetchData()
         this.toggleEditMode()
         this.refresh()
-        this.user.preferences = this.user.preferences.filter((value: String) => value.length > 0);
       },
       error: (err) => {
-        console.log(err)
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
     })
   }
   emitValue(data: any): void {
@@ -71,36 +79,13 @@ export class ProfileComponent implements OnInit {
   toggleEditMode() {
     this.editMode = !this.editMode
   }
-  getTags() {
-    this.orders.forEach((order: any) => { //looping user orders
-      if (order.status == 'accepted') {
-        order.gameItems.forEach((game: any) => { // looping games included in each order
-          if (game.tag) {
-            game.tag.forEach((tag: string) => { //looping tags of each game
-              if (this.tags.length > 0) {
-                const index = this.tags.findIndex((item: any) => item === tag);
-                if (index === -1) {
-                  this.tags.push(tag);
-                  this.tagCount[this.tags.length - 1] = 1;
-                } else {
-                  this.tagCount[index]++;
-                }
-              }
-              else
-                this.tags.push(tag);
-              this.tagCount[0] = 1;
-            });
-          }
-        });
-      }
-    })
-  }
   getGames() {
     this.orders.forEach((order: any) => {
       if (order.status == 'accepted') {
-        order.gameItems.forEach((game: any) => {
+        console.log(order.Games)
+        order.Games.forEach((game: any) => {
           if (this.games.length > 0) {
-            if (!this.games.some((obj: any) => obj._id === game._id))
+            if (!this.games.some((obj: any) => obj.id === game.id))
               this.games.push(game)
           } else {
             this.games.push(game)
@@ -112,28 +97,33 @@ export class ProfileComponent implements OnInit {
   fetchData() {
     const userObservable = this.userService.getCurrentUser(); //get current user
     if (userObservable) {
-      userObservable.pipe(
-        switchMap((userData) => { //to switch to the orders Observable inside the user Observable subscription
-          this.user = userData;
-          this.user.preferences = this.user.preferences.filter((value: String) => value.length > 0);
-          this.setValues()
-          // Fetch user orders
-          const ordersObservable = this.orderService.GetUserOrders(this.user._id);
-          if (ordersObservable) {
-            return ordersObservable;
-          } else {
-            throw new Error('Failed to fetch user orders');
-          }
-        })
-      ).subscribe({
+      userObservable.subscribe({
         next: (data: any) => {
-          this.orders = data;
-          this.getTags()
-          this.getGames()
+          this.user = data;
+          this.getFollowersAndFollowing()
+          this.setValues(data)
+          const ordersObservable = this.orderService.GetUserOrders(data.id);
+          if (ordersObservable) {
+            ordersObservable.subscribe({
+              next: (data: any) => {
+                this.orders = data
+                this.getGames()
+              },
+              error: (err: any) => {
+                this.toastr.error(err, "Error");
+                setTimeout(() => {
+                  this.toastr.clear()
+                }, 3000); 
+                          }
+            })
+          }
         },
         error: (err: any) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000); 
+              }
       });
     }
   }
@@ -142,7 +132,7 @@ export class ProfileComponent implements OnInit {
   }
   setDefault() {
     this.bgcolor = this.default
-    this.character = 'assets/images/Characters/PkBYcGy.png'
+    this.character = this.user.character
     this.bgImg = "url(" + this.character + ")"
   }
   addInput() {
@@ -170,49 +160,37 @@ export class ProfileComponent implements OnInit {
     this.selectedImage = char;
     //update user
   }
+  getFollowersAndFollowing() {
+    this.followService.getFollowers(this.user.id).subscribe({
+      next: (data) => {
+        // console.log(data)
+        this.followers = data
+        
+      },
+      error: (err: any) => {
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
+    })
+    this.followService.getFollowing(this.user.id).subscribe({
+      next: (data) => {
+        // console.log(data)
+        this.following = data
+      },
+      error: (err: any) => {
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
+    })
+  }
+  redirect(id: any) {
+    this.router.navigate(['/users', id]).then(() => {
+      this.ngOnInit()
+    });
+  }
 
-  // followers=[
-  //   {
-  //     username:"ahmed",
-  //     character:"assets/images/Characters/PkBYcGy.png",
-  //     level:"gladiator"
-  //   },
-  //   {
-  //     username:"samya",
-  //     character:"assets/images/Characters/enoiz019r2t41.png",
-  //     level:"slayer"
-  //   },
-  //   {
-  //     username:"koko",
-  //     character:"assets/images/Characters/pubg.png",
-  //     level:"knight"
-  //   }
-  // ]
-  // following=[
-  //   {
-  //     username:"ahmed",
-  //     character:"assets/images/Characters/PkBYcGy.png",
-  //     level:"gladiator"
-  //   },
-  //   {
-  //     username:"samya",
-  //     character:"assets/images/Characters/enoiz019r2t41.png",
-  //     level:"slayer"
-  //   },
-  //   {
-  //     username:"koko",
-  //     character:"assets/images/Characters/pubg.png",
-  //     level:"knight"
-  //   },
-  //   {
-  //     username:"samya",
-  //     character:"assets/images/Characters/enoiz019r2t41.png",
-  //     level:"slayer"
-  //   },
-  //   {
-  //     username:"koko",
-  //     character:"assets/images/Characters/pubg.png",
-  //     level:"knight"
-  //   }
-  // ]
 }

@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { GamesService } from 'src/app/services/products.service';
 import { UserService } from 'src/app/services/users.service';
 import { GalleryItem, ImageItem } from 'ng-gallery';
+import { CartService } from 'src/app/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-game-show',
@@ -15,10 +17,10 @@ export class GameShowComponent implements OnInit {
   game: any;
   isLoggedIn: boolean = false;
   user: any;
-  cart: any[] = []
+  cart: any
   images: GalleryItem[] = [];
 
-  constructor(route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService) {
+  constructor(private toastr: ToastrService,route: ActivatedRoute, private gameService: GamesService, private authService: AuthService, private userService: UserService, private cartService: CartService) {
     this.gameID = route.snapshot.params["id"]
   }
 
@@ -29,23 +31,40 @@ export class GameShowComponent implements OnInit {
         this.assignImages()
       },
       error: (err) => {
-        console.log(err)
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
+          }
     })
     const userObservable = this.userService.getCurrentUser()
     if (userObservable) {
       userObservable.subscribe({
         next: (data) => {
           this.user = data;
-          this.cart = this.user.cart
+          this.cartService.GetCart(this.user.id).subscribe({
+            next: (data) => {
+              this.cart = data;
+              console.log(this.cart)
+            },
+            error: (err) => {
+              this.toastr.error(err, "Error");
+              setTimeout(() => {
+                this.toastr.clear()
+              }, 3000);             }
+          })
           this.isloggedIn();
         },
         error: (err) => {
-          console.log(err)
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);         }
       })
     }
+
   }
+
   assignImages() {
     this.game.images.forEach((img: string) => {
       this.images.push(new ImageItem({ src: img, thumb: img })
@@ -57,33 +76,53 @@ export class GameShowComponent implements OnInit {
   }
 
   isInCart(): boolean {
-    const index = this.cart.findIndex((item: any) => item._id === this.gameID);
-    if (index === -1) {
-      return false;
-    } else {
+    if (this.cart.some((item: any) => item.id ==this.gameID))
       return true
-    }
+    return false
   }
 
   addToCart() {
     if (this.cart.length > 0) {
-      const index = this.cart.findIndex((item: any) => item._id === this.gameID);
+      const index = this.cart.findIndex((item: any) => item.id === this.game.id);
       if (index === -1) {
-        this.cart.push(this.game);
+        this.cartService.addToCart(this.game.id,this.user.id).subscribe({
+          next: () => {
+            this.cart.push(this.game);
+            this.toastr.success("Game added Successfully!", "Updating Cart");
+          },
+          error: (err) => {
+            this.toastr.error(err, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 3000);           }
+        })
       } else {
-        this.cart.splice(index, 1);
+        this.cartService.removeItem(this.game.id,this.user.id).subscribe({
+          next: () => {
+            this.cart.splice(index, 1);
+            this.toastr.error("Game removed Successfully!", "Updating Cart");
+
+          },
+          error: (err) => {
+            this.toastr.error(err, "Error");
+            setTimeout(() => {
+              this.toastr.clear()
+            }, 3000);           }
+        })
       }
     }
     else
-      this.cart.push(this.game);
-    this.userService.updateUserCart(this.user._id, this.cart).subscribe({
-      next: () => {
-        this.ngOnInit();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+      this.cartService.addToCart(this.game.id,this.user.id).subscribe({
+        next: () => {
+          this.cart.push(this.game);
+          this.toastr.success("Game added Successfully!", "Updating Cart");
+        },
+        error: (err) => {
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);         }
+      })
   }
 
 }

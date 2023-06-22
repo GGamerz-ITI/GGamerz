@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from 'src/app/services/orders.service';
 
 
@@ -12,14 +13,15 @@ import { OrdersService } from 'src/app/services/orders.service';
 export class RejectedOrdersComponent {
   allOrders: any[] = [];
   rejectedOrders:any[]=[];
+  numGames: any[] = []
 
-  displayedColumns: string[] = ['_id', 'numGames', 'total'];
+  displayedColumns: string[] = ['id', 'numGames', 'total'];
   dataSource!: MatTableDataSource<any>;
 @Input() rejectedOrdersChild!:any[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private ordersService:OrdersService) { 
+  constructor(private toastr: ToastrService,private ordersService:OrdersService) { 
     this.filterPendingOrders()
 
   }
@@ -30,19 +32,29 @@ export class RejectedOrdersComponent {
     })
   }
 
+  getNumGames() {
+    this.allOrders.forEach(order => {
+      console.log(order.Games)
+
+      this.numGames[order.id] = order.Games.length
+    })
+  }
   filterPendingOrders(){
     this.ordersService.getAllOrders().subscribe(
       {
           next:(data: Object) => {
            this.allOrders = data as any[];
        this.rejectedOrders=this.allOrders.filter(order => order.status === "rejected");
-   
+       this.getNumGames()
+
            this.dataSource = new MatTableDataSource(this.rejectedOrders);
            this.dataSource.paginator = this.paginator;
          },
          error:(error) => {
-           console.log(error);
-         }}
+          this.toastr.error(error, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);          }}
        );
   }
 

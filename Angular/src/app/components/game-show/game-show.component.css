@@ -20,20 +20,48 @@ body {
 .image-container {
     background: none;
 }
+@media (max-width: 600px){
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    gap:8px
+  }
+  .about {
+    width: 100%;
+    height: fit-content;
+  }
+  .col-right {
+    width: 100%;
+    height: fit-content;
+  }
+  .actions-container, .discord{
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (min-width: 600px){
+  .info-container {
+    display: flex;
+  }
+  .about{
+    width: 60%;
+    height: fit-content;
+  }
+  .col-right {
+    width: 30%;
+    height: fit-content;
+  }
+  .actions-container{
+    display: flex;
+  }
+}
 .info-container {
     justify-content: space-between;
 }
-
-.col-right {
-    width: 30%;
-    height: fit-content;
-}
-
 .col-left {
-    width: 60%;
-    height: fit-content;
+  width: 60%;
+  height: fit-content;
 }
-
 .cart {
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -79,3 +107,8 @@ body {
 .os {
     justify-content: center;
 }
+#review-text{
+  height: 25%;
+}
+/* abdelrahim was here */
+

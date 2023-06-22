@@ -9,12 +9,12 @@ import { Observable, Subject } from 'rxjs';
 })
 export class OrdersService {
 
-  private readonly Base_URL = environment.apiURL + "/orders"; //localhost:3000/api
+  private readonly Base_URL = environment.apiURL + "/order"; //localhost:3000/api
 public orderChngStatusSubject:Subject<void> = new Subject <any>
 public orderUpdateChngObservable: Observable <void> = this.orderChngStatusSubject.asObservable();
   constructor(private readonly myClient: HttpClient) { }
 
-  GetUserOrders(id: string) {
+  GetUserOrders(id: any) {
     return this.myClient.get(this.Base_URL + '/user/' + id)
   }
 
@@ -24,9 +24,9 @@ public orderUpdateChngObservable: Observable <void> = this.orderChngStatusSubjec
     return this.myClient.delete(this.Base_URL + '/' + id)
   }
 
-  createOrder(data: any): Observable<any> {
+  createOrder(data: any){
     // console.log('create');
-    return this.myClient.post(this.Base_URL + '/', data);
+    return this.myClient.post(this.Base_URL, data);
   }
 
   getAllOrders(){

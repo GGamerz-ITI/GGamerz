@@ -1,0 +1,15 @@
+<!-- <div class="bg-light">
+<img class="w-25" src="../../../assets/images/exciting-news-sign-or-stamp-vector-25070301-transformed.png"> -->
+
+<div class="Cards">
+  <div  *ngFor="let newsItem of newsList" class="w-50 rounded me-1 ms-3 news">
+    <h5 class="fw-bold  text-light p-4"> {{ newsItem.title }}</h5>
+    <div class="d-flex flex-row ">
+      <p class="text-light news-content p-4">{{ newsItem.content }}</p>
+    </div>
+    <div class=" p-4">
+      <p class="fs-6 text-light">Created at: {{formatDate(newsItem.createdAt  || '') }}</p>
+    </div>
+  </div>
+</div>
+<!-- </div> -->

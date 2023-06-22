@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, Form  } from '@angular/forms';
 import { GamesService } from 'src/app/services/products.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-product',
@@ -25,7 +26,7 @@ export class CreateProductComponent  {
   osList = ['linux', 'mac', 'windows'];
 
 
-  constructor(public gamesService: GamesService,  private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {}
+  constructor(private toastr: ToastrService,public gamesService: GamesService,  private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {}
 
 
   ngOnInit(): void {
@@ -62,7 +63,7 @@ export class CreateProductComponent  {
     console.log(this.updatedOs)
   }
   }
-  
+
   onChangeFile(event: any) {
     const files = event.target.files;
     this.selectedImages = [];
@@ -73,7 +74,7 @@ export class CreateProductComponent  {
       this.selectedImages.push(files[i]);
       imagesControl.push(this.formBuilder.control(files[i]));
     }
-    
+
   }
 
   add(){
@@ -101,10 +102,10 @@ export class CreateProductComponent  {
           formData.append('releasedDate', formattedDate);
           formData.append('name', this.gameForm.get('name')!.value);
               formData.append('price', this.gameForm.get('price')!.value);
-             
+
               formData.append('description', this.gameForm.get('description')!.value);
 
-             
+
               console.log(formData);
 
           this.gamesService.AddNewProduct( formData).subscribe({
@@ -112,11 +113,16 @@ export class CreateProductComponent  {
               this.router.navigate(['/dashboard/games']);
             }
             ,
-            error:(err)=>{console.log(err)}
+            error:(err)=>{
+              this.toastr.error(err, "Error");
+              setTimeout(() => {
+                this.toastr.clear()
+              }, 3000);
+            }
           });
-     } 
+     }
     else{
-      console.log("engzzzzzzzzz")
+      console.log("Not valid")
     }
   }
 }

@@ -25,6 +25,21 @@ const createCoupon = async (req, res) => {
     }
 };
 
+const getUserCoupons = async (req, res) => {
+    try {
+        const userId=req.params.id
+        const user = await models.User.findByPk(userId);
+        const userPoints=user.points
+        const getUserCoupons = await models.Coupon.findAll({
+            where:{ points: {
+            [Op.lte]: userPoints
+          }}});
+        res.json(getUserCoupons);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+        return;
+    }
+};
 const getCoupons = async (req, res) => {
     try {
         const getCoupons = await models.Coupon.findAll();
@@ -85,5 +100,6 @@ module.exports = {
     createCoupon,
     getCoupons,
     deleteCoupon,
-    editCoupon
+    editCoupon,
+    getUserCoupons
 };

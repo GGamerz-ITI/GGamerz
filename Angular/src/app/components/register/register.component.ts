@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/users.service';
 import { Router } from '@angular/router';
+import { VerifyService } from '../../services/verify.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +15,7 @@ export class RegisterComponent {
   public mainInfo:any;
   public errorMsg:any = null;
 
-  constructor(private UserService: UserService, private router: Router){}
+  constructor(private UserService: UserService, private router: Router, private VerifyService: VerifyService, private toastr:ToastrService){}
 
   getData(data:any){
     this.validMainInfo = data;
@@ -31,7 +33,7 @@ export class RegisterComponent {
     console.log(formData);
     this.UserService.Register(formData).subscribe({
       next:()=>{
-      this.router.navigate(['/login']);
+        this.sendVerification(formData.email.toLowerCase())
        },
 
       error:(err)=>{
@@ -46,5 +48,30 @@ export class RegisterComponent {
         }
       }
   });
+  }
+
+  sendVerification(email:any) {
+    this.VerifyService.sendVerification(email).subscribe({
+      next: (data)=>{
+        this.toastr.success('Sent Verification to Email');
+        this.router.navigate(['/login']);
+      },
+      error: (err)=>{
+        if(err.status = 409)
+        {
+          this.toastr.error('User Already Verified');
+          this.router.navigate(['/login']);
+        }else
+        if(err.status = 404){
+
+          this.toastr.error('Error User Not Registered');
+          this.router.navigate(['/register']);
+        }
+        else{
+          this.toastr.error('Failed! make new verification request');
+          this.router.navigate(['/re-send'], { queryParams: { value: 'email' } });
+        }
+      }
+    });
   }
 }

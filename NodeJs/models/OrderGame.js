@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.INTEGER,
             allowNull: false
         },
-    }, {tableName: 'orders-games'});
+    }, {tableName: 'Orders-games'});
     OrderGame.associate = function (models) {
         
     };

@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
 import { OrdersService } from 'src/app/services/orders.service';
 import { UserService } from 'src/app/services/users.service';
@@ -15,7 +16,7 @@ export class OrdersComponent implements OnInit {
     { label: 'Pending', value: 'pending' },
     { label: 'Rejected', value: 'rejected' }
   ];
-  constructor(private orderService: OrdersService, private userService: UserService, private cdr: ChangeDetectorRef) { }
+  constructor(private toastr: ToastrService,private orderService: OrdersService, private userService: UserService, private cdr: ChangeDetectorRef) { }
   user: any;
   filteredOrders: any[] = []
   orders: any
@@ -31,7 +32,7 @@ export class OrdersComponent implements OnInit {
         switchMap((userData) => { //to switch to the orders Observable inside the user Observable subscription
           this.user = userData;
           // Fetch user orders
-          const ordersObservable = this.orderService.GetUserOrders(this.user._id);
+          const ordersObservable = this.orderService.GetUserOrders(this.user.id);
           if (ordersObservable) {
             return ordersObservable;
           } else {
@@ -41,11 +42,15 @@ export class OrdersComponent implements OnInit {
       ).subscribe({
         next: (data: any) => {
           this.orders = data;
+          console.log(this.orders)
           this.filterData();
         },
         error: (err: any) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000); 
+              }
       });
     }
   }

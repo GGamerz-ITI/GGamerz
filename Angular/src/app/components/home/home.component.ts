@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { GamesService } from 'src/app/services/products.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class HomeComponent {
 
   @ViewChild('aboutSection') aboutSection!: ElementRef;
 
-  constructor(private gamesService: GamesService) {
+  constructor(
+    private toastr: ToastrService,private gamesService: GamesService) {
     this.getGames();
   }
 
@@ -38,7 +40,10 @@ export class HomeComponent {
         console.log('firstImage:', this.firstImage);
       },
       (error) => {
-        console.error('Error retrieving games:', error);
+        this.toastr.error('Error retrieving games: '+error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000); 
       }
     );
   }

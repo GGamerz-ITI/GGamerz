@@ -24,7 +24,7 @@ module.exports = {
         defaultValue: 'pending',
       },
       couponId: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
         references: {
           model: {

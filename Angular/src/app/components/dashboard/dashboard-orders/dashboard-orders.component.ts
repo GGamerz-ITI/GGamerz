@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from 'src/app/services/orders.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class DashboardOrdersComponent {
   acceptedOrders:any[]=[];
   rejectedOrders:any[]=[];
 
-  constructor(private ordersService: OrdersService) { }
+  constructor(private toastr: ToastrService,private ordersService: OrdersService) { }
 
   ngOnInit() {
     this.ordersService.getAllOrders().subscribe(
@@ -24,12 +25,14 @@ export class DashboardOrdersComponent {
         console.log("accepted:",this.acceptedOrders);
         console.log("rejected:",this.rejectedOrders);
         console.log("pending:",this.pendingOrders);
-       console.log(this.allOrders)
+      //  console.log(this.allOrders)
 
       },
       error:(error) => {
-        console.log(error);
-      }}
+        this.toastr.error(error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);       }}
     );
   }
   filterOrders(){

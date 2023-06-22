@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -12,8 +13,6 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormMainInfoComponent } from './components/register/form-main-info/form-main-info.component';
-import { FormDiscordComponent } from './components/register/form-discord/form-discord.component';
-import { FormCharacterComponent } from './components/register/form-character/form-character.component';
 import { AllGamesComponent } from './components/all-games/all-games.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { LoginComponent } from './components/login/login.component';
@@ -24,9 +23,6 @@ import { ForbiddenComponent } from './components/errors/forbidden/forbidden.comp
 import { NotfoundComponent } from './components/errors/notfound/notfound.component';
 
 import { ToastrModule } from 'ngx-toastr';
-import { AdminOnlyComponent } from './components/admin-only/admin-only.component';
-import { UserOnlyComponent } from './components/user-only/user-only.component';
-import { AuthOnlyComponent } from './components/auth-only/auth-only.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -48,7 +44,7 @@ import { MatListModule } from '@angular/material/list';
 import { HeaderComponent } from './components/dashboard/header/header.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { WidgetComponent } from './components/dashboard/widget/widget.component';
-import { ChartoneComponent } from './components/dashboard/chartone/chartone.component';
+// import { ChartoneComponent } from './components/dashboard/chartone/chartone.component';
 import { TitleComponent } from './components/dashboard/title/title.component';
 import { UsersTableComponent } from './components/dashboard/users/users-table/users-table.component';
 // import { MatSidenavModule } from '@angular/material/select';
@@ -72,13 +68,29 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { GalleryModule } from 'ng-gallery';
 import { UserUpdateService } from './services/emitters.service';
 import { AboutUsComponent } from './components/about-us/about-us.component';
-import { ChartTwoComponent } from './components/chart-two/chart-two.component';
+import { ChartTwoComponent } from './components/dashboard/chart-two/chart-two.component';
 import { UpdateProductComponent } from './components/dashboard/update-product/update-product.component';
+import { FeedbackComponent } from './components/feedback/feedback.component';
+import { UserComponent } from './components/user/user.component';
+import { FilteredUsersComponent } from './components/filtered-users/filtered-users.component';
+import { NewsComponent } from './components/news/news.component';
+import { DashboardAnnouncementsComponent } from './components/dashboard/dashboard-announcements/dashboard-announcements.component';
+// import { AnnouncementDetailsComponent } from './components/dashboard/announcement-details/announcement-details.component';
+import { CreateAnnouncementComponent } from './components/dashboard/create-announcement/create-announcement.component';
+import { UpdateAnnouncementComponent } from './components/dashboard/update-announcement/update-announcement.component';
+import { UserReviewsComponent } from './components/user-reviews/user-reviews.component';
+import { ResendVerificationComponent } from './components/resend-verification/resend-verification.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { DashboardCouponsComponent } from './components/dashboard/dashboard-coupons/dashboard-coupons.component';
+import { CreateCouponComponent } from './components/dashboard/create-coupon/create-coupon.component';
+import { UpdateCouponComponent } from './components/dashboard/update-coupon/update-coupon.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 
 @NgModule({
   declarations: [
+    DashboardCouponsComponent,
     AppComponent,
     HomeCardsComponent,
     NavbarComponent,
@@ -86,8 +98,6 @@ import { UpdateProductComponent } from './components/dashboard/update-product/up
     FooterComponent,
     RegisterComponent,
     FormMainInfoComponent,
-    FormDiscordComponent,
-    FormCharacterComponent,
     AllGamesComponent,
     ChartComponent,
     LoginComponent,
@@ -96,9 +106,6 @@ import { UpdateProductComponent } from './components/dashboard/update-product/up
     LoginComponent,
     ForbiddenComponent,
     NotfoundComponent,
-    AdminOnlyComponent,
-    UserOnlyComponent,
-    AuthOnlyComponent,
     OrdersComponent,
     OrderItemComponent,
     CreditCardComponent,
@@ -107,7 +114,7 @@ import { UpdateProductComponent } from './components/dashboard/update-product/up
     SidenavComponent,
     HeaderComponent,
     WidgetComponent,
-    ChartoneComponent,
+    // ChartoneComponent,
     TitleComponent,
     UsersTableComponent,
     UserNavComponent,
@@ -128,6 +135,21 @@ import { UpdateProductComponent } from './components/dashboard/update-product/up
     AboutUsComponent,
     ChartTwoComponent,
     UpdateProductComponent,
+    FeedbackComponent,
+    UserComponent,
+    FilteredUsersComponent,
+    NewsComponent,
+    DashboardAnnouncementsComponent,
+    // AnnouncementDetailsComponent,
+    ResendVerificationComponent,
+    VerifyEmailComponent,
+    DashboardCouponsComponent,
+    CreateCouponComponent,
+    UpdateCouponComponent,
+    CreateAnnouncementComponent,
+    UpdateAnnouncementComponent,
+    UserReviewsComponent,
+    ResetPasswordComponent,
 
 
   ],
@@ -149,6 +171,7 @@ import { UpdateProductComponent } from './components/dashboard/update-product/up
     MatToolbarModule,
     MatListModule,
     MatMenuModule,
+    MatTooltipModule,
     MatTabsModule,
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right",

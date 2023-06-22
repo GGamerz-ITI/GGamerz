@@ -55,7 +55,7 @@
 .stat:hover{
     cursor: pointer;
 }
-.title:hover {
+.title:hover,  .username:hover {
     cursor: pointer;
     color: #007bff;
 }

@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GamesService } from 'src/app/services/products.service';
 import { Location } from '@angular/common';
 import { error } from 'jquery';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard-products',
@@ -12,14 +13,15 @@ import { error } from 'jquery';
   styleUrls: ['./dashboard-products.component.css']
 })
 export class DashboardProductsComponent implements OnInit {
-  displayedColumns: string[] = ['_id', 'name', 'date', 'price', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'date', 'price', 'actions'];
   dataSource!: MatTableDataSource<any>;
   productsTitle: string = "Games";
   games: any[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private gamesService: GamesService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private toastr: ToastrService,private gamesService: GamesService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.gamesService.GetAllGames().subscribe(
@@ -30,8 +32,10 @@ export class DashboardProductsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       error:(error) => {
-        console.log(error);
-      }}
+        this.toastr.error(error, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);       }}
     );
   }
 
@@ -44,26 +48,28 @@ export class DashboardProductsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       },
       error: (err) => {
-        console.log(err);
-      }
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);       }
     }
     );
   }
 
   removeDeletedProduct(id: any) {
-    this.games = this.games.filter(game => game._id !== id);
+    this.games = this.games.filter(game => game.id !== id);
   }
 
    formatDate(dateString: string): string {
     const date = new Date(dateString);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');  
+    const day = String(date.getDate()).padStart(2, '0');
     return `${day} - ${month} - ${year}`;
   }
 
   // navigateToEdit(game: any) {
-  //   this.router.navigate(['./add'], { relativeTo: this.route, queryParams: { gameId: game._id }, state: { game: game } });
+  //   this.router.navigate(['./add'], { relativeTo: this.route, queryParams: { gameId: game.id }, state: { game: game } });
   // }
 
 }

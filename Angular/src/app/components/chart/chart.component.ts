@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
 // import { UserUpdateService } from 'src/app/services/emitters.service';
 import { OrdersService } from 'src/app/services/orders.service';
@@ -22,7 +23,7 @@ export class ChartComponent implements OnInit{
   user: any;
   orders: any[] = [];
 
-  constructor(private userService: UserService, private orderService: OrdersService) { }
+  constructor(private toastr: ToastrService,private userService: UserService, private orderService: OrdersService) { }
 
   ngOnInit(): void {
     console.log("in child");
@@ -35,33 +36,38 @@ export class ChartComponent implements OnInit{
         switchMap((userData) => { //to switch to the orders Observable inside the user Observable subscription
           this.user = userData;
           // Fetch user orders
-          const ordersObservable = this.orderService.GetUserOrders(this.user._id);
+          const ordersObservable = this.orderService.GetUserOrders(this.user.id);
           if (ordersObservable) {
             return ordersObservable;
           } else {
             throw new Error('Failed to fetch user orders');
+            
           }
         })
       ).subscribe({
         next: (data: any) => {
           this.orders = data;
           this.getTags()
-          this.createChart();
+          setTimeout(() => {
+
+          this.createChart();},100)
         },
         error: (err: any) => {
-          console.log(err);
-        }
+          this.toastr.error(err, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 2000);             }
       });
     }
   }
   getTags() {
     this.orders.forEach((order: any) => { //looping user orders
       if (order.status == 'accepted') {
-        order.gameItems.forEach((game: any) => { // looping games included in each order
-          if (game.tag) {
-            game.tag.forEach((tag: string) => { //looping tags of each game
+        order.Games.forEach((game: any) => { // looping games included in each order
+          if (game.tags) {
+            game.tags.forEach((tag: string) => { //looping tags of each game
               if (this.tags.length > 0) {
-                const index = this.tags.findIndex((item: any) => item === tag);
+                const index = this.tags.findIndex((item: any) => item == tag);
                 if (index === -1) {
                   this.tags.push(tag);
                   this.tagCount[this.tags.length - 1] = 1;
@@ -77,6 +83,8 @@ export class ChartComponent implements OnInit{
         });
       }
     })
+    // console.log( this.tags,
+    // this.tagCount)
   }
   createChart() {
     this.chart = new Chart("MyChart", {
