@@ -145,7 +145,7 @@ const updateProduct=async (req, res) => {
       if (!product) {
         return res.status(404).send("Product not found");
       }
-      res.status(200).json("product retrived successfully");
+      res.status(200).json("product retrived successfullygit");
     } catch (error) {
       console.error(error);
       res.status(500).send("An error occurred while retrieving the product");
