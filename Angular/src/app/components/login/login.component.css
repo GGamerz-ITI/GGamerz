@@ -66,6 +66,15 @@ input{
   position: relative;
 
 }
+.line{
+  justify-content: space-between;
+}
+.link{
+  text-decoration: none;
+}
+.link:hover{
+  color: rgb(204, 199, 199);
+}
 @media screen and (max-width: 600px) {
   #main {
     width: 80%;
