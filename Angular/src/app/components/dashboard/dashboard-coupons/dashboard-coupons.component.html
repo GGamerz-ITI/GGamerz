@@ -31,7 +31,8 @@
       <a [routerLink]="'/dashboard/games/' + coupon.id">
         <i class="material-icons button--rounded">edit</i>
       </a>
-      <i class="material-icons button--rounded m-2" data-bs-toggle="modal" [attr.data-bs-target]="'#confirmation' + coupon._id">delete</i>
+
+      <i class="material-icons button--rounded m-2" data-bs-toggle="modal" [attr.data-bs-target]="'#confirmation' + coupon.id">delete</i>
       <div class="modal fade" [id]="'confirmation' + coupon.id" index="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -44,7 +45,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >I'm sure</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteCoupon(coupon.id)">I'm sure</button>
             </div>
           </div>
         </div>

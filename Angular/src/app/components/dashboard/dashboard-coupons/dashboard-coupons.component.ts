@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CouponsService } from 'src/app/services/coupons.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-dashboard-coupons',
@@ -11,22 +13,44 @@ export class DashboardCouponsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'amount', 'points', 'actions'];
   productsTitle: string = "Coupons";
   dataSource!: MatTableDataSource<any>;
+  coupons: any[] = [];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private couponService: CouponsService) {
+  constructor(private toastr: ToastrService, private couponService: CouponsService) {
     this.dataSource = new MatTableDataSource<any[]>([]);
   }
 
-  ngOnInit(): void {
-    this.getCoupons();
+  ngOnInit() {
+  this.getCoupons();
   }
 
   getCoupons() {
     this.couponService.getCoupons().subscribe({
       next: (data: any[]) => {
         this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
       },
       error: (error: any) => {
         console.log(error);
+      }
+    });
+  }
+
+  deleteCoupon(id: any) {
+    this.couponService.deleteCoupon(id).subscribe({
+      next: () => {
+        // Remove the deleted coupon from the list
+        this.coupons = this.coupons.filter(coupon => coupon.id !== id);
+        // Update the dataSource with the updated list of coupons
+        this.dataSource.data = this.coupons;
+        this.toastr.success("Coupon deleted successfully", "Success");
+        this.getCoupons()
+      },
+      error: (err) => {
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear();
+        }, 3000);
       }
     });
   }
@@ -38,4 +62,5 @@ export class DashboardCouponsComponent implements OnInit {
     const day = String(date.getDate()).padStart(2, '0');
     return `${day} - ${month} - ${year}`;
   }
+
 }

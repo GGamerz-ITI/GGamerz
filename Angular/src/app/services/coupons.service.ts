@@ -23,4 +23,10 @@ export class CouponsService {
   createCoupon(body: any){
     return this.myClient.post(this.Base_URL , body);
   }
+
+  deleteCoupon(id: any) {
+    console.log(this.Base_URL + '/' + id)
+    return this.myClient.delete(this.Base_URL + '/' + id)
+  }
+  
 }

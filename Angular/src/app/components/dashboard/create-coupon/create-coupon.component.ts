@@ -10,8 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CreateCouponComponent {
   createdGame: string = "New Coupon";
-  // couponForm!: FormGroup;
-
 
   constructor(private couponService: CouponsService, private router: Router, private toastr: ToastrService,) {}
 
@@ -23,7 +21,6 @@ export class CreateCouponComponent {
   })
 
   add() {
-
     if (this.couponForm.valid) {
       let name = this.couponForm.controls['name'].value;
       let amount = this.couponForm.controls['amount'].value;
@@ -38,7 +35,8 @@ export class CreateCouponComponent {
       }
 
       this.couponService.createCoupon(couponData).subscribe({
-        next: (response) => {
+        next: () => {
+          this.toastr.success("Coupon created successfully", "Success");
           this.router.navigate(['/dashboard/coupons']);
         },
 
@@ -53,8 +51,4 @@ export class CreateCouponComponent {
       console.log('Form is not valid');
     }
   }
-
-
-
-
 }
