@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   title: 'Production Environment Heading',
-  apiURL: process.env['API_URL']
+  apiURL: 'https://ggez-vw06.onrender.com/api'
 };
 
