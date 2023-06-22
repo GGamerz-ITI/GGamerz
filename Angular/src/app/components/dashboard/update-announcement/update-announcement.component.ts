@@ -59,7 +59,7 @@ export class UpdateAnnouncementComponent {
       this.newsService.updateNewsById(this.updatedAnnouncementId, updatedAnnouncement).subscribe({
         next: () => {
           console.log("done");
-          this.router.navigate(['/announcements']);
+          this.router.navigate(['dashboard/announcements']);
         },
         error: (err) => {
           this.toastr.error(err, "Error");

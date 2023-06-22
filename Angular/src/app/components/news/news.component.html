@@ -4,8 +4,8 @@
 <div class="Cards">
   <div  *ngFor="let newsItem of newsList" class="w-50 rounded me-1 ms-3 news">
     <h5 class="fw-bold  text-light p-4"> {{ newsItem.title }}</h5>
-    <div class="">
-      <p class=" text-light p-4">{{ newsItem.content }}</p>
+    <div class="d-flex flex-row ">
+      <p class="text-light news-content p-4">{{ newsItem.content }}</p>
     </div>
     <div class=" p-4">
       <p class="fs-6 text-light">Created at: {{formatDate(newsItem.createdAt  || '') }}</p>

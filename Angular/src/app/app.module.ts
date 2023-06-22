@@ -80,6 +80,7 @@ import { ResendVerificationComponent } from './resend-verification/resend-verifi
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { CreateAnnouncementComponent } from './components/dashboard/create-announcement/create-announcement.component';
 import { UpdateAnnouncementComponent } from './components/dashboard/update-announcement/update-announcement.component';
+import { UserReviewsComponent } from './components/user-reviews/user-reviews.component';
 
 
 
@@ -139,6 +140,7 @@ import { UpdateAnnouncementComponent } from './components/dashboard/update-annou
     VerifyEmailComponent,
     CreateAnnouncementComponent,
     UpdateAnnouncementComponent,
+    UserReviewsComponent,
 
 
   ],

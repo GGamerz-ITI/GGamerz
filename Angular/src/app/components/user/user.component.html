@@ -125,7 +125,6 @@
         <hr class="m-2 separator rounded">
         <!-- show games Purchased -->
         <p class="m-2 p-3 fs-4 fw-medium text-light">Games Purchased</p>
-        <div></div>
         <div class="d-flex games-purchased flex-row m-3">
             <div class="card bg-dark text-light text-center m-2 shadow-sm" *ngFor="let g of games">
                 <div class="card-header">
@@ -140,6 +139,9 @@
                 <p class="text-center text-light bg-dark rounded p-2 m-auto mb-4">This user has no games yet!</p>
             </div>
         </div>
+        <hr class="m-2 separator rounded">
+        <p class="m-2 p-3 fs-4 fw-medium text-light">Games Reviews</p>
+        <app-user-reviews></app-user-reviews>
     </div>
 </div>
 <app-footer></app-footer>

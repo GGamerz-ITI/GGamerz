@@ -77,11 +77,11 @@ const deleteComment = async (req, res) => {
 
   try {
     const deletedComment = await models.Comment.destroy({ where: {id: CommentId}});
-    if (!deletedComment) {
+    if (deletedComment) {
       res.status(200).json({ message: "review Deleted" });
       return;
     } else {
-      res.status(400).json({ message: "Failed to delete review" });
+      res.status(400).json({ message: "Failed to delete comment" });
       return;
     }
   } catch (err) {
