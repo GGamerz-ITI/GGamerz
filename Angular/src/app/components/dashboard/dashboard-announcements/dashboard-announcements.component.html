@@ -1,7 +1,8 @@
 <app-title [titleContent]="Announcements"></app-title>
 
 <div class="d-flex justify-content-center align-content-center">
-  <i type="button" [routerLink]="['./add']" class="fa-solid fa-circle-plus fa-xl" style="color: white;"></i>
+  <i type="button" [routerLink]="['./add']"
+    class="fa-solid fa-circle-plus fa-xl" style="color: white;"></i>
 </div>
 
 <table mat-table [dataSource]="dataSource">
@@ -16,30 +17,22 @@
     <td mat-cell *matCellDef="let announcement">{{ announcement.title }}</td>
   </ng-container>
 
-
   <ng-container matColumnDef="content">
     <th mat-header-cell *matHeaderCellDef>Content</th>
-    <td mat-cell *matCellDef="let announcement" [matTooltip]="announcement.content" class="truncate-content">{{ announcement.content }}</td>
-  </ng-container>
-  
-
-  <ng-container matColumnDef="created_date">
-    <th mat-header-cell *matHeaderCellDef>Created At</th>
-    <td mat-cell *matCellDef="let announcement">{{ formatDate(announcement.created_at) }}</td>
+    <td mat-cell *matCellDef="let announcement"
+      [matTooltip]="announcement.content" class="truncate-content">{{
+      announcement.content }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="updated_date">
-    <th mat-header-cell *matHeaderCellDef>Updated At</th>
-    <td mat-cell *matCellDef="let announcement">{{ formatDate(announcement.updated_at) }}</td>
-  </ng-container>
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let announcement">
-      
+
       <a [routerLink]="'/dashboard/announcements/update/' + announcement.id">
         <i class="material-icons button--rounded m-2">edit</i>
       </a>
-      <i class="material-icons button--rounded" data-bs-toggle="modal" [attr.data-bs-target]="'#confirmation' + announcement.id">
+      <i class="material-icons button--rounded" data-bs-toggle="modal"
+        [attr.data-bs-target]="'#confirmation' + announcement.id">
         delete
       </i>
       <!-- {{ announcement.id}} -->
@@ -47,22 +40,28 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header text-dark">
-              <h5 class="modal-title" id="confirmationLabel">Delete announcement confirmation</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="confirmationLabel">Delete announcement
+                confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p class="text-dark">Are you sure you want to delete this announcement?</p>
+              <p class="text-dark">Are you sure you want to delete this
+                announcement?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteAnnouncement(announcement.id)">I'm sure</button>
+              <button type="button" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger"
+                data-bs-dismiss="modal"
+                (click)="deleteAnnouncement(announcement.id)">I'm sure</button>
             </div>
           </div>
         </div>
       </div>
     </td>
   </ng-container>
-  
+
   <!-- Table rows -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let announcement; columns: displayedColumns;"></tr>
