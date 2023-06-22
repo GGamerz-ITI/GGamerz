@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const path = require("path");
 const User = require(path.join(__dirname,"../models/User.js"))
@@ -77,8 +77,8 @@ const deleteComment = async (req, res) => {
 
   try {
     const deletedComment = await models.Comment.destroy({ where: {id: CommentId}});
-    if (!deletedComment) {
-      res.status(200).json({ message: "comment Deleted" });
+    if (deletedComment) {
+      res.status(200).json({ message: "review Deleted" });
       return;
     } else {
       res.status(400).json({ message: "Failed to delete comment" });

@@ -4,9 +4,9 @@
 </div>
 <table mat-table [dataSource]="dataSource">
 
-  <ng-container matColumnDef="_id">
+  <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let game">{{ game._id }}</td>
+    <td mat-cell *matCellDef="let game">{{ game.id }}</td>
   </ng-container>
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -14,7 +14,7 @@
   </ng-container>
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef>Date</th>
-    <td mat-cell *matCellDef="let game">{{formatDate( game.releasedDate) }}</td>
+    <td mat-cell *matCellDef="let game">{{formatDate( game.releaseDate) }}</td>
   </ng-container>
   <ng-container matColumnDef="price">
     <th mat-header-cell *matHeaderCellDef>Price</th>
@@ -23,12 +23,12 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>actions</th>
     <td mat-cell *matCellDef="let game">
-      <a [routerLink]="'/dashboard/games/' + game._id">
+      <a [routerLink]="'/dashboard/games/' + game.id">
         <i class="material-icons button--rounded">visibility</i>
       </a>
-      <a [routerLink]="'/dashboard/games/update/' + game._id"><i class="material-icons button--rounded m-2">edit</i></a>
-      <i class="material-icons button--rounded" data-bs-toggle="modal" [attr.data-bs-target]="'#confirmation' + game._id">delete</i>
-      <div class="modal fade" [id]="'confirmation' + game._id" index="-1">
+      <a [routerLink]="'/dashboard/games/update/' + game.id"><i class="material-icons button--rounded m-2">edit</i></a>
+      <i class="material-icons button--rounded" data-bs-toggle="modal" [attr.data-bs-target]="'#confirmation' + game.id">delete</i>
+      <div class="modal fade" [id]="'confirmation' + game.id" index="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header text-dark">
@@ -40,14 +40,14 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteProduct(game._id)">I'm sure</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteProduct(game.id)">I'm sure</button>
             </div>
           </div>
         </div>
       </div>
     </td>
   </ng-container>
-  
+
 
   <!-- Table rows -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

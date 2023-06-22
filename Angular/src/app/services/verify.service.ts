@@ -11,6 +11,7 @@ constructor(private readonly myClient: HttpClient) {}
 
 private readonly Base_URL = environment.apiURL + "/verify";
 
+// Email
 sendVerification(email:any) {
   const body = {
     email: email
@@ -20,5 +21,13 @@ sendVerification(email:any) {
 
 verifyUserEmail(userId: any,token: any) {
   return this.myClient.get(this.Base_URL + '/emailVerify/' + userId + '/' + token)
+}
+
+// Password email request
+sendPasswordReset(email:any) {
+  const body = {
+    email: email
+  }
+  return this.myClient.post(this.Base_URL + '/passwordReset', body)
 }
 }

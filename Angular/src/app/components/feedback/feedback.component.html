@@ -1,4 +1,4 @@
-        <!-- abdelrahim -->
+<!-- abdelrahim -->
 
         <div class="container p-3">
           <div class="row">
@@ -24,9 +24,9 @@
                   <!-- circular picture and username -->
                   <div class="d-flex align-items-center">
                     <div class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center mr-3" style="width: 40px; height: 40px;">
-                      <span class="fas fa-user">{{ review.user.image }}</span>
+                      <span class="fas fa-user"></span>
                     </div>
-                    <div>
+                    <div *ngIf="review.user">
                       <p class="font-weight-bold mb-0" style="color: green;">{{ review.user.username }}</p>
                     </div>
                   </div>
@@ -55,7 +55,7 @@
                       <div class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center mr-3" style="width: 40px; height: 40px;">
                         <span class="fas fa-user"></span>
                       </div>
-                      <div>
+                      <div *ngIf="comment.user">
                         <p class="font-weight-bold mb-0" style="color: yellow;">{{ comment.user.username }}</p>                      </div>
                     </div>
                     <!-- dropdown -->

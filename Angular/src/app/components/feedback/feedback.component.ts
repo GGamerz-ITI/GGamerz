@@ -63,8 +63,7 @@ export class FeedbackComponent {
         console.log(err)
       }
     })
-    //  // abdelrahim
-     $('.reply-link').click(function(e) {
+    $('.reply-link').click(function (e) {
       e.preventDefault();
       $(this).next('.reply-container').toggleClass('show');
     });
@@ -73,7 +72,6 @@ export class FeedbackComponent {
   }
 
 
-  ///// abdelrahim
   isFormVisible = false;
   reviewText = '';
   isReplyVisible = false;
@@ -105,7 +103,7 @@ export class FeedbackComponent {
   // showReply() {
   //   this.isReplyVisible = true;
   // }
-  showReply(review:any) {
+  showReply(review: any) {
     review.showReplyForm = !review.showReplyForm;
   }
 
@@ -119,6 +117,8 @@ export class FeedbackComponent {
       this.reviewService.createReview(review).subscribe({
         next: (response) => {
           console.log('Review created successfully:', response);
+          this.ngOnInit()
+          this.reviewText=""
         },
         error: (error) => {
           console.error('Error creating review:', error);
@@ -144,13 +144,13 @@ export class FeedbackComponent {
       this.commentService.createComment(comment).subscribe({
         next: (response) => {
           console.log('Comment created successfully:', response);
-
+          this.ngOnInit()
+          this.commentText.reset()
         },
         error: (error) => {
           console.error('Error creating comment:', error);
         },
       });
-      window.location.reload();
     }else {
       this.toastr.warning('You have to login first', 'Warning');
     }
@@ -164,7 +164,7 @@ export class FeedbackComponent {
         next: (response) => {
           if (this.user.id == review.userId) {
             console.log('Review deleted successfully:', response);
-            // You may want to reload the reviews list or update the view here
+            this.ngOnInit();
           } else {
             console.error('Error: User ID does not match the review owner.');
           }
@@ -172,11 +172,6 @@ export class FeedbackComponent {
         error: (error) => {
           console.error('Error deleting review:', error);
         },
-        complete: () => {
-          // The complete callback is invoked after the request completes
-          // You can put any post-processing logic here, like reloading the reviews list
-          window.location.reload();
-        }
       });
     }else {
       this.toastr.warning('You have to login first', 'Warning');
@@ -188,7 +183,7 @@ export class FeedbackComponent {
         this.commentService.deleteComment(comment.id).subscribe({
           next: (response) => {
             console.log('Comment deleted successfully:', response);
-            // You may want to reload the comments list or update the view here
+            this.ngOnInit();
           },
           error: (error) => {
             console.error('Error deleting comment:', error);
@@ -214,7 +209,6 @@ export class FeedbackComponent {
       return false;
      }
    }  else {
-    this.toastr.warning('You have to login first', 'Warning');
     return false;
   }
 }

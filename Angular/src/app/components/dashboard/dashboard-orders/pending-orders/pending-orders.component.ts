@@ -12,56 +12,78 @@ import { OrdersService } from 'src/app/services/orders.service';
 })
 export class PendingOrdersComponent {
   allOrders: any[] = [];
-  acceptedOrders:any[]=[];
+  acceptedOrders: any[] = [];
+  numGames: any[] = []
 
-  displayedColumns: string[] = ['_id', 'numGames', 'total','action'];
+  displayedColumns: string[] = ['id', 'numGames', 'total', 'action'];
   dataSource!: MatTableDataSource<any>;
-@Input() acceptedOrdersChild!:any[];
+  @Input() acceptedOrdersChild!: any[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private toastr: ToastrService,private ordersService:OrdersService) {
+  constructor(private toastr: ToastrService, private ordersService: OrdersService) {
     this.filterPendingOrders();
 
-   }
+  }
 
   ngOnInit() {
-    this.ordersService.orderUpdateChngObservable.subscribe(()=>{
+    this.ordersService.orderUpdateChngObservable.subscribe(() => {
       this.filterPendingOrders();
     })
   }
-  filterPendingOrders(){
-this.ordersService.getAllOrders().subscribe({
-  next:(data: Object) => {
-    this.allOrders = data as any[];
-this.acceptedOrders=this.allOrders.filter(order => order.status === "pending");
-
-    this.dataSource = new MatTableDataSource(this.acceptedOrders);
-    this.dataSource.paginator = this.paginator;
-  },
-  error:(err) => {
-    this.toastr.error(err, "Error");
-    setTimeout(() => {
-      this.toastr.clear()
-    }, 3000);  }
-})
-  }
-
-  chngStatus(id:any,status:string){
-    const body={status:status}
-    this.ordersService.chngOrderStatus(id,body).subscribe({
-      next:()=>{
-        this.ordersService.orderChngStatusSubject.next();
-        console.log("done")
+  filterPendingOrders() {
+    this.ordersService.getAllOrders().subscribe({
+      next: (data: Object) => {
+        this.allOrders = data as any[];
+        this.acceptedOrders = this.allOrders.filter(order => order.status === "pending");
+        this.getNumGames()
+        this.dataSource = new MatTableDataSource(this.acceptedOrders);
+        this.dataSource.paginator = this.paginator;
       },
-      error:(err)=>{
+      error: (err) => {
         this.toastr.error(err, "Error");
         setTimeout(() => {
           this.toastr.clear()
-        }, 3000);       }
+        }, 3000);
+      }
     })
   }
 
-  
+  getNumGames() {
+    this.allOrders.forEach(order => {
+      console.log(order.Games)
+
+      this.numGames[order.id] = order.Games.length
+    })
+  }
+
+  chngStatus(id: any, status: string) {
+    const body = { status: status }
+    this.ordersService.chngOrderStatus(id, body).subscribe({
+      next: () => {
+        this.ordersService.orderChngStatusSubject.next();
+        // console.log("done")
+        if (status == 'accepted') {
+          this.toastr.success("Order accepted!", "Feedback");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);
+        }else{
+          this.toastr.error("Order declined!", "Feedback");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+      }
+    })
+  }
+
+
 
 }

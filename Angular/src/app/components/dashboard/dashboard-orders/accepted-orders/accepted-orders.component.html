@@ -1,12 +1,12 @@
 <table mat-table [dataSource]="dataSource" >
   <!-- Define your table columns -->
-  <ng-container matColumnDef="_id">
+  <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let order">{{ order._id }}</td>
+    <td mat-cell *matCellDef="let order">{{ order.id }}</td>
   </ng-container>
   <ng-container matColumnDef="numGames">
     <th mat-header-cell *matHeaderCellDef>no. of items</th>
-    <td mat-cell *matCellDef="let order">{{ order.numGames }}</td>
+    <td mat-cell *matCellDef="let order; let i = index">{{ numGames[ order.id] }}</td>
   </ng-container>
   <ng-container matColumnDef="total">
     <th mat-header-cell *matHeaderCellDef>Total</th>

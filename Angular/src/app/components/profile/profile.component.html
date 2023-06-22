@@ -96,7 +96,8 @@
                                                 class="text-dark d-flex flex-row align-items-center">
                                                 <img class="w-25 m-4" src={{follower.level}}>
                                                 <div>
-                                                    <p class="m-2 username fw-bold" data-bs-dismiss="modal" (click)="redirect(follower.id)">{{ follower.username }}</p>
+                                                    <p class="m-2 username fw-bold" data-bs-dismiss="modal"
+                                                        (click)="redirect(follower.id)">{{ follower.username }}</p>
                                                     <p class="m-2 text-secondary">
                                                         {{follower.discord}}</p>
                                                 </div>
@@ -127,15 +128,16 @@
                                     <div class="modal-body d-flex flex-row flex-wrap justify-content-center p-4">
                                         <div *ngIf="  following.followings.length>0 else zeroFollowing">
 
-                                        <div *ngFor="let person of following.followings"
-                                            class="text-dark d-flex flex-row align-items-center">
-                                            <img class="w-25 m-4" src={{person.level}}>
-                                            <div>
-                                                <p class="m-2 username fw-bold" data-bs-dismiss="modal" (click)="redirect(person.id)">{{ person.username }}</p>
-                                                <p class="m-2 text-secondary">
-                                                    {{person.discord}}</p>
+                                            <div *ngFor="let person of following.followings"
+                                                class="text-dark d-flex flex-row align-items-center">
+                                                <img class="w-25 m-4" src={{person.level}}>
+                                                <div>
+                                                    <p class="m-2 username fw-bold" data-bs-dismiss="modal"
+                                                        (click)="redirect(person.id)">{{ person.username }}</p>
+                                                    <p class="m-2 text-secondary">
+                                                        {{person.discord}}</p>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                         <ng-template #zeroFollowing>
                                             <p class="text-center text-info">User is not currently following anyone</p>
@@ -201,6 +203,9 @@
                 </p>
             </div>
         </div>
+        <hr class="m-2 separator rounded">
+        <p class="m-2 p-3 fs-4 fw-medium text-light">Game Reviews</p>
+        <app-user-reviews></app-user-reviews>
         <hr class="m-2 separator rounded">
         <p class="m-2 p-3 fs-4 fw-medium text-light">Most Purchased Genres</p>
         <app-chart></app-chart>

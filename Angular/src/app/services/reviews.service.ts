@@ -27,6 +27,7 @@ public reviewUpdateChngObservable: Observable <void> = this.reviewChngStatusSubj
     // console.log('create');
     return this.myClient.post(this.Base_URL+'/create', data);
   }
-
-
+  getReviewsByUser(id: any) {
+    return this.myClient.get(this.Base_URL + '/user/' + id)
+  }
 }

@@ -9,7 +9,10 @@
   background-image: url("../../../assets/images/istockphoto-1127916497-612x612.jpg");
   background-size: cover;
 }
-
+.news-content {
+  width: 100%;
+  word-wrap: break-word;
+}
 .card {
   width: 350px;
   /* height: 250px;  */

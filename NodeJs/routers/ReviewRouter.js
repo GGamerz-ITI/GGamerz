@@ -6,6 +6,7 @@ const reviewController = require(path.join(__dirname, "../controllers/ReviewCont
 
 router.get("/game/:id", reviewController.getAllGameReviews);
 router.get("/:id", reviewController.getReviewById);
+router.get("/user/:id", reviewController.getReviewByUser);
 router.delete("/:id", reviewController.deleteReview);
 router.post("/create", reviewController.createReview);
 

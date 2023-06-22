@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const path = require("path");
 const User = require(path.join(__dirname, "../models/User.js"));
@@ -115,7 +115,7 @@ const createUser = async (req, res) => {
       }
     }
   } catch (err) {
-    res.status(400).json({ message: err.errors[0].message });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

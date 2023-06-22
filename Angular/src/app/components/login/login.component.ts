@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   public mainInfo:any;
   public errorMsg:any = null;
+  public needVerify: boolean | boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -50,18 +52,23 @@ get password() {return this.mainInfo.get("password"); }
         console.log(err);
         switch(err.status)
         {
+          // Invalid Password
           case 401:
           this.errorMsg = err.error.message;
           break;
 
+          // Not Verified
           case 402:
           this.errorMsg = err.error.message;
+          this.needVerify = true
           break;
 
+          // Not Found
           case 404:
           this.errorMsg = err.error.message;
           break;
 
+          // Banned
           case 403:
           this.errorMsg = err.error.message;
           break;
