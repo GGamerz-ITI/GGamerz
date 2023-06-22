@@ -9,7 +9,7 @@ const cloudinary = require('cloudinary').v2;
 const getAllProducts =async (req, res) => {
     try {
       const products = await models.Game.findAll();
-      res.json(products);
+      res.status(200).json("products retrieved successfully");
     } catch (error) {
       console.error("Error retrieving products:", error);
       res.status(500).json({ error: "Failed to retrieve products" });
@@ -54,11 +54,11 @@ const createProduct = async (req, res) => {
         }
 
         const newProduct = await models.Game.create(myProduct);
-        res.status(200).json(newProduct);
+        res.status(200).json("product created successfully");
       }
     });
   } catch (err) {
-    return res.status(500).send("Server Error, Failed to create the product !");
+    return res.status(400).send("Server Error, Failed to create the product !");
   }
   };
 const updateProduct=async (req, res) => {
@@ -131,7 +131,7 @@ const updateProduct=async (req, res) => {
             return res.status(400).json({message: "Failed to update product"});
           }
       
-          return res.status(200).json(updateProduct);
+          return res.status(200).json("prduct updated successfully");
         }
       })
     } catch (err) {
@@ -145,7 +145,7 @@ const updateProduct=async (req, res) => {
       if (!product) {
         return res.status(404).send("Product not found");
       }
-      res.status(200).json(product);
+      res.status(200).json("product retrived successfully");
     } catch (error) {
       console.error(error);
       res.status(500).send("An error occurred while retrieving the product");
