@@ -36,7 +36,7 @@ export class GamesService {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');  // Add the 'Content-Type' header
     headers.append('Accept', 'application/json');  // Add any other necessary headers
-    return this.myClient.post(this.Base_URL,newProduct,{ headers });
+    return this.myClient.post(this.Base_URL + '/create',newProduct,{ headers });
 
   }
 

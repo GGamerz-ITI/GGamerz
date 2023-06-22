@@ -9,7 +9,7 @@ const cloudinary = require('cloudinary').v2;
 const getAllProducts =async (req, res) => {
     try {
       const products = await models.Game.findAll();
-      res.status(200).json("products retrieved successfully");
+      res.status(200).json(products);
     } catch (error) {
       console.error("Error retrieving products:", error);
       res.status(500).json({ error: "Failed to retrieve products" });
@@ -50,6 +50,7 @@ const createProduct = async (req, res) => {
           if (characters) {
             myProduct["character"] =
               process.env.CLOUD_PATH + characters[0].filename;
+              console.log(myProduct["character"]);
           }
         }
 
@@ -145,7 +146,7 @@ const updateProduct=async (req, res) => {
       if (!product) {
         return res.status(404).send("Product not found");
       }
-      res.status(200).json("product retrived successfullygit");
+      res.status(200).json(product);
     } catch (error) {
       console.error(error);
       res.status(500).send("An error occurred while retrieving the product");
