@@ -57,18 +57,12 @@ export class AllGamesComponent implements OnInit {
               // console.log(this.cart)
             },
             error: (err) => {
-              this.toastr.error(err, "Error");
-              setTimeout(() => {
-                this.toastr.clear()
-              }, 2000);
+              console.log(err)
             }
           })
         },
         error: (err) => {
-          this.toastr.error(err, "Error");
-          setTimeout(() => {
-            this.toastr.clear()
-          }, 2000);
+          console.log(err)
         }
       })
     }
@@ -118,10 +112,10 @@ export class AllGamesComponent implements OnInit {
         this.cartService.removeItem(g.id, this.user.id).subscribe({
           next: () => {
             this.cart.splice(index, 1);
-            this.toastr.error("Game removed Successfully!", "Updating Cart");
+            this.toastr.error("Game removed from Cart!", "Updating Cart");
           },
           error: (err) => {
-            this.toastr.error(err, "Error");
+            this.toastr.error(err.message, "Error");
             setTimeout(() => {
               this.toastr.clear()
             }, 2000);          }
@@ -135,7 +129,7 @@ export class AllGamesComponent implements OnInit {
           this.toastr.success("Game added Successfully!", "Updating Cart");
         },
         error: (err) => {
-          this.toastr.error(err, "Error");
+          this.toastr.error(err.message, "Error");
           setTimeout(() => {
             this.toastr.clear()
           }, 2000);        }
