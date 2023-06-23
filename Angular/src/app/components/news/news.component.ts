@@ -24,10 +24,7 @@ export class NewsComponent implements OnInit {
           this.newsList = news as any[]; // Cast the 'news' object to 'any[]' type
         },
         error: (error) => {
-          this.toastr.error(error, "Error");
-          setTimeout(() => {
-            this.toastr.clear()
-          }, 3000);
+         console.log(error)
         }
       } );
   }
