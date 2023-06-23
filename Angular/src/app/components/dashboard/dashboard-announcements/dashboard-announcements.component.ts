@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./dashboard-announcements.component.css']
 })
 export class DashboardAnnouncementsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'title', 'content', 'created_date', 'updated_date', 'actions'];
+  displayedColumns: string[] = ['id', 'title', 'content', 'actions'];
   dataSource!: MatTableDataSource<any>;
   announcements: any[] = [];
   Announcements: string = "Announcements";

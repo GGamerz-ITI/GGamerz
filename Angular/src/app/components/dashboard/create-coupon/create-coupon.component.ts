@@ -17,7 +17,7 @@ export class CreateCouponComponent {
     name: new FormControl(null, Validators.required),
     amount: new FormControl(null, Validators.required),
     expDate: new FormControl(null, Validators.required),
-    points: new FormControl(null, Validators.required),
+    points: new FormControl(null),
   })
 
   add() {

@@ -11,11 +11,13 @@ import { GamesService } from 'src/app/services/products.service';
 })
 export class UpdateProductComponent {
   updatedGameName: string = "Update Game";
+  selectedSingleImage: File | undefined;
   gameForm!: FormGroup;
   selectedImages:string[] = [];
   updatedDescription!:string;
   updatedName!:string;
   updatedPrice!:number;
+  updatedPoints!:number;
   game:any;
   updatedProductId!:string;
   updatedValues!:any
@@ -24,9 +26,9 @@ export class UpdateProductComponent {
   updatedOs:string[]=[];
   updatedImages:string[]=[];
 
-  tagsList = ['Action', 'funny', 'sports','adventure','horror',"war","combat","fantasy"];
+  tagsList = ['action', 'funny', 'sports','adventure','horror',"war","combat","fantasy"];
   typesList = ['multiplayer', 'singleplayer'];
-  osList = ['Linux', 'MacOs', 'Windows'];
+  osList = ['linux', 'mac', 'windows'];
 
   constructor(
     private toastr: ToastrService,
@@ -40,9 +42,11 @@ export class UpdateProductComponent {
         this.gameForm = this.formBuilder.group({
           name: new FormControl(),
           price: new FormControl(),
-          tag: new FormControl(),
-          type: new FormControl(),
+          points: new FormControl(),
+          tags: new FormControl(),
+          types: new FormControl(),
           os: new FormControl(),
+          character: new FormControl(),
           description: new FormControl(),
           imageURL: this.formBuilder.array([]),
         });
@@ -57,17 +61,18 @@ export class UpdateProductComponent {
       this.toastr.error(err, "Error");
       setTimeout(() => {
         this.toastr.clear()
-      }, 3000);     }
+      }, 3000);     
+    }
   });
 
-  const tagControl = this.gameForm.get('tag');
+  const tagControl = this.gameForm.get('tags');
   if (tagControl) {
     tagControl.valueChanges.subscribe((selectedTags: string[]) => {
       this.updatedTags = selectedTags;
     });
     console.log(this.updatedTags)
   }
-  const typeControl = this.gameForm.get('type');
+  const typeControl = this.gameForm.get('types');
   if (typeControl) {
     typeControl.valueChanges.subscribe((selectedTypes: string[]) => {
       this.updatedTypes = selectedTypes;
@@ -96,6 +101,13 @@ export class UpdateProductComponent {
     }
   }
 
+  onSingleImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedSingleImage = file;
+    }
+  }
+
   update(){
     const formData = new FormData();
     if(this.gameForm.valid){
@@ -104,43 +116,57 @@ export class UpdateProductComponent {
 
         this.gameForm.value.name==this.game.name || this.gameForm.value.name ==null ? this.updatedName=this.game.name :this.updatedName=this.gameForm.value.name;
         this.gameForm.value.price==this.game.price || this.gameForm.value.price ==null ? this.updatedPrice=this.game.price :this.updatedPrice=this.gameForm.value.price;
+        this.gameForm.value.price==this.game.price || this.gameForm.value.price ==null ? this.updatedPoints=this.game.price :this.updatedPoints=this.gameForm.value.price;
         this.gameForm.value.description==this.game.description || this.gameForm.value.description ==null ? this.updatedDescription=this.game.description :this.updatedDescription=this.gameForm.value.description;
         formData.append('name',this.updatedName);
         formData.append('description',this.updatedDescription);
         formData.append('price', this.updatedPrice.toString());
+        formData.append('points', this.updatedPoints.toString());
 
         
           
-        if(this.updatedTypes.length==0 )
-         this.updatedTypes=  this.game.types
-        else
-         { 
-          this.updatedTypes=this.gameForm.value.type
-        }
+        
 
+// console.log(this.updatedTypes)
+if (this.updatedTags.length === 0) {
+  if(typeof(this.game.tags)=='string'){
+    this.updatedTags.push(this.game.tags)
+  }else{
+    this.updatedTags =[...this.game.tags];
+
+  }
+}
+
+for (let tag of this.updatedTags) {
+  formData.append('tags', tag);
+}
+
+        if(this.updatedTypes.length==0  )
+          {
+            if(typeof(this.game.types)=='string'){
+              this.updatedTypes.push(this.game.types)
+            }
+            else
+            {
+              this.updatedTypes= [...this.game.types]
+            }
+          }
+       
         for(let type of this.updatedTypes)
           {
-            formData.append('type', type);
+            formData.append('types', type);
           }
 
+          if (this.updatedOs.length === 0) {
+            if(typeof(this.game.os)=='string'){
+            this.updatedOs.push(this.game.os)
+            }else{
+              this.updatedOs =[...this.game.os]; 
 
-        if(this.updatedTags.length==0 )
-         this.updatedTags=  this.game.tags
-        else
-        {
-          this.updatedTags=this.gameForm.value.tag
-        }
-           for(let tag of this.updatedTags){
-            formData.append('tag', tag);
+            }
           }
-
-        if(this.updatedOs.length==0 )
-         this.updatedOs=  this.game.os
-        else
-        {  
-          this.updatedOs=this.gameForm.value.os
-        }
-        for(let os of this.updatedOs){
+          
+          for (let os of this.updatedOs) {
             formData.append('os', os);
           }
 
@@ -158,6 +184,13 @@ export class UpdateProductComponent {
         for(let images of this.updatedImages)
           {
             formData.append('imageURL', images);
+          }
+
+          if (this.selectedSingleImage) {
+            formData.append('character', this.selectedSingleImage);
+          } else {
+            // If no new image is selected, use the old value
+            formData.append('character', this.game.character);
           }
 
            formData.forEach((value, key) => {
