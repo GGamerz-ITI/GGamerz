@@ -9,7 +9,7 @@ const cloudinary = require('cloudinary').v2;
 const getAllProducts =async (req, res) => {
     try {
       const products = await models.Game.findAll();
-      res.json(products);
+      res.status(200).json(products);
     } catch (error) {
       console.error("Error retrieving products:", error);
       res.status(500).json({ error: "Failed to retrieve products" });
@@ -50,15 +50,16 @@ const createProduct = async (req, res) => {
           if (characters) {
             myProduct["character"] =
               process.env.CLOUD_PATH + characters[0].filename;
+              console.log(myProduct["character"]);
           }
         }
 
         const newProduct = await models.Game.create(myProduct);
-        res.status(200).json(newProduct);
+        res.status(200).json("product created successfully");
       }
     });
   } catch (err) {
-    return res.status(500).send("Server Error, Failed to create the product !");
+    return res.status(400).send("Server Error, Failed to create the product !");
   }
   };
 const updateProduct=async (req, res) => {
@@ -79,8 +80,8 @@ const updateProduct=async (req, res) => {
           product.name = req.body.name || product.name;
           product.price = req.body.price || product.price ;
           product.os = req.body.os || product.os;
-          product.tags = req.body.tag || product.tags ;
-          product.types = req.body.type || product.types;
+          product.tags = req.body.tags || product.tags ;
+          product.types = req.body.types || product.types;
           product.description = req.body.description ||product.description;
           product.releasedDate = req.body.releasedDate || product.releasedDate;
           product.points = req.body.points || product.points;
@@ -131,7 +132,7 @@ const updateProduct=async (req, res) => {
             return res.status(400).json({message: "Failed to update product"});
           }
       
-          return res.status(200).json(updateProduct);
+          return res.status(200).json("prduct updated successfully");
         }
       })
     } catch (err) {

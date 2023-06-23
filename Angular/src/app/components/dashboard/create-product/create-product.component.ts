@@ -14,7 +14,10 @@ export class CreateProductComponent  {
 
   createdGame: string = "New Game";
   gameForm!: FormGroup;
+  // selectedImage: File | undefined;
+  selectedSingleImage: File | undefined;
   selectedImages:string[] = [];
+  selectedCharacter:string[] = [];
   selectedTags:string[] = [];
   selectedType:string[] = [];
   selectedOs:string[] = [];
@@ -34,11 +37,13 @@ export class CreateProductComponent  {
     this.gameForm = this.formBuilder.group({
       name: new FormControl(null, Validators.required),
       price: new FormControl(null, Validators.required),
+      points: new FormControl(null, Validators.required),
       tag: new FormControl([], Validators.required),
       type: new FormControl([], Validators.required),
       os: new FormControl([], Validators.required),
       description: new FormControl(null, Validators.required),
       imageURL: this.formBuilder.array([]),
+      character: new FormControl(null),
     });
 
     const tagControl = this.gameForm.get('tag');
@@ -67,16 +72,29 @@ export class CreateProductComponent  {
   onChangeFile(event: any) {
     const files = event.target.files;
     this.selectedImages = [];
-    console.log(event.target)
-    console.log("tesssss")
+    // console.log(event.target)
     const imagesControl = this.gameForm.get('imageURL') as FormArray;
     for (let i = 0; i < files.length; i++) {
       this.selectedImages.push(files[i]);
       imagesControl.push(this.formBuilder.control(files[i]));
     }
-
   }
 
+  onSingleImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedSingleImage = file;
+    }
+  }
+
+
+  // onImageChange(event: Event) {
+  //   const target = event.target as HTMLInputElement;
+  //   if (target.files && target.files.length > 0) {
+  //     this.selectedImage = target.files[0];
+  //   }
+  // }
+  
   add(){
         const formData = new FormData();
         // console.log('in function')
@@ -86,12 +104,12 @@ export class CreateProductComponent  {
           }
           //////
           for(let tag of this.updatedTags){
-            formData.append('tag', tag);
+            formData.append('tags', tag);
           }
           console.log(this.updatedTags)
           //////
           for(let type of this.updatedTypes){
-            formData.append('type', type);
+            formData.append('types', type);
           }
           ///////
           for(let os of this.updatedOs){
@@ -99,17 +117,23 @@ export class CreateProductComponent  {
           }
           const currentDate = new Date();
           const formattedDate = currentDate.toISOString();
-          formData.append('releasedDate', formattedDate);
+          formData.append('releaseDate', formattedDate);
           formData.append('name', this.gameForm.get('name')!.value);
-              formData.append('price', this.gameForm.get('price')!.value);
-
-              formData.append('description', this.gameForm.get('description')!.value);
-
+          formData.append('price', this.gameForm.get('price')!.value);
+          formData.append('points', this.gameForm.get('points')!.value);
+          formData.append('description', this.gameForm.get('description')!.value);
+          
+          if (this.selectedSingleImage) {
+            formData.append('character', this.selectedSingleImage);
+          }
 
               console.log(formData);
 
           this.gamesService.AddNewProduct( formData).subscribe({
             next:()=>{
+              this.toastr.info("product will be created shortly", "create product");
+      setTimeout(() => {
+        this.toastr.clear()},3000);
               this.router.navigate(['/dashboard/games']);
             }
             ,

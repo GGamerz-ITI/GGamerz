@@ -13,6 +13,9 @@ export class DashboardProductDetailsComponent implements OnInit {
   Title: string = "Game details";
   hoveredImageUrl: string = "";
   firstImage: string = "";
+  tags: string[] =[];
+  types: string[] =[];
+  os: string[] =[];
   currentSlideIndex = 0;
   images: GalleryItem[] = [];
 
@@ -30,6 +33,7 @@ export class DashboardProductDetailsComponent implements OnInit {
     this.game.images.forEach((img: string) => {
       this.images.push(new ImageItem({ src: img, thumb: img })
       )
+    
     });
   }
 
@@ -38,6 +42,22 @@ export class DashboardProductDetailsComponent implements OnInit {
       {
         next: (data) => {
           this.game = data;
+          if(typeof(this.game.tags)=="string"){
+            this.tags.push (this.game.tags)
+          }else{
+            this.tags = this.game.tags;
+          }
+          if(typeof(this.game.types)=="string"){
+            this.types.push (this.game.types)
+          }else{
+            this.types = this.game.types;
+          }
+          if(typeof(this.game.os)=="string"){
+            this.os.push (this.game.os)
+          }else{
+            this.os = this.game.os;
+          }
+          console.log(this.tags,this.types,this.os)
           this.assignImages()
         },
         error: (err) => {

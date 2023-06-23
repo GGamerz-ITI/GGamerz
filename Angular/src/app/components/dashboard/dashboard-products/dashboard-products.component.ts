@@ -28,6 +28,7 @@ export class DashboardProductsComponent implements OnInit {
    {
        next:(data: Object) => {
         this.games = data as any[];
+        console.log(this.games)
         this.dataSource = new MatTableDataSource(data as any[]);
         this.dataSource.paginator = this.paginator;
       },
