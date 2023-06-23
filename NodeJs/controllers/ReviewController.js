@@ -102,9 +102,7 @@ const getReviewByUser = async (req, res) => {
       ]
     });
 
-    if (reviews.length === 0) {
-      return res.status(404).json({ message: "No reviews found" });
-    }
+   
 
     res.json(reviews);
   } catch (err) {

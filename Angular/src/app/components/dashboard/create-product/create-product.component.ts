@@ -131,6 +131,9 @@ export class CreateProductComponent  {
 
           this.gamesService.AddNewProduct( formData).subscribe({
             next:()=>{
+              this.toastr.info("product will be created shortly", "create product");
+      setTimeout(() => {
+        this.toastr.clear()},3000);
               this.router.navigate(['/dashboard/games']);
             }
             ,
