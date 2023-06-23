@@ -30,11 +30,7 @@ export class GameShowComponent implements OnInit {
         this.game = data
         this.assignImages()
       },
-      error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000); 
+      error: (err) => {console.log(err)
           }
     })
     const userObservable = this.userService.getCurrentUser()
@@ -47,19 +43,11 @@ export class GameShowComponent implements OnInit {
               this.cart = data;
               console.log(this.cart)
             },
-            error: (err) => {
-              this.toastr.error(err, "Error");
-              setTimeout(() => {
-                this.toastr.clear()
-              }, 3000);             }
+            error: (err) => {console.log(err)   }
           })
           this.isloggedIn();
         },
-        error: (err) => {
-          this.toastr.error(err, "Error");
-          setTimeout(() => {
-            this.toastr.clear()
-          }, 3000);         }
+        error: (err) => {console.log(err) }
       })
     }
 
@@ -91,7 +79,7 @@ export class GameShowComponent implements OnInit {
             this.toastr.success("Game added Successfully!", "Updating Cart");
           },
           error: (err) => {
-            this.toastr.error(err, "Error");
+            this.toastr.error(err.message, "Error");
             setTimeout(() => {
               this.toastr.clear()
             }, 3000);           }
@@ -104,7 +92,7 @@ export class GameShowComponent implements OnInit {
 
           },
           error: (err) => {
-            this.toastr.error(err, "Error");
+            this.toastr.error(err.message, "Error");
             setTimeout(() => {
               this.toastr.clear()
             }, 3000);           }
@@ -118,7 +106,7 @@ export class GameShowComponent implements OnInit {
           this.toastr.success("Game added Successfully!", "Updating Cart");
         },
         error: (err) => {
-          this.toastr.error(err, "Error");
+          this.toastr.error(err.message, "Error");
           setTimeout(() => {
             this.toastr.clear()
           }, 3000);         }

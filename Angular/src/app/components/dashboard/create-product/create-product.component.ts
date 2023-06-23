@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, Form  } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule, Form } from '@angular/forms';
 import { GamesService } from 'src/app/services/products.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,26 +10,26 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css']
 })
-export class CreateProductComponent  {
+export class CreateProductComponent {
 
   createdGame: string = "New Game";
   gameForm!: FormGroup;
   // selectedImage: File | undefined;
   selectedSingleImage: File | undefined;
-  selectedImages:string[] = [];
-  selectedCharacter:string[] = [];
-  selectedTags:string[] = [];
-  selectedType:string[] = [];
-  selectedOs:string[] = [];
-  updatedTags:string[]=[];
-  updatedTypes:string[]=[];
-  updatedOs:string[]=[];
-  tagsList = ['Action', 'funny', 'sports','adventure','horror',"war","combat","fantasy"];
+  selectedImages: string[] = [];
+  selectedCharacter: string[] = [];
+  selectedTags: string[] = [];
+  selectedType: string[] = [];
+  selectedOs: string[] = [];
+  updatedTags: string[] = [];
+  updatedTypes: string[] = [];
+  updatedOs: string[] = [];
+  tagsList = ['Action', 'funny', 'sports', 'adventure', 'horror', "war", "combat", "fantasy"];
   typesList = ['multiplayer', 'singleplayer'];
   osList = ['linux', 'mac', 'windows'];
 
 
-  constructor(private toastr: ToastrService,public gamesService: GamesService,  private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {}
+  constructor(private toastr: ToastrService, public gamesService: GamesService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -54,19 +54,19 @@ export class CreateProductComponent  {
       console.log(this.updatedTags)
     }
     const typeControl = this.gameForm.get('type');
-  if (typeControl) {
-    typeControl.valueChanges.subscribe((selectedTypes: string[]) => {
-      this.updatedTypes = selectedTypes;
-    });
-    console.log(this.updatedTypes)
-  }
-  const osControl = this.gameForm.get('os');
-  if (osControl) {
-    osControl.valueChanges.subscribe((selectedOs: string[]) => {
-      this.updatedOs = selectedOs;
-    });
-    console.log(this.updatedOs)
-  }
+    if (typeControl) {
+      typeControl.valueChanges.subscribe((selectedTypes: string[]) => {
+        this.updatedTypes = selectedTypes;
+      });
+      console.log(this.updatedTypes)
+    }
+    const osControl = this.gameForm.get('os');
+    if (osControl) {
+      osControl.valueChanges.subscribe((selectedOs: string[]) => {
+        this.updatedOs = selectedOs;
+      });
+      console.log(this.updatedOs)
+    }
   }
 
   onChangeFile(event: any) {
@@ -94,58 +94,59 @@ export class CreateProductComponent  {
   //     this.selectedImage = target.files[0];
   //   }
   // }
-  
-  add(){
-        const formData = new FormData();
-        // console.log('in function')
-        if (this.gameForm.valid) {
-          for(let image of this.selectedImages){
-            formData.append('imageURL', image);
-          }
-          //////
-          for(let tag of this.updatedTags){
-            formData.append('tags', tag);
-          }
-          console.log(this.updatedTags)
-          //////
-          for(let type of this.updatedTypes){
-            formData.append('types', type);
-          }
-          ///////
-          for(let os of this.updatedOs){
-            formData.append('os', os);
-          }
-          const currentDate = new Date();
-          const formattedDate = currentDate.toISOString();
-          formData.append('releaseDate', formattedDate);
-          formData.append('name', this.gameForm.get('name')!.value);
-          formData.append('price', this.gameForm.get('price')!.value);
-          formData.append('points', this.gameForm.get('points')!.value);
-          formData.append('description', this.gameForm.get('description')!.value);
-          
-          if (this.selectedSingleImage) {
-            formData.append('character', this.selectedSingleImage);
-          }
 
-              console.log(formData);
+  add() {
+    const formData = new FormData();
+    // console.log('in function')
+    if (this.gameForm.valid) {
+      for (let image of this.selectedImages) {
+        formData.append('imageURL', image);
+      }
+      //////
+      for (let tag of this.updatedTags) {
+        formData.append('tags', tag);
+      }
+      console.log(this.updatedTags)
+      //////
+      for (let type of this.updatedTypes) {
+        formData.append('types', type);
+      }
+      ///////
+      for (let os of this.updatedOs) {
+        formData.append('os', os);
+      }
+      const currentDate = new Date();
+      const formattedDate = currentDate.toISOString();
+      formData.append('releaseDate', formattedDate);
+      formData.append('name', this.gameForm.get('name')!.value);
+      formData.append('price', this.gameForm.get('price')!.value);
+      formData.append('points', this.gameForm.get('points')!.value);
+      formData.append('description', this.gameForm.get('description')!.value);
 
-          this.gamesService.AddNewProduct( formData).subscribe({
-            next:()=>{
-              this.toastr.info("product will be created shortly", "create product");
-      setTimeout(() => {
-        this.toastr.clear()},3000);
-              this.router.navigate(['/dashboard/games']);
-            }
-            ,
-            error:(err)=>{
-              this.toastr.error(err, "Error");
-              setTimeout(() => {
-                this.toastr.clear()
-              }, 3000);
-            }
-          });
-     }
-    else{
+      if (this.selectedSingleImage) {
+        formData.append('character', this.selectedSingleImage);
+      }
+
+      console.log(formData);
+
+      this.gamesService.AddNewProduct(formData).subscribe({
+        next: () => {
+          this.toastr.info("You will be redirected shortly", "creating product");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);
+          this.router.navigate(['/dashboard/games']);
+        }
+        ,
+        error: (err) => {
+          this.toastr.error(err.message, "Error");
+          setTimeout(() => {
+            this.toastr.clear()
+          }, 3000);
+        }
+      });
+    }
+    else {
       console.log("Not valid")
     }
   }

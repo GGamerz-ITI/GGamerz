@@ -31,9 +31,13 @@ const getUserCoupons = async (req, res) => {
         const user = await models.User.findByPk(userId);
         const userPoints=user.points
         const getUserCoupons = await models.Coupon.findAll({
-            where:{ points: {
-            [Op.lte]: userPoints
-          }}});
+            where: {
+                [Op.or]: [
+                  { points: { [Op.lte]: userPoints } },
+                  { points: null }
+                ]
+              }
+            });
         res.json(getUserCoupons);
     } catch (err) {
         res.status(500).json({ message: err.message });

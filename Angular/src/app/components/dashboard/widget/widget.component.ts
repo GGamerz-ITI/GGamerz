@@ -30,11 +30,7 @@ export class WidgetComponent {
       next: (items: Object) => {
         this.itemsCount = Object.keys(items).length;
       },
-      error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000);
+      error: (err) => {console.log(err)
       }
     });
   }
@@ -45,10 +41,7 @@ export class WidgetComponent {
         this.usersCount = Object.keys(users).length;
       },
       error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000);
+        console.log(err)
       }
     });
   }
@@ -62,11 +55,7 @@ export class WidgetComponent {
           this.revenue = this.revenue + parseFloat(items[this.acceptedOrders[i]].total)
         }
       },
-      error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000);
+      error: (err) => {console.log(err)
       }
     });
   }
@@ -76,11 +65,7 @@ export class WidgetComponent {
       next: (orders: Object) => {
         this.ordersCount = Object.keys(orders).length;
       },
-      error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000);
+      error: (err) => {console.log(err)
       }
     });
   }

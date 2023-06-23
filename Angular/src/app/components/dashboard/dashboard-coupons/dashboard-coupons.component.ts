@@ -47,7 +47,7 @@ export class DashboardCouponsComponent implements OnInit {
         this.getCoupons()
       },
       error: (err) => {
-        this.toastr.error(err, "Error");
+        this.toastr.error(err.message, "Error");
         setTimeout(() => {
           this.toastr.clear();
         }, 3000);

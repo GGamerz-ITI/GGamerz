@@ -93,11 +93,7 @@ export class FilteredUsersComponent {
       next: (data) => {
         this.userFollower = data
       },
-      error: (err: any) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000);
+      error: (err: any) => {console.log(err)
 
       }
     })
@@ -105,11 +101,7 @@ export class FilteredUsersComponent {
       next: (data) => {
         this.userFollowing = data
       },
-      error: (err: any) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000);
+      error: (err: any) => {console.log(err)
 
       }
     })
@@ -137,7 +129,7 @@ export class FilteredUsersComponent {
         this.ngOnInit()
       },
       error: (err: any) => {
-        this.toastr.error(err, "Error");
+        this.toastr.error(err.message, "Error");
         setTimeout(() => {
           this.toastr.clear()
         }, 3000);
@@ -152,7 +144,7 @@ export class FilteredUsersComponent {
         this.ngOnInit()
       },
       error: (err: any) => {
-        this.toastr.error(err, "Error");
+        this.toastr.error(err.message, "Error");
         setTimeout(() => {
           this.toastr.clear()
         }, 3000);

@@ -33,11 +33,7 @@ export class ChartTwoComponent implements OnInit {
             this.createChart();
           }, 100)
         },
-        error: (err: any) => {
-          this.toastr.error(err, "Error");
-          setTimeout(() => {
-            this.toastr.clear()
-          }, 3000);
+        error: (err: any) => {console.log(err)
         }
       });
     }

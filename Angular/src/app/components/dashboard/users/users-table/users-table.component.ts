@@ -43,10 +43,7 @@ export class UsersTableComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
         },
         error: (error) => {
-          this.toastr.error(error, "Error");
-          setTimeout(() => {
-            this.toastr.clear()
-          }, 3000);
+          console.log(error.message)
         }
       }
     );
@@ -67,11 +64,7 @@ export class UsersTableComponent implements OnInit {
         // this.dataSource = new MatTableDataSource(this.users);
         // this.dataSource.paginator = this.paginator;
       },
-      error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000);
+      error: (err) => {console.log(err)
       }
 
     });

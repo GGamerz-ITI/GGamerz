@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NewsService } from 'src/app/services/news.service';
 import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard-announcements',
@@ -17,7 +18,7 @@ export class DashboardAnnouncementsComponent implements OnInit {
   Announcements: string = "Announcements";
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private newsService: NewsService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private toastr: ToastrService,private newsService: NewsService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getAnnouncements();
@@ -46,15 +47,22 @@ export class DashboardAnnouncementsComponent implements OnInit {
 
 
   deleteAnnouncement(id: string) {
-    this.newsService.deleteNewsById(id).subscribe(
-      () => {
-        console.log('Announcement deleted successfully');
+    this.newsService.deleteNewsById(id).subscribe({
+     next: () => {
+        this.toastr.success("Announcement deleted successfully", "Feedback");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+        // console.log('Announcement deleted successfully');
         // Refresh the list of announcements
         this.getAnnouncements();
       },
-      (error: any) => {
-        console.log('Error deleting announcement:', error);
-      }
+      error:(err) => {
+        this.toastr.success(err.message, "Error");
+        setTimeout(() => {
+          this.toastr.clear()
+        }, 3000);
+      }}
     );
   }
   
