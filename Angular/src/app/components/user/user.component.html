@@ -100,9 +100,9 @@
                 <!-- follow and unfollow -->
                 <button (click)="follow()" *ngIf="!isFollowing() else elseblock"
                     class="btn btn-outline-dark btn-lg ps-5 pe-5 mt-4">
-                    <span *ngIf="isFollower() else falseblock">Follow</span>
+                    <span *ngIf="isFollower() else falseblock">Follow Back</span>
                     <ng-template #falseblock>
-                        Follow Back
+                        Follow
                     </ng-template>
                 </button>
                 <ng-template #elseblock>

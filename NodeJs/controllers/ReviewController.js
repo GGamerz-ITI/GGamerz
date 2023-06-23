@@ -52,7 +52,7 @@ const createReview = async (req, res) => {
     // Save review
     try {
       const newrevieww = await models.Review.create(newreview);
-      res.status(200).json(newrevieww);
+      res.status(200).json({ message: "review created successfully"});
       return;
     } catch (err) {
       return res.status(400).json({ message: err.message })
@@ -102,9 +102,7 @@ const getReviewByUser = async (req, res) => {
       ]
     });
 
-    if (reviews.length === 0) {
-      return res.status(404).json({ message: "No reviews found" });
-    }
+   
 
     res.json(reviews);
   } catch (err) {

@@ -39,11 +39,7 @@ export class HomeComponent {
         console.log('images:', this.images[0]);
         console.log('firstImage:', this.firstImage);
       },
-      (error) => {
-        this.toastr.error('Error retrieving games: '+error, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 3000); 
+      (error) => {console.log(error)
       }
     );
   }

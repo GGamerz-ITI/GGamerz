@@ -53,10 +53,7 @@ export class ChartComponent implements OnInit{
           this.createChart();},100)
         },
         error: (err: any) => {
-          this.toastr.error(err, "Error");
-          setTimeout(() => {
-            this.toastr.clear()
-          }, 2000);             }
+         console.log(err) }
       });
     }
   }

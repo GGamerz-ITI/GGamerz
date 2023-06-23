@@ -1,4 +1,5 @@
 const path = require("path");
+const emailBuilder = require(path.join(__dirname, "../utils/EmailTemplate"))
 const models = require(path.join(__dirname ,"../models"));
 require("dotenv").config({ path: __dirname + "/.env" });
 
@@ -61,12 +62,19 @@ const verifyEmail = async (req,res) =>{
         }
 
         // Token created and will be sent by email
-          const mailOptions = {
+        
+        // Creating Url and message to send them to email builder to get back design
+        const myUrl = `${process.env.FRONTEND}verify?userId=${user.id}&token=${token}`;
+        const msg = `Verify your email now on GGamerz and join our gaming community where you </br> can buy games and 
+        communicate with other gamers like you :D`
+        const title = `Verify Email`
+       
+       // Preparing html builder and other options
+        const mailOptions = {
             from: 'ggamerz.iti@gmail.com',
             to: userEmail,
             subject: 'Email Verification',
-            html: `<p>Please click the following link to verify your email:
-            <a href="${process.env.FRONTEND}verify?userId=${user.id}&token=${token}">Verify Email</a></p>`
+            html: emailBuilder.emailTemplate(myUrl,msg, title) // takes url, msg and button title to return html template
           };
              
           let send = await sendEmail(mailOptions);
@@ -181,13 +189,17 @@ const passReset = async (req,res) =>{
           return res.status(400).json({ message: "Failed to create token in Reset Password Table" });
       }
 
+      // Creating Url and message to send them to email builder to get back design
+      const myUrl = `${process.env.FRONTEND}passReset?userId=${user.id}&token=${token}`;
+      const msg = `Oops looks like you forgot your password 👀 <br/> Here is a link click on it to make another one`
+      const title = `Reset Password`
+
       // Token created and will be sent by email
         const mailOptions = {
           from: 'ggamerz.iti@gmail.com',
           to: userEmail,
           subject: 'Reset Password',
-          html: `<p>Please click the following link to verify your email:
-          <a href="${process.env.FRONTEND}passReset?userId=${user.id}&token=${token}">Reset Password</a></p>`
+          html: emailBuilder.emailTemplate(myUrl,msg, title) // takes url, msg and button title to return html template
         };
            
         let send = await sendEmail(mailOptions);

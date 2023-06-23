@@ -19,18 +19,15 @@ export class CartItemComponent {
   selectedCouponId: any
   orderPts = 0
 
-  constructor(private toastr: ToastrService,private userService: UserService, private cartService: CartService, private couponsService: CouponsService) { }
+  constructor(private toastr: ToastrService, private userService: UserService, private cartService: CartService, private couponsService: CouponsService) { }
 
   getAvailcoupons() {
     this.couponsService.getUserCoupons(this.user.id).subscribe({
       next: (data) => {
         this.coupons = data
       },
-      error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear()
-        }, 2000);      }
+      error: (err) => {console.log(err)
+      }
     });
   }
 
@@ -48,17 +45,13 @@ export class CartItemComponent {
               this.updateTotal()
             },
             error: (err) => {
-              this.toastr.error(err, "Error");
-              setTimeout(() => {
-                this.toastr.clear()
-              }, 2000);                 }
+              console.log(err)
+            }
           })
         },
         error: (err) => {
-          this.toastr.error(err, "Error");
-          setTimeout(() => {
-            this.toastr.clear()
-          }, 2000);             }
+          console.log(err)
+        }
       })
     }
   }
@@ -69,10 +62,11 @@ export class CartItemComponent {
         this.ngOnInit()
       },
       error: (err) => {
-        this.toastr.error(err, "Error");
+        this.toastr.error(err.message, "Error");
         setTimeout(() => {
           this.toastr.clear()
-        }, 2000);           }
+        }, 2000);
+      }
     });
   }
 
@@ -82,10 +76,11 @@ export class CartItemComponent {
         this.ngOnInit();
       },
       error: (err) => {
-        this.toastr.error(err, "Error");
+        this.toastr.error(err.message, "Error");
         setTimeout(() => {
           this.toastr.clear()
-        }, 2000);           }
+        }, 2000);
+      }
     })
   }
 
@@ -117,7 +112,8 @@ export class CartItemComponent {
       if (coupon.id == this.selectedCouponId) {
         const discount = parseInt(coupon.amount)
         this.total = this.total - (this.total * (discount / 100))
-        this.orderPts -= coupon.points
+        if (coupon.points)
+          this.orderPts -= coupon.points
       }
     });
   }

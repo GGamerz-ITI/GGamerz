@@ -23,7 +23,7 @@ export class UpdateAnnouncementComponent {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.gameForm = this.formBuilder.group({
@@ -38,10 +38,7 @@ export class UpdateAnnouncementComponent {
         this.announcement = data;
       },
       error: (err) => {
-        this.toastr.error(err, "Error");
-        setTimeout(() => {
-          this.toastr.clear();
-        }, 3000);
+        console.log(err)
       }
     });
   }
@@ -58,11 +55,14 @@ export class UpdateAnnouncementComponent {
 
       this.newsService.updateNewsById(this.updatedAnnouncementId, updatedAnnouncement).subscribe({
         next: () => {
-          console.log("done");
+          this.toastr.success("Announcement updated successfully", "Feedback");
+          setTimeout(() => {
+            this.toastr.clear();
+          }, 3000);
           this.router.navigate(['dashboard/announcements']);
         },
         error: (err) => {
-          this.toastr.error(err, "Error");
+          this.toastr.error(err.message, "Error");
           setTimeout(() => {
             this.toastr.clear();
           }, 3000);
