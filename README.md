@@ -6,11 +6,8 @@
 </div>
 
 # Introduction
-GGamerz is an e-commerce website with an admin-panel that allows admins to control all data manipulation and handling. Our app mainly serves as a platform where users can shop through a database of various games ⚽🎮🕹️🧩
-and filter by different choices such as game type, game category or platform compatibility. Users can build their profile and add their game preferences and Discord links to facilitate contact between them and other users as a part of our community. Users are able to search for other user who share their same game preferences to follow and unfollow eachother, Each user is able to write reviews on games and reply on others' reviews. 
-For each game user will buy he will gain points which helps him to level up and get badges to compete with others.
-They can also exchange their points with coupons for discounts on their next purchase.
-News section to keep the user up with the latest announcements.
+GGamerz is an e-commerce website with an admin panel that empowers administrators to handle and manipulate all data. Our platform serves as a hub where users can explore a diverse database of games, filtering by game type, category, or platform compatibility. 🎮🎯🕹
+Users can create profiles, add their game preferences, and include their Discord links to foster community interaction. To connect with like-minded gamers, users can search for others who share their game preferences, follow or unfollow them. Additionally, users have the ability to write game reviews and engage in discussions by replying to other users' reviews. With each game purchase, users earn points to level up and earn badges, fostering friendly competition. These points can also be exchanged for coupons, granting discounts on future purchases. Stay up-to-date with the latest announcements through our news section.
 
 ## Demo Video :tv: 
 <!-- [![Website Demo Video](https://img.youtube.com/vi/o9uaP1QoSwI/0.jpg)](https://www.youtube.com/watch?v=o9uaP1QoSwI) --> 
